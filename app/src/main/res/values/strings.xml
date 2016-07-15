@@ -1,4 +1,36 @@
 <resources>
     <string name="app_name">Pokemon Locations</string>
-    <string name="enter_location">Enter Location</string>
+    <string name="search_hint">Which Pokemon are you looking for?</string>
+    <string name="add">Add</string>
+    <string name="choose">Choose</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="favorites">Favorites</string>
+    <string name="my_locations">My Locations</string>
+    <string name="settings">Settings</string>
+    <string-array name="nav_drawer_tabs">
+        <item>@string/favorites</item>
+        <item>@string/my_locations</item>
+        <item>@string/settings</item>
+    </string-array>
+
+    <string name="star_icon">{ion-android-star}</string>
+    <string name="map_icon">{ion-android-map}</string>
+    <string name="settings_icon">{ion-android-settings}</string>
+    <string-array name="nav_drawer_icons">
+        <item>@string/star_icon</item>
+        <item>@string/map_icon</item>
+        <item>@string/settings_icon</item>
+    </string-array>
+
+    <string name="please_rate">
+        Hey, it looks like you\'re a frequent user of Pokemon Locations!
+        If you have a couple seconds, we would be incredibly grateful if you could rate this app in the Play Store.
+        Every good rating really goes a long way towards motivating us to continue
+        creating and maintaining free, ad-free apps like this one. Thank you.
+    </string>
+    <string name="will_rate">Sure, I\'ll help</string>
+    <string name="no_im_good">No, I\'m good</string>
 </resources>

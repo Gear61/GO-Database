@@ -40,7 +40,7 @@ public class UIUtils {
     public static void loadMenuIcon(Menu menu, int itemId, Icon icon) {
         menu.findItem(itemId).setIcon(
                 new IconDrawable(MyApplication.getAppContext(), icon)
-                        .colorRes(Color.WHITE)
+                        .colorRes(R.color.white)
                         .actionBarSize());
     }
 }

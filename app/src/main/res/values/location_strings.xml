@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="set_current_location">Set current location</string>
+    <string name="add_location_title">Add Location</string>
+    <string name="location">Location</string>
+    <string name="choose_current_location">Choose Current Location</string>
+    <string name="current_instructions">Your current location is where the app searches for Pokemon.</string>
+
+    <!-- Permissions and error cases-->
+    <string name="location_services_needed">
+        Your current location is \"Automatic\",
+        which means that you need to enable location services
+        and then wait a couple seconds before searching for Pokemon.
+        Would you like to do that now?
+    </string>
+     <string name="auto_location_fail">
+        We couldn\'t get your current location.
+        Please try again or reset location services.
+    </string>
+</resources>

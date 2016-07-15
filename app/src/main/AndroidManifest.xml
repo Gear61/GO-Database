@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data tools:replace="android:value"
+        <meta-data
+            tools:replace="android:value"
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
 
@@ -21,11 +22,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".Activities.LocationActivity"
-            android:label="@string/enter_location">
         </activity>
     </application>
 </manifest>

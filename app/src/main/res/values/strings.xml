@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Pokemon Locations - Pokemon Go</string>
+    <string name="app_name">Pokemon Locations</string>
+    <string name="enter_location">Enter Location</string>
 </resources>

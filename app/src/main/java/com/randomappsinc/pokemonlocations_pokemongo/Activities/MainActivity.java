@@ -1,9 +1,10 @@
-package com.randomappsinc.pokemonlocations_pokemongo;
+package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.randomappsinc.pokemonlocations_pokemongo.R;
+
+public class MainActivity extends StandardActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

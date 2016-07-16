@@ -36,6 +36,7 @@ public class SearchFragment extends Fragment {
     public static final int LOCATION_REQUEST_CODE = 1;
 
     @Bind(R.id.search_input) AutoCompleteTextView searchInput;
+    @Bind(R.id.no_results) View noResults;
 
     private MaterialDialog progressDialog;
     private boolean locationFetched;

@@ -33,6 +33,17 @@
             style="@style/input_icon"/>
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/no_results"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="@string/no_results"
+        android:textSize="32sp"
+        android:textColor="@color/dark_gray" />
+
     <ListView
         android:id="@+id/search_results"
         android:layout_width="match_parent"

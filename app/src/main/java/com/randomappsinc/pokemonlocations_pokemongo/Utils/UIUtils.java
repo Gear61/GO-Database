@@ -46,6 +46,12 @@ public class UIUtils {
 
     public static String getPokemonUrl(String pokemonName) {
         String url = "https://img.pokemondb.net/artwork/%s.jpg";
+        if (pokemonName.equals("Nidoran♀")) {
+            pokemonName = "nidoran-f";
+        }
+        if (pokemonName.equals("Nidoran♂")) {
+            pokemonName = "nidoran-m";
+        }
         return String.format(url, pokemonName.toLowerCase());
     }
 }

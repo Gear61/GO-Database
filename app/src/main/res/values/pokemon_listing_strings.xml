@@ -27,8 +27,8 @@
 
     <!-- Error messages -->
     <string name="no_frequency">Please tell us how often this Pokemon appears.</string>
-    <string name="no_state">Please give us the state your location is in.</string>
-    <string name="no_city">Please give us the city your location is in.</string>
+    <string name="no_state">Please enter in a valid state.</string>
+    <string name="no_city">Please tell us the city your location is in.</string>
     <string name="no_display_name">Please give us the name or address of your location.</string>
 
     <!-- Icons -->

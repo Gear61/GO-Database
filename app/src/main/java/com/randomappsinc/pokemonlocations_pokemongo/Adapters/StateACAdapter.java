@@ -6,13 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.R;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
-import com.squareup.picasso.Picasso;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.StateServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,49 +18,44 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by alexanderchiou on 7/15/16.
+ * Created by alexanderchiou on 7/16/16.
  */
-public class PokemonACAdapter extends ArrayAdapter<String> {
+public class StateACAdapter extends ArrayAdapter<String> {
     private ArrayList<String> suggestions;
     private Context context;
 
     @SuppressWarnings("unchecked")
-    public PokemonACAdapter(Context context, int viewResourceId, ArrayList<String> items) {
+    public StateACAdapter(Context context, int viewResourceId, ArrayList<String> items) {
         super(context, viewResourceId, items);
         this.context = context;
         this.suggestions = new ArrayList<>();
     }
 
-    public class PokemonSuggestionViewHolder {
-        @Bind(R.id.pokemon_icon) ImageView pokemonIcon;
-        @Bind(R.id.pokemon_name) TextView pokemonName;
+    public class StateSuggestionViewHolder {
+        @Bind(R.id.state) TextView state;
 
-        public PokemonSuggestionViewHolder(View view) {
+        public StateSuggestionViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
 
-        public void loadPokemon(int position) {
+        public void loadState(int position) {
             if (position < suggestions.size()) {
-                String pokemonText = suggestions.get(position);
-                Picasso.with(context)
-                        .load(UIUtils.getPokemonUrl(pokemonText))
-                        .into(pokemonIcon);
-                pokemonName.setText(pokemonText);
+                state.setText(suggestions.get(position));
             }
         }
     }
 
     public View getView(int position, View view, ViewGroup parent) {
-        PokemonSuggestionViewHolder holder;
+        StateSuggestionViewHolder holder;
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.pokemon_ac_item, parent, false);
-            holder = new PokemonSuggestionViewHolder(view);
+            view = vi.inflate(R.layout.state_ac_item, parent, false);
+            holder = new StateSuggestionViewHolder(view);
             view.setTag(holder);
         } else {
-            holder = (PokemonSuggestionViewHolder) view.getTag();
+            holder = (StateSuggestionViewHolder) view.getTag();
         }
-        holder.loadPokemon(position);
+        holder.loadState(position);
         return view;
     }
 
@@ -81,7 +73,7 @@ public class PokemonACAdapter extends ArrayAdapter<String> {
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint != null) {
                 suggestions.clear();
-                suggestions.addAll(PokemonServer.get().getMatchingPokemon(constraint.toString()));
+                suggestions.addAll(StateServer.get().getMatchingStates(constraint.toString()));
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = suggestions;

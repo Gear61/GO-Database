@@ -1,48 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/search_term_container"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="10dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/pokemon_input"
-                android:hint="@string/which_pokemon_report"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
+            <FrameLayout
                 android:layout_marginTop="0dp"
-                style="@style/text_input"/>
+                style="@style/input_container">
 
-            <com.joanzapata.iconify.widget.IconTextView
-                android:text="@string/journal_icon"
-                style="@style/input_icon"/>
+                <AutoCompleteTextView
+                    android:id="@+id/pokemon_input"
+                    android:hint="@string/which_pokemon_report"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    style="@style/text_input"/>
 
-            <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/clear_input"
-                android:text="@string/clear_icon"
-                android:layout_gravity="center_vertical|end"
-                style="@style/input_icon"/>
-        </FrameLayout>
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:text="@string/journal_icon"
+                    style="@style/input_icon"/>
 
-        <com.rey.material.widget.Button
-            android:id="@+id/add_pokemon_listing"
-            android:text="@string/add_listing"
-            android:layout_marginTop="10dp"
-            style="@style/ripple_button_style"
-            app:rd_style="@style/button_ripple_attributes"/>
-    </LinearLayout>
-</ScrollView>
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/clear_pokemon"
+                    style="@style/clear_icon"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/input_container">
+                <EditText
+                    android:id="@+id/frequency"
+                    android:hint="@string/frequency_hint"
+                    android:paddingLeft="40dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    style="@style/text_input"/>
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:text="@string/time_icon"
+                    style="@style/input_icon"/>
+            </FrameLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textColor="@color/dark_gray"
+                android:textSize="32sp"
+                android:layout_gravity="center_horizontal"/>
+
+            <FrameLayout style="@style/input_container">
+                <AutoCompleteTextView
+                    android:id="@+id/state_input"
+                    android:hint="@string/state"
+                    android:paddingRight="40dp"
+                    style="@style/text_input"/>
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/clear_state"
+                    style="@style/clear_icon"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/input_container">
+                <EditText
+                    android:id="@+id/city_input"
+                    android:hint="@string/city"
+                    android:paddingRight="40dp"
+                    style="@style/text_input"/>
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/clear_city"
+                    style="@style/clear_icon"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/input_container">
+                <EditText
+                    android:id="@+id/name_or_address"
+                    android:hint="@string/name_or_address_hint"
+                    android:paddingRight="40dp"
+                    android:singleLine="false"
+                    android:lines="3"
+                    android:gravity="top"
+                    style="@style/text_input"/>
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/clear_name"
+                    style="@style/clear_icon"/>
+            </FrameLayout>
+
+            <com.rey.material.widget.Button
+                android:id="@+id/add_pokemon_listing"
+                android:text="@string/add_listing"
+                android:layout_marginTop="10dp"
+                style="@style/ripple_button_style"
+                app:rd_style="@style/button_ripple_attributes"/>
+        </LinearLayout>
+    </ScrollView>
+</android.support.design.widget.CoordinatorLayout>

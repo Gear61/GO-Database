@@ -2,8 +2,9 @@
 <resources>
     <string name="add_pokemon_listing">Add Pokemon Listing</string>
     <string name="which_pokemon_report">Which Pokemon are you reporting?</string>
+    <string name="frequency_hint">How often does it show up?</string>
 
-    <string name="how_often_hint">How often does this Pokemon show up?</string>
+    <string name="how_often_hint">How often does this Pokemon appear?</string>
     <string name="common">Common</string>
     <string name="uncommon">Uncommon</string>
     <string name="rare">Rare</string>
@@ -14,5 +15,22 @@
         <item>@string/rare</item>
     </string-array>
 
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="name_or_address_hint">
+        Name or address
+        (Use name for recognizable places like \"Central Park\"
+        and address otherwise)
+    </string>
+
     <string name="add_listing">Add Listing</string>
+
+    <!-- Error messages -->
+    <string name="no_frequency">Please tell us how often this Pokemon appears.</string>
+    <string name="no_state">Please give us the state your location is in.</string>
+    <string name="no_city">Please give us the city your location is in.</string>
+    <string name="no_display_name">Please give us the name or address of your location.</string>
+
+    <!-- Icons -->
+    <string name="time_icon">{ion-android-time}</string>
 </resources>

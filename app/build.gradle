@@ -34,4 +34,5 @@ dependencies {
     compile 'com.github.rey5137:material:1.2.4'
     compile 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.android.support:support-v13:24.0.0'
 }

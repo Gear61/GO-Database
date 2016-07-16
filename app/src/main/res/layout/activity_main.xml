@@ -26,4 +26,11 @@
             android:name="com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment"
             tools:layout="@layout/fragment_navigation_drawer"/>
     </android.support.v4.widget.DrawerLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_pokemon_listing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/default_margin"/>
 </android.support.design.widget.CoordinatorLayout>

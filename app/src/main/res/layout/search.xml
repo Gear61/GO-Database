@@ -4,6 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:padding="10dp">
 
     <FrameLayout
@@ -12,12 +14,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/search_term"
             android:hint="@string/search_hint"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:layout_marginTop="0dp"
+            android:imeOptions="actionSearch"
             style="@style/text_input"/>
 
         <com.joanzapata.iconify.widget.IconTextView

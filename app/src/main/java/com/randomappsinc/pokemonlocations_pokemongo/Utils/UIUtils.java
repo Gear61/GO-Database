@@ -43,4 +43,9 @@ public class UIUtils {
                         .colorRes(R.color.white)
                         .actionBarSize());
     }
+
+    public static String getPokemonUrl(String pokemonName) {
+        String url = "https://img.pokemondb.net/artwork/%s.jpg";
+        return String.format(url, pokemonName.toLowerCase());
+    }
 }

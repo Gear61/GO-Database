@@ -18,6 +18,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFr
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import butterknife.Bind;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @OnClick(R.id.add_pokemon_listing)
     public void addPokemonListing() {
+        PokemonServer.get();
         startActivity(new Intent(this, AddListingActivity.class));
     }
 

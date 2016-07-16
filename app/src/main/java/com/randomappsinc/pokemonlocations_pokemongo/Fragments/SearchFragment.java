@@ -10,13 +10,19 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.MainActivity;
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
+import java.util.ArrayList;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.nlopez.smartlocation.SmartLocation;
 
 /**
@@ -24,6 +30,8 @@ import io.nlopez.smartlocation.SmartLocation;
  */
 public class SearchFragment extends Fragment {
     public static final int LOCATION_REQUEST_CODE = 1;
+
+    @Bind(R.id.search_term) AutoCompleteTextView searchInput;
 
     private MaterialDialog progressDialog;
     private boolean locationFetched;
@@ -34,6 +42,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.search, container, false);
         ButterKnife.bind(this, rootView);
+
+        searchInput.setAdapter(new PokemonACAdapter(getActivity(), R.layout.pokemon_ac_item, new ArrayList<String>()));
 
         locationChecker = new Handler();
         locationCheckTask = new Runnable() {
@@ -52,6 +62,11 @@ public class SearchFragment extends Fragment {
                 .build();
 
         return rootView;
+    }
+
+    @OnClick(R.id.clear_search)
+    public void clearSearch() {
+        searchInput.setText("");
     }
 
     @Override

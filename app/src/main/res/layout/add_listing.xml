@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:padding="10dp">
 
-        <EditText
-            android:id="@+id/pokemon"
-            android:hint="@string/which_pokemon_report"
-            style="@style/text_input"/>
+        <FrameLayout
+            android:id="@+id/search_term_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/pokemon_input"
+                android:hint="@string/which_pokemon_report"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:layout_marginTop="0dp"
+                style="@style/text_input"/>
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:text="@string/journal_icon"
+                style="@style/input_icon"/>
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/clear_input"
+                android:text="@string/clear_icon"
+                android:layout_gravity="center_vertical|end"
+                style="@style/input_icon"/>
+        </FrameLayout>
+
+        <com.rey.material.widget.Button
+            android:id="@+id/add_pokemon_listing"
+            android:text="@string/add_listing"
+            android:layout_marginTop="10dp"
+            style="@style/ripple_button_style"
+            app:rd_style="@style/button_ripple_attributes"/>
     </LinearLayout>
 </ScrollView>

@@ -42,8 +42,12 @@ public class PokemonServer {
     }
 
     public boolean isValidPokemon(String input) {
-        String cleanName = input.substring(0, 1).toUpperCase() + input.substring(1);
-        return pokemonList.contains(cleanName);
+        if (input.isEmpty()) {
+            return false;
+        } else {
+            String cleanName = input.substring(0, 1).toUpperCase() + input.substring(1);
+            return pokemonList.contains(cleanName);
+        }
     }
 
     public List<String> getMatchingPokemon(String prefix) {

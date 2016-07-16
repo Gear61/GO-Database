@@ -18,6 +18,7 @@ import android.widget.ListView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.IconItemsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -104,6 +105,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                UIUtils.hideKeyboard(getActivity());
                 if (!isAdded()) {
                     return;
                 }

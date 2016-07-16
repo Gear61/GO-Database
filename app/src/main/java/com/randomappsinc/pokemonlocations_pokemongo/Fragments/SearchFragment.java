@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -17,12 +18,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.MainActivity;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import io.nlopez.smartlocation.SmartLocation;
 
 /**
@@ -31,7 +35,7 @@ import io.nlopez.smartlocation.SmartLocation;
 public class SearchFragment extends Fragment {
     public static final int LOCATION_REQUEST_CODE = 1;
 
-    @Bind(R.id.search_term) AutoCompleteTextView searchInput;
+    @Bind(R.id.search_input) AutoCompleteTextView searchInput;
 
     private MaterialDialog progressDialog;
     private boolean locationFetched;
@@ -67,6 +71,20 @@ public class SearchFragment extends Fragment {
     @OnClick(R.id.clear_search)
     public void clearSearch() {
         searchInput.setText("");
+    }
+
+    @OnEditorAction(R.id.search_input)
+    public boolean onKeyPress(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            UIUtils.hideKeyboard(getActivity());
+            if (PokemonServer.get().isValidPokemon(searchInput.getText().toString())) {
+
+            } else {
+                showSnackbar(getString(R.string.invalid_pokemon));
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override

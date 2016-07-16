@@ -13,4 +13,6 @@
         <item>@string/uncommon</item>
         <item>@string/rare</item>
     </string-array>
+
+    <string name="add_listing">Add Listing</string>
 </resources>

@@ -3,4 +3,6 @@
     <string name="search_hint">Which Pokemon are you looking for?</string>
     <string name="search_icon">{ion-android-search}</string>
     <string name="clear_icon">{ion-android-close}</string>
+
+    <string name="invalid_pokemon">Please enter in a valid Pokemon.</string>
 </resources>

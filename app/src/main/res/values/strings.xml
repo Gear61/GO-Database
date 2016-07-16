@@ -1,14 +1,12 @@
 <resources>
     <string name="app_name">Pokemon Locations</string>
-    <string name="search_hint">Which Pokemon are you looking for?</string>
-    <string name="add">Add</string>
     <string name="choose">Choose</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="favorites">Favorites</string>
-    <string name="poke_findings">Poke Findings</string>
+    <string name="poke_findings">My Poke Findings</string>
     <string name="settings">Settings</string>
     <string-array name="nav_drawer_tabs">
         <item>@string/favorites</item>
@@ -26,10 +24,9 @@
     </string-array>
 
     <string name="please_rate">
-        Hey, it looks like you\'re a frequent user of Pokemon Locations!
-        If you have a couple seconds, we would be incredibly grateful if you could rate this app in the Play Store.
+        Hey, if you have a couple seconds, we would be incredibly grateful if you could rate this app in the Play Store!
         Every good rating really goes a long way towards motivating us to continue
-        building and maintaining free, ad-free apps like this one. Thank you.
+        building and maintaining free, ad-free apps like this one. Thank you!
     </string>
     <string name="will_rate">Sure, I\'ll help</string>
     <string name="no_im_good">No, I\'m good</string>

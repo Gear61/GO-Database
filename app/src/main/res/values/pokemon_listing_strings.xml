@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_pokemon_listing">Add Pokemon Listing</string>
+    <string name="which_pokemon_report">Which Pokemon are you reporting?</string>
+
+    <string name="how_often_hint">How often does this Pokemon show up?</string>
+    <string name="common">Common</string>
+    <string name="uncommon">Uncommon</string>
+    <string name="rare">Rare</string>
+    <string name="frequency_title">Frequency Options</string>
+    <string-array name="frequency_options">
+        <item>@string/common</item>
+        <item>@string/uncommon</item>
+        <item>@string/rare</item>
+    </string-array>
+</resources>

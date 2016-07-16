@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @OnClick(R.id.add_pokemon_listing)
     public void addPokemonListing() {
-
+        startActivity(new Intent(this, AddListingActivity.class));
     }
 
     @Override

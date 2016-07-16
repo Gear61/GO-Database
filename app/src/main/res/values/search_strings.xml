@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_hint">Which Pokemon are you looking for?</string>
+    <string name="search_icon">{ion-android-search}</string>
+    <string name="clear_icon">{ion-android-close}</string>
+</resources>

@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
+    <FrameLayout
+        android:id="@+id/search_term_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/search_term"
+            android:hint="@string/search_hint"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:layout_marginTop="0dp"
+            style="@style/text_input"/>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:text="@string/search_icon"
+            android:layout_marginTop="0dp"
+            style="@style/input_icon"/>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/clear_search"
+            android:text="@string/clear_icon"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center_vertical|end"
+            style="@style/input_icon"/>
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/search_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

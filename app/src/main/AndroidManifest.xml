@@ -44,5 +44,12 @@
             android:label="@string/settings"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".Activities.AddListingActivity"
+            android:label="@string/add_pokemon_listing"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
     </application>
 </manifest>

@@ -18,7 +18,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFr
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import butterknife.Bind;
@@ -29,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Bind(R.id.parent) View parent;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.add_pokemon_listing) FloatingActionButton addListing;
+
+    private NavigationDrawerFragment navDrawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         addListing.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_android_add).colorRes(R.color.white));
 
-        NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
+        navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        navDrawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
 
         FragmentManager fragmentManager = getFragmentManager();
         SearchFragment searchFragment = new SearchFragment();
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @OnClick(R.id.add_pokemon_listing)
     public void addPokemonListing() {
-        PokemonServer.get();
+        navDrawerFragment.closeDrawer();
         startActivity(new Intent(this, AddListingActivity.class));
     }
 

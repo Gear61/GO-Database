@@ -41,6 +41,21 @@
 
             <FrameLayout style="@style/input_container">
                 <EditText
+                    android:id="@+id/location_input"
+                    android:hint="@string/location_hint"
+                    android:paddingLeft="40dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:singleLine="false"
+                    style="@style/text_input"/>
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:text="@string/location_icon"
+                    style="@style/input_icon"/>
+            </FrameLayout>
+
+            <FrameLayout style="@style/input_container">
+                <EditText
                     android:id="@+id/frequency"
                     android:hint="@string/frequency_hint"
                     android:paddingLeft="40dp"
@@ -51,54 +66,6 @@
                 <com.joanzapata.iconify.widget.IconTextView
                     android:text="@string/time_icon"
                     style="@style/input_icon"/>
-            </FrameLayout>
-
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/location"
-                android:textColor="@color/dark_gray"
-                android:textSize="32sp"
-                android:layout_gravity="center_horizontal"/>
-
-            <FrameLayout style="@style/input_container">
-                <AutoCompleteTextView
-                    android:id="@+id/state_input"
-                    android:hint="@string/state"
-                    android:paddingRight="40dp"
-                    style="@style/text_input"/>
-
-                <com.joanzapata.iconify.widget.IconTextView
-                    android:id="@+id/clear_state"
-                    style="@style/clear_icon"/>
-            </FrameLayout>
-
-            <FrameLayout style="@style/input_container">
-                <EditText
-                    android:id="@+id/city_input"
-                    android:hint="@string/city"
-                    android:paddingRight="40dp"
-                    style="@style/text_input"/>
-
-                <com.joanzapata.iconify.widget.IconTextView
-                    android:id="@+id/clear_city"
-                    style="@style/clear_icon"/>
-            </FrameLayout>
-
-            <FrameLayout style="@style/input_container">
-                <EditText
-                    android:id="@+id/name_or_address"
-                    android:hint="@string/name_or_address_hint"
-                    android:paddingRight="40dp"
-                    android:singleLine="false"
-                    android:lines="3"
-                    android:gravity="top"
-                    style="@style/text_input"/>
-
-                <com.joanzapata.iconify.widget.IconTextView
-                    android:id="@+id/clear_name"
-                    style="@style/clear_icon"/>
             </FrameLayout>
 
             <com.rey.material.widget.Button

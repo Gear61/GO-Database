@@ -1,23 +1,53 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by alexanderchiou on 7/15/16.
  */
 public class PokemonServer {
     private static PokemonServer instance;
-    private static List<String> pokemonList;
-
-    private PokemonServer() {
-        pokemonList = FileUtils.extractItems("pokemon.txt");
-    }
 
     public static PokemonServer get() {
         if (instance == null) {
             instance = new PokemonServer();
         }
         return instance;
+    }
+
+    private List<String> pokemonList;
+    private Map<String, Integer> nameToIdMappings;
+
+    private PokemonServer() {
+        pokemonList = new ArrayList<>();
+        nameToIdMappings = new HashMap<>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(MyApplication.getAppContext()
+                    .getAssets().open("pokemon.txt")));
+            String pokemon;
+            int currentIndex = 1;
+            while ((pokemon = reader.readLine()) != null) {
+                pokemonList.add(pokemon);
+                nameToIdMappings.put(pokemon, currentIndex);
+                currentIndex++;
+            }
+        } catch (IOException ignored) {
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (Exception ignored) {}
+            }
+        }
+        Collections.sort(pokemonList);
     }
 
     public boolean isValidPokemon(String input) {
@@ -31,5 +61,9 @@ public class PokemonServer {
 
     public List<String> getMatchingPokemon(String prefix) {
         return MatchingUtils.getMatchingItems(prefix, pokemonList);
+    }
+
+    public int getPokemonId(String pokemonName) {
+        return nameToIdMappings.get(pokemonName);
     }
 }

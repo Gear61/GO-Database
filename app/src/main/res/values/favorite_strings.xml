@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_favorites">
+        You do not have any favorited locations.
+        If you find a place you like, click the {ion-android-star-outline} in the toolbar,
+        and we will save it here for you.
+    </string>
+</resources>

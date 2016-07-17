@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/upvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upvote_icon"
+            android:textSize="36dp"/>
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:textColor="@color/dark_gray"/>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/downvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/downvote_icon"
+            android:textSize="36dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/display_name"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_gray"
+        android:textSize="24sp"/>
+</LinearLayout>

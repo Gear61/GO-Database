@@ -24,10 +24,12 @@ public class PokemonServer {
 
     private List<String> pokemonList;
     private Map<String, Integer> nameToIdMappings;
+    private Map<Integer, String> idToNameMappings;
 
     private PokemonServer() {
         pokemonList = new ArrayList<>();
         nameToIdMappings = new HashMap<>();
+        idToNameMappings = new HashMap<>();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(MyApplication.getAppContext()
@@ -37,6 +39,7 @@ public class PokemonServer {
             while ((pokemon = reader.readLine()) != null) {
                 pokemonList.add(pokemon);
                 nameToIdMappings.put(pokemon, currentIndex);
+                idToNameMappings.put(currentIndex, pokemon);
                 currentIndex++;
             }
         } catch (IOException ignored) {
@@ -65,5 +68,9 @@ public class PokemonServer {
 
     public int getPokemonId(String pokemonName) {
         return nameToIdMappings.get(pokemonName);
+    }
+
+    public String getPokemonName(int id) {
+        return idToNameMappings.get(id);
     }
 }

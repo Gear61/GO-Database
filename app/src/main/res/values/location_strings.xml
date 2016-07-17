@@ -20,6 +20,10 @@
         Please try again or reset location services.
     </string>
 
+    <string name="common_title"><u>Common</u></string>
+    <string name="uncommon_title"><u>Uncommon</u></string>
+    <string name="rare_title"><u>Rare</u></string>
+
     <string name="start_heading_here">Start heading here</string>
 
     <string name="location_icon">{ion-location}</string>

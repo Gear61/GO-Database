@@ -25,37 +25,28 @@
             <include layout="@layout/pokelocation_cell"/>
 
             <TextView
-                android:text="@string/common"
+                android:text="@string/common_title"
                 style="@style/frequency_title"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/common_pokemon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+                style="@style/pokemon_gallery_style"/>
 
             <TextView
-                android:text="@string/uncommon"
+                android:text="@string/uncommon_title"
                 style="@style/frequency_title"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/uncommon_pokemon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+                style="@style/pokemon_gallery_style"/>
 
             <TextView
-                android:text="@string/rare"
+                android:text="@string/rare_title"
                 style="@style/frequency_title"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rare_pokemon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+                style="@style/pokemon_gallery_style"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

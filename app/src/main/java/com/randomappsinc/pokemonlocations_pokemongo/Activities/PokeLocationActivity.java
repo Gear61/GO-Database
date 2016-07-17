@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
@@ -34,6 +35,8 @@ public class PokeLocationActivity extends StandardActivity {
         score.setText(String.valueOf(place.getScore()));
         displayName.setText(place.getDisplayName());
 
-
+        commonPokemon.setAdapter(new PokemonAdapter(this, place.getCommonPokemon()));
+        uncommonPokemon.setAdapter(new PokemonAdapter(this, place.getUncommonPokemon()));
+        rarePokemon.setAdapter(new PokemonAdapter(this, place.getRarePokemon()));
     }
 }

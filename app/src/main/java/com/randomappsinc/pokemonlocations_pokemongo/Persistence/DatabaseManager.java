@@ -1,7 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
@@ -62,6 +61,8 @@ public class DatabaseManager {
         pokemon.add(43);
         pokemon.add(90);
         pokemon.add(27);
+        pokemon.add(35);
+        pokemon.add(42);
         derp.setCommonPokemon(pokemon);
         derp.setUncommonPokemon(pokemon);
         derp.setRarePokemon(pokemon);

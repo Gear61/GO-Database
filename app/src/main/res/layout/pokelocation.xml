@@ -28,6 +28,10 @@
                 android:text="@string/common_title"
                 style="@style/frequency_title"/>
 
+            <TextView
+                android:id="@+id/no_common_pokemon"
+                style="@style/no_pokemon_frequency"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/common_pokemon"
                 style="@style/pokemon_gallery_style"/>
@@ -36,6 +40,10 @@
                 android:text="@string/uncommon_title"
                 style="@style/frequency_title"/>
 
+            <TextView
+                android:id="@+id/no_uncommon_pokemon"
+                style="@style/no_pokemon_frequency"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/uncommon_pokemon"
                 style="@style/pokemon_gallery_style"/>
@@ -43,6 +51,10 @@
             <TextView
                 android:text="@string/rare_title"
                 style="@style/frequency_title"/>
+
+            <TextView
+                android:id="@+id/no_rare_pokemon"
+                style="@style/no_pokemon_frequency"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rare_pokemon"

@@ -56,13 +56,13 @@ public class DatabaseManager {
         derp.setDisplayName("Lake Elizabeth");
 
         ArrayList<Integer> pokemon = new ArrayList<>();
-        pokemon.add(16);
+        /* pokemon.add(16);
         pokemon.add(89);
         pokemon.add(43);
         pokemon.add(90);
         pokemon.add(27);
         pokemon.add(35);
-        pokemon.add(42);
+        pokemon.add(42); */
         derp.setCommonPokemon(pokemon);
         derp.setUncommonPokemon(pokemon);
         derp.setRarePokemon(pokemon);

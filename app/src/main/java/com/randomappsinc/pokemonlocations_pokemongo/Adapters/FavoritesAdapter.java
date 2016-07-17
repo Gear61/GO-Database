@@ -20,7 +20,7 @@ public class FavoritesAdapter extends BaseAdapter {
     private List<PokeLocation> favorites;
     private View noFavorites;
 
-    public FavoritesAdapter (Context context, View noFavorites) {
+    public FavoritesAdapter(Context context, View noFavorites) {
         this.context = context;
         this.noFavorites = noFavorites;
         syncWithDb();

@@ -54,5 +54,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
         </activity>
+
+        <activity
+            android:name=".Activities.PokeLocationActivity"
+            android:label="@string/location_view"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

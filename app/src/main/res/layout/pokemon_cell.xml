@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:paddingRight="10dp">
+
+    <ImageView
+        android:id="@+id/pokemon_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="2dp"
+        android:text="@string/journal_icon"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:background="@color/dark_gray_circle"
+        android:layout_gravity="bottom|end" />
+</FrameLayout>

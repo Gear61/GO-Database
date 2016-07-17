@@ -128,6 +128,7 @@ public class SearchFragment extends Fragment {
                         public void onLocationUpdated(Location location) {
                             locationChecker.removeCallbacks(locationCheckTask);
                             locationFetched = true;
+                            progressDialog.setContent(R.string.finding_pokemon);
                         }
                     });
             locationChecker.postDelayed(locationCheckTask, 10000L);

@@ -4,6 +4,8 @@
     <string name="search_icon">{ion-android-search}</string>
     <string name="clear_icon">{ion-android-close}</string>
 
+    <string name="finding_pokemon">Finding you Pokemon&#8230;</string>
+
     <string name="no_results">No search results to display.</string>
     <string name="invalid_pokemon">Please enter in a valid Pokemon.</string>
 </resources>

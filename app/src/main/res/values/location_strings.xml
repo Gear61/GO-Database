@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="location">Location</string>
+    <string name="location_view">Location View</string>
     <string name="getting_your_location">Getting your location&#8230;</string>
 
     <string name="location_permission_reason">
@@ -18,6 +19,8 @@
         We couldn\'t get your current location.
         Please try again or reset location services.
     </string>
+
+    <string name="start_heading_here">Start heading here</string>
 
     <string name="location_icon">{ion-location}</string>
     <string name="upvote_icon">{ion-arrow-up-b}</string>

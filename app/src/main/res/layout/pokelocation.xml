@@ -1,0 +1,61 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.rey.material.widget.Button
+        android:id="@+id/start_navigation"
+        android:layout_alignParentBottom="true"
+        android:text="@string/start_heading_here"
+        style="@style/ripple_button_style"
+        app:rd_style="@style/button_ripple_attributes"/>
+
+    <ScrollView
+        android:layout_above="@+id/start_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/pokelocation_cell"/>
+
+            <TextView
+                android:text="@string/common"
+                style="@style/frequency_title"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/common_pokemon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+            <TextView
+                android:text="@string/uncommon"
+                style="@style/frequency_title"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/uncommon_pokemon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+            <TextView
+                android:text="@string/rare"
+                style="@style/frequency_title"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rare_pokemon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

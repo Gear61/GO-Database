@@ -1,6 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
@@ -54,6 +55,16 @@ public class DatabaseManager {
         PokeLocation derp = new PokeLocation();
         derp.setScore(5);
         derp.setDisplayName("Lake Elizabeth");
+
+        ArrayList<Integer> pokemon = new ArrayList<>();
+        pokemon.add(16);
+        pokemon.add(89);
+        pokemon.add(43);
+        pokemon.add(90);
+        pokemon.add(27);
+        derp.setCommonPokemon(pokemon);
+        derp.setUncommonPokemon(pokemon);
+        derp.setRarePokemon(pokemon);
 
         PokeLocation derp2 = new PokeLocation();
         derp2.setScore(-9999);

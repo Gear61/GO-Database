@@ -10,9 +10,8 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
  */
 public class PreferencesManager {
     private static final String NUM_APP_OPENS_KEY = "numAppOpens";
-    private static final String STATE_KEY = "userState";
-    private static final String CITY_KEY = "userCity";
     private static final String LOCATION_FIRST_TIME_KEY = "locationFirstTime";
+    private static final String SHOULD_SHOW_LOCATION_RATIONALE_KEY = "shouldShowLocationRationale";
     private static PreferencesManager instance;
     private SharedPreferences prefs;
 
@@ -37,5 +36,11 @@ public class PreferencesManager {
         boolean firstTime = prefs.getBoolean(LOCATION_FIRST_TIME_KEY, true);
         prefs.edit().putBoolean(LOCATION_FIRST_TIME_KEY, false).apply();
         return firstTime;
+    }
+
+    public boolean shouldShowLocationRationale() {
+        boolean shouldShow = prefs.getBoolean(SHOULD_SHOW_LOCATION_RATIONALE_KEY, true);
+        prefs.edit().putBoolean(SHOULD_SHOW_LOCATION_RATIONALE_KEY, false).apply();
+        return shouldShow;
     }
 }

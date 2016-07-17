@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="location">Location</string>
+    <string name="getting_your_location">Getting your location&#8230;</string>
+
+    <string name="location_permission_reason">
+        This app searches for nearby Pokemon by getting your current location,
+        which means that you need to give us permission to access it.
+    </string>
 
     <!-- Permissions and error cases-->
     <string name="location_services_needed">

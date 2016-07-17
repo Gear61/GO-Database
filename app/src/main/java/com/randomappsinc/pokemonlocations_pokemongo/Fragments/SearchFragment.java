@@ -1,8 +1,10 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Fragments;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -17,7 +19,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.MainActivity;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PermissionUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
@@ -27,14 +31,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 
 /**
  * Created by alexanderchiou on 7/14/16.
  */
 public class SearchFragment extends Fragment {
-    public static final int LOCATION_REQUEST_CODE = 1;
-
     @Bind(R.id.search_input) AutoCompleteTextView searchInput;
     @Bind(R.id.no_results) View noResults;
 
@@ -79,7 +82,11 @@ public class SearchFragment extends Fragment {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             UIUtils.hideKeyboard(getActivity());
             if (PokemonServer.get().isValidPokemon(searchInput.getText().toString())) {
-
+                if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    doSearch();
+                } else {
+                    askForLocation();
+                }
             } else {
                 showSnackbar(getString(R.string.invalid_pokemon));
             }
@@ -88,15 +95,54 @@ public class SearchFragment extends Fragment {
         return false;
     }
 
+    private void askForLocation() {
+        if (PreferencesManager.get().shouldShowLocationRationale()) {
+            new MaterialDialog.Builder(getActivity())
+                    .content(R.string.location_permission_reason)
+                    .positiveText(android.R.string.yes)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            requestLocation();
+                        }
+                    })
+                    .show();
+        } else {
+            requestLocation();
+        }
+    }
+
+    private void requestLocation() {
+        PermissionUtils.requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, 1);
+    }
+
+    private void doSearch() {
+        if (SmartLocation.with(getActivity()).location().state().locationServicesEnabled()) {
+            progressDialog.setContent(R.string.getting_your_location);
+            progressDialog.show();
+            locationFetched = false;
+            SmartLocation.with(getActivity()).location()
+                    .oneFix()
+                    .start(new OnLocationUpdatedListener() {
+                        @Override
+                        public void onLocationUpdated(Location location) {
+                            locationChecker.removeCallbacks(locationCheckTask);
+                            locationFetched = true;
+                        }
+                    });
+            locationChecker.postDelayed(locationCheckTask, 10000L);
+        } else {
+            showLocationServicesDialog();
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // If they give us access to their location, run the search, otherwise, pester them for permission
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            doSearch();
+        } else {
+            requestLocation();
         }
     }
 

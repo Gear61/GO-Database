@@ -12,8 +12,9 @@ public class PokeLocationDO extends RealmObject {
     private String placeId;
 
     private String displayName;
-    private float latitude;
-    private float longitude;
+    private String address;
+    private double latitude;
+    private double longitude;
     private int score;
 
     private RealmList<PokemonDO> commonPokemon;
@@ -36,19 +37,27 @@ public class PokeLocationDO extends RealmObject {
         this.displayName = displayName;
     }
 
-    public float getLatitude() {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

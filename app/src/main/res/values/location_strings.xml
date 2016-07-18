@@ -19,6 +19,10 @@
         We couldn\'t get your current location.
         Please try again or reset location services.
     </string>
+    <string name="google_locations_down">
+        Google location services are down.
+        Please try to submit your location later.
+    </string>
 
     <string name="common_title"><u>Common</u></string>
     <string name="uncommon_title"><u>Uncommon</u></string>

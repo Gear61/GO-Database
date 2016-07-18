@@ -20,6 +20,7 @@ public class PokeLocationViewHolder {
     @Bind(R.id.upvote) TextView upvote;
     @Bind(R.id.downvote) TextView downvote;
     @Bind(R.id.display_name) TextView displayName;
+    @Bind(R.id.address) TextView address;
 
     @BindColor(R.color.dark_gray) int darkGray;
     @BindColor(R.color.app_red) int red;
@@ -38,6 +39,7 @@ public class PokeLocationViewHolder {
     public void loadLocation() {
         score.setText(String.valueOf(place.getScore()));
         displayName.setText(place.getDisplayName());
+        address.setText(place.getAddress());
 
         int currentVote = DatabaseManager.get().getVote(place);
         switch (currentVote) {

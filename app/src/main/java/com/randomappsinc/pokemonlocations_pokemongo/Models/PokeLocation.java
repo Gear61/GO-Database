@@ -19,9 +19,10 @@ public class PokeLocation implements Parcelable {
 
     private String placeId;
     private String displayName;
+    private String address;
     private int score;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private List<Integer> commonPokemon;
     private List<Integer> uncommonPokemon;
     private List<Integer> rarePokemon;
@@ -52,19 +53,27 @@ public class PokeLocation implements Parcelable {
         this.displayName = displayName;
     }
 
-    public float getLatitude() {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -97,6 +106,7 @@ public class PokeLocation implements Parcelable {
 
         placeDO.setPlaceId(placeId);
         placeDO.setDisplayName(displayName);
+        placeDO.setAddress(address);
         placeDO.setScore(score);
         placeDO.setLatitude(latitude);
         placeDO.setLongitude(longitude);
@@ -131,9 +141,10 @@ public class PokeLocation implements Parcelable {
     protected PokeLocation(Parcel in) {
         placeId = in.readString();
         displayName = in.readString();
+        address = in.readString();
         score = in.readInt();
-        latitude = in.readFloat();
-        longitude = in.readFloat();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
         if (in.readByte() == 0x01) {
             commonPokemon = new ArrayList<>();
             in.readList(commonPokemon, Integer.class.getClassLoader());
@@ -163,9 +174,10 @@ public class PokeLocation implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(placeId);
         dest.writeString(displayName);
+        dest.writeString(address);
         dest.writeInt(score);
-        dest.writeFloat(latitude);
-        dest.writeFloat(longitude);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
         if (commonPokemon == null) {
             dest.writeByte((byte) (0x00));
         } else {

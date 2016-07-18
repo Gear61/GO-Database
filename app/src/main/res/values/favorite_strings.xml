@@ -5,4 +5,6 @@
         If you find a place you like, click the {ion-android-star-outline} in the toolbar,
         and we will save it here for you.
     </string>
+    <string name="favorite_location">Favorite location</string>
+    <string name="unfavorite_location">Unfavorite location</string>
 </resources>

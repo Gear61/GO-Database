@@ -2,15 +2,20 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokeLocationViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -78,5 +83,32 @@ public class PokeLocationActivity extends StandardActivity {
 
     public void submitPokefinding(Pokemon pokemon, float frequency) {
         // TODO: Make API call
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.location_menu, menu);
+        if (DatabaseManager.get().isLocationFavorited(place)) {
+            menu.findItem(R.id.favorite_location).setTitle(R.string.unfavorite_location);
+            UIUtils.loadMenuIcon(menu, R.id.favorite_location, IoniconsIcons.ion_android_star);
+        } else {
+            UIUtils.loadMenuIcon(menu, R.id.favorite_location, IoniconsIcons.ion_android_star_outline);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.favorite_location:
+                if (DatabaseManager.get().isLocationFavorited(place)) {
+                    DatabaseManager.get().unfavoriteLocation(place);
+                } else {
+                    DatabaseManager.get().favoriteLocation(place);
+                }
+                invalidateOptionsMenu();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

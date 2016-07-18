@@ -1,8 +1,10 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.VoteDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,30 +122,37 @@ public class DatabaseManager {
 
     public List<PokeLocation> getFavorites () {
         List<PokeLocation> favorites = new ArrayList<>();
-
-        PokeLocation derp = new PokeLocation();
-        derp.setPlaceId("984fnkjsn38");
-        derp.setScore(5);
-        derp.setDisplayName("Lake Elizabeth");
-
-        ArrayList<Integer> pokemon = new ArrayList<>();
-        pokemon.add(16);
-        pokemon.add(89);
-        pokemon.add(43);
-        pokemon.add(90);
-        pokemon.add(27);
-        pokemon.add(35);
-        pokemon.add(42);
-        derp.setCommonPokemon(pokemon);
-        derp.setUncommonPokemon(pokemon);
-        derp.setRarePokemon(pokemon);
-
-        PokeLocation derp2 = new PokeLocation();
-        derp2.setScore(-9999);
-        derp2.setDisplayName("Lake Elizabeth 2");
-
-        favorites.add(derp);
-        favorites.add(derp2);
+        List<PokeLocationDO> pokeLocationDOs = realm.where(PokeLocationDO.class).findAll();
+        for (PokeLocationDO pokeLocationDO : pokeLocationDOs) {
+            favorites.add(PokemonUtils.getLocationFromDO(pokeLocationDO));
+        }
         return favorites;
+    }
+
+    public boolean isLocationFavorited(PokeLocation pokeLocation) {
+        return realm.where(PokeLocationDO.class)
+                .equalTo("placeId", pokeLocation.getPlaceId())
+                .findFirst() != null;
+    }
+
+    public void unfavoriteLocation(final PokeLocation pokeLocation) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(PokeLocationDO.class)
+                        .equalTo("placeId", pokeLocation.getPlaceId())
+                        .findFirst()
+                        .deleteFromRealm();
+            }
+        });
+    }
+
+    public void favoriteLocation(final PokeLocation pokeLocation) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(pokeLocation.toPokeLocationDO());
+            }
+        });
     }
 }

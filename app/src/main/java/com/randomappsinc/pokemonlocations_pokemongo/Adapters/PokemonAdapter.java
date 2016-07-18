@@ -1,12 +1,14 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActivity;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
@@ -15,18 +17,20 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by alexanderchiou on 7/17/16.
  */
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
-    private Context context;
-    private List<Integer> pokemon;
+    private PokeLocationActivity context;
+    private List<Integer> pokemonList;
 
-    public PokemonAdapter(Context context, List<Integer> pokemon) {
+    public PokemonAdapter(PokeLocationActivity context, List<Integer> pokemonList) {
         this.context = context;
-        this.pokemon = pokemon;
+        this.pokemonList = pokemonList;
     }
 
     @Override
@@ -42,11 +46,14 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
     @Override
     public int getItemCount() {
-        return pokemon.size();
+        return pokemonList.size();
     }
 
     public class PokemonViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.pokemon_icon) ImageView pokemonPicture;
+        @BindString(R.string.add_finding_question) String addFindingQuestion;
+
+        private Pokemon pokemon;
 
         public PokemonViewHolder(View view) {
             super(view);
@@ -54,9 +61,28 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
         }
 
         public void loadPokemon(int position) {
-            String pokemonName = PokemonServer.get().getPokemonName(pokemon.get(position));
-            String imageUrl = UIUtils.getPokemonUrl(pokemonName);
+            pokemon = new Pokemon();
+            pokemon.setId(pokemonList.get(position));
+            pokemon.setName(PokemonServer.get().getPokemonName(pokemonList.get(position)));
+
+            String imageUrl = UIUtils.getPokemonUrl(pokemon.getName());
             Picasso.with(context).load(imageUrl).into(pokemonPicture);
+        }
+
+        @OnClick(R.id.pokemon_parent)
+        public void addPokeFinding() {
+            new MaterialDialog.Builder(context)
+                    .content(String.format(addFindingQuestion, pokemon.getName(), context.getPlace().getDisplayName()))
+                    .items(R.array.flag_frequency_options)
+                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                        @Override
+                        public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                            return true;
+                        }
+                    })
+                    .positiveText(R.string.choose)
+                    .negativeText(android.R.string.no)
+                    .show();
         }
     }
 }

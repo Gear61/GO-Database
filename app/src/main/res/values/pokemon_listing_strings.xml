@@ -2,9 +2,9 @@
 <resources>
     <string name="add_pokemon_listing">Add Pokemon Listing</string>
     <string name="location_hint">Where does it show up?</string>
-    <string name="frequency_hint">How often does it show up?</string>
+    <string name="frequency_hint">How rare is it here?</string>
 
-    <string name="how_often_hint">How often does this Pokemon appear?</string>
+    <string name="how_often_hint">How rare is this Pokemon here?</string>
     <string name="common">Common</string>
     <string name="uncommon">Uncommon</string>
     <string name="rare">Rare</string>
@@ -14,18 +14,21 @@
         <item>@string/uncommon</item>
         <item>@string/rare</item>
     </string-array>
-    <string name="never">Never</string>
+
+    <string name="non_existent">Non-existent</string>
     <string-array name="flag_frequency_options">
         <item>@string/common</item>
         <item>@string/uncommon</item>
         <item>@string/rare</item>
-        <item>@string/never</item>
+        <item>@string/non_existent</item>
     </string-array>
 
     <string name="add_listing">Add Listing</string>
 
     <!-- Error messages -->
-    <string name="no_frequency">Please tell us how often this Pokemon appears.</string>
+    <string name="no_frequency">Please tell us how rare this Pokemon is here.</string>
+
+    <string name="add_finding_question">How rare do you think %1$s is at %2$s?</string>
 
     <!-- Icons -->
     <string name="time_icon">{ion-android-time}</string>

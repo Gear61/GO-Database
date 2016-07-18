@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokeLocationViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
@@ -37,8 +38,8 @@ public class PokeLocationActivity extends StandardActivity {
 
         place = getIntent().getParcelableExtra(PokeLocation.KEY);
 
-        score.setText(String.valueOf(place.getScore()));
-        displayName.setText(place.getDisplayName());
+        PokeLocationViewHolder viewHolder = new PokeLocationViewHolder(findViewById(R.id.pokelocation_parent));
+        viewHolder.loadItem(place);
 
         if (place.getCommonPokemon().isEmpty()) {
             noCommon.setVisibility(View.VISIBLE);
@@ -60,5 +61,9 @@ public class PokeLocationActivity extends StandardActivity {
             rarePokemon.setVisibility(View.VISIBLE);
             rarePokemon.setAdapter(new PokemonAdapter(this, place.getRarePokemon()));
         }
+    }
+
+    public PokeLocation getPlace() {
+        return place;
     }
 }

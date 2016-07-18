@@ -23,7 +23,7 @@
         <item>@string/non_existent</item>
     </string-array>
 
-    <string name="add_listing">Add Listing</string>
+    <string name="submitting_finding">Submitting Poke Finding&#8230;</string>
 
     <!-- Error messages -->
     <string name="no_frequency">Please tell us how rare this Pokemon is here.</string>

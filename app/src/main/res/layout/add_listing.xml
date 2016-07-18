@@ -70,7 +70,7 @@
 
             <com.rey.material.widget.Button
                 android:id="@+id/add_pokemon_listing"
-                android:text="@string/add_listing"
+                android:text="@string/submit"
                 android:layout_marginTop="10dp"
                 style="@style/ripple_button_style"
                 app:rd_style="@style/button_ripple_attributes"/>

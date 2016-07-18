@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class PokemonACAdapter extends ArrayAdapter<String> {
             if (position < suggestions.size()) {
                 String pokemonText = suggestions.get(position);
                 Picasso.with(context)
-                        .load(UIUtils.getPokemonUrl(pokemonText))
+                        .load(PokemonUtils.getPokemonUrl(pokemonText))
                         .into(pokemonIcon);
                 pokemonName.setText(pokemonText);
             }

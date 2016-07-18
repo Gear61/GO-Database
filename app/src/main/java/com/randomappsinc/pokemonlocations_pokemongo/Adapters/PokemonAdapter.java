@@ -11,7 +11,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActiv
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             pokemon.setId(pokemonList.get(position));
             pokemon.setName(PokemonServer.get().getPokemonName(pokemonList.get(position)));
 
-            String imageUrl = UIUtils.getPokemonUrl(pokemon.getName());
+            String imageUrl = PokemonUtils.getPokemonUrl(pokemon.getName());
             Picasso.with(context).load(imageUrl).into(pokemonPicture);
         }
 
@@ -77,6 +77,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
                     .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                         @Override
                         public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                            context.submitPokefinding(pokemon, PokemonUtils.getFrequency(which));
                             return true;
                         }
                     })

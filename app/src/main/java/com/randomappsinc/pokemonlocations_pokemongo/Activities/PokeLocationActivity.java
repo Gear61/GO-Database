@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokeLocationViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import butterknife.Bind;
@@ -17,6 +19,7 @@ import butterknife.ButterKnife;
  * Created by alexanderchiou on 7/17/16.
  */
 public class PokeLocationActivity extends StandardActivity {
+    @Bind(R.id.parent) View parent;
     @Bind(R.id.score) TextView score;
     @Bind(R.id.display_name) TextView displayName;
     @Bind(R.id.common_pokemon) RecyclerView commonPokemon;
@@ -28,6 +31,7 @@ public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.no_rare_pokemon) View noRare;
 
     private PokeLocation place;
+    private MaterialDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,11 @@ public class PokeLocationActivity extends StandardActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         place = getIntent().getParcelableExtra(PokeLocation.KEY);
+        progressDialog = new MaterialDialog.Builder(this)
+                .content(R.string.submitting_finding)
+                .progress(true, 0)
+                .cancelable(false)
+                .build();
 
         PokeLocationViewHolder viewHolder = new PokeLocationViewHolder(findViewById(R.id.pokelocation_parent));
         viewHolder.loadItem(place);
@@ -65,5 +74,9 @@ public class PokeLocationActivity extends StandardActivity {
 
     public PokeLocation getPlace() {
         return place;
+    }
+
+    public void submitPokefinding(Pokemon pokemon, float frequency) {
+        // TODO: Make API call
     }
 }

@@ -1,64 +1,71 @@
-<RelativeLayout
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.rey.material.widget.Button
-        android:id="@+id/start_navigation"
-        android:layout_alignParentBottom="true"
-        android:text="@string/start_heading_here"
-        style="@style/ripple_button_style"
-        app:rd_style="@style/button_ripple_attributes"/>
-
-    <ScrollView
-        android:layout_above="@+id/start_navigation"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <com.rey.material.widget.Button
+            android:id="@+id/start_navigation"
+            android:layout_alignParentBottom="true"
+            android:text="@string/start_heading_here"
+            style="@style/ripple_button_style"
+            app:rd_style="@style/button_ripple_attributes"/>
+
+        <ScrollView
+            android:layout_above="@+id/start_navigation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <include layout="@layout/pokelocation_cell"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:text="@string/common_title"
-                style="@style/frequency_title"/>
+                <include layout="@layout/pokelocation_cell"/>
 
-            <TextView
-                android:id="@+id/no_common_pokemon"
-                style="@style/no_pokemon_frequency"/>
+                <TextView
+                    android:text="@string/common_title"
+                    style="@style/frequency_title"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/common_pokemon"
-                style="@style/pokemon_gallery_style"/>
+                <TextView
+                    android:id="@+id/no_common_pokemon"
+                    style="@style/no_pokemon_frequency"/>
 
-            <TextView
-                android:text="@string/uncommon_title"
-                style="@style/frequency_title"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/common_pokemon"
+                    style="@style/pokemon_gallery_style"/>
 
-            <TextView
-                android:id="@+id/no_uncommon_pokemon"
-                style="@style/no_pokemon_frequency"/>
+                <TextView
+                    android:text="@string/uncommon_title"
+                    style="@style/frequency_title"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/uncommon_pokemon"
-                style="@style/pokemon_gallery_style"/>
+                <TextView
+                    android:id="@+id/no_uncommon_pokemon"
+                    style="@style/no_pokemon_frequency"/>
 
-            <TextView
-                android:text="@string/rare_title"
-                style="@style/frequency_title"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/uncommon_pokemon"
+                    style="@style/pokemon_gallery_style"/>
 
-            <TextView
-                android:id="@+id/no_rare_pokemon"
-                style="@style/no_pokemon_frequency"/>
+                <TextView
+                    android:text="@string/rare_title"
+                    style="@style/frequency_title"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rare_pokemon"
-                style="@style/pokemon_gallery_style"/>
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/no_rare_pokemon"
+                    style="@style/no_pokemon_frequency"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rare_pokemon"
+                    style="@style/pokemon_gallery_style"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

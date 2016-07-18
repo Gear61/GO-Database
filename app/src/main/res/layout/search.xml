@@ -16,7 +16,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/search_input"
-            android:hint="@string/search_hint"
+            android:hint="@string/pokemon_name"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:imeOptions="actionSearch"
@@ -33,15 +33,17 @@
             style="@style/input_icon"/>
     </FrameLayout>
 
-    <TextView
+    <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/no_results"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:text="@string/no_results"
-        android:textSize="32sp"
+        android:text="@string/start_searching"
+        android:textSize="20sp"
         android:textColor="@color/dark_gray" />
 
     <ListView

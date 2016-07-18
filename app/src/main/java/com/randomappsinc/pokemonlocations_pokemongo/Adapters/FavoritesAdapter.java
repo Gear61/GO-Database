@@ -63,7 +63,7 @@ public class FavoritesAdapter extends BaseAdapter {
         } else {
             holder = (PokeLocationViewHolder) view.getTag();
         }
-        holder.loadLocation(getItem(position));
+        holder.loadItem(getItem(position));
         return view;
     }
 }

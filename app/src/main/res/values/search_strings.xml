@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search_hint">Which Pokemon are you looking for?</string>
+    <string name="pokemon_name">Pokemon name</string>
     <string name="search_icon">{ion-android-search}</string>
     <string name="clear_icon">{ion-android-close}</string>
 
     <string name="finding_pokemon">Finding you Pokemon&#8230;</string>
 
+    <string name="start_searching">
+        Simply type in the name of the Pokemon you want
+        and hit the {ion-android-search} in the bottom right
+        of your keyboard to start searching!
+    </string>
     <string name="no_results">No search results to display.</string>
-    <string name="invalid_pokemon">Please enter in a valid Pokemon.</string>
+    <string name="invalid_pokemon">Please enter in a valid Pokemon name.</string>
 </resources>

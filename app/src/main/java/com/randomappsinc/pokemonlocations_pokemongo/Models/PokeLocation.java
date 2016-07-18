@@ -3,8 +3,13 @@ package com.randomappsinc.pokemonlocations_pokemongo.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.RealmList;
 
 /**
  * Created by alexanderchiou on 7/17/16.
@@ -12,7 +17,7 @@ import java.util.List;
 public class PokeLocation implements Parcelable {
     public static final String KEY = "pokeLocation";
 
-    private int locationId;
+    private String placeId;
     private String displayName;
     private int score;
     private float latitude;
@@ -23,12 +28,12 @@ public class PokeLocation implements Parcelable {
 
     public PokeLocation() {}
 
-    public int getLocationId() {
-        return locationId;
+    public String getPlaceId() {
+        return placeId;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
     public int getScore() {
@@ -87,8 +92,44 @@ public class PokeLocation implements Parcelable {
         this.rarePokemon = rarePokemon;
     }
 
+    public PokeLocationDO toPokeLocationDO() {
+        PokeLocationDO placeDO = new PokeLocationDO();
+
+        placeDO.setPlaceId(placeId);
+        placeDO.setDisplayName(displayName);
+        placeDO.setScore(score);
+        placeDO.setLatitude(latitude);
+        placeDO.setLongitude(longitude);
+
+        RealmList<PokemonDO> commonPokemonDOs = new RealmList<>();
+        for (Integer pokemonId : commonPokemon) {
+            PokemonDO pokemonDO = new PokemonDO();
+            pokemonDO.setPokemonId(pokemonId);
+            commonPokemonDOs.add(pokemonDO);
+        }
+        placeDO.setCommonPokemon(commonPokemonDOs);
+
+        RealmList<PokemonDO> uncommonPokemonDOs = new RealmList<>();
+        for (Integer pokemonId : uncommonPokemon) {
+            PokemonDO pokemonDO = new PokemonDO();
+            pokemonDO.setPokemonId(pokemonId);
+            uncommonPokemonDOs.add(pokemonDO);
+        }
+        placeDO.setUncommonPokemon(uncommonPokemonDOs);
+
+        RealmList<PokemonDO> rarePokemonDOs = new RealmList<>();
+        for (Integer pokemonId : rarePokemon) {
+            PokemonDO pokemonDO = new PokemonDO();
+            pokemonDO.setPokemonId(pokemonId);
+            rarePokemonDOs.add(pokemonDO);
+        }
+        placeDO.setRarePokemon(rarePokemonDOs);
+
+        return placeDO;
+    }
+
     protected PokeLocation(Parcel in) {
-        locationId = in.readInt();
+        placeId = in.readString();
         displayName = in.readString();
         score = in.readInt();
         latitude = in.readFloat();
@@ -120,7 +161,7 @@ public class PokeLocation implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(locationId);
+        dest.writeString(placeId);
         dest.writeString(displayName);
         dest.writeInt(score);
         dest.writeFloat(latitude);

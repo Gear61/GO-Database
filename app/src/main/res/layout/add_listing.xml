@@ -25,7 +25,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/pokemon_input"
-                    android:hint="@string/which_pokemon_report"
+                    android:hint="@string/pokemon_name"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
                     style="@style/text_input"/>

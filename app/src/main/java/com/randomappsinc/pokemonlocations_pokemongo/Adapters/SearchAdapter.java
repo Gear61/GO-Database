@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +19,11 @@ import java.util.List;
 public class SearchAdapter extends BaseAdapter {
     private Context context;
     private List<PokeLocation> results;
-    private View noResults;
+    private TextView noResults;
 
-    public SearchAdapter(Context context, View noResults) {
+    public SearchAdapter(Context context, TextView noResults) {
         this.context = context;
+        this.results = new ArrayList<>();
         this.noResults = noResults;
     }
 
@@ -31,6 +34,7 @@ public class SearchAdapter extends BaseAdapter {
     }
 
     public void setNoContent() {
+        noResults.setText(R.string.no_results);
         int viewVisibility = results.isEmpty() ? View.VISIBLE : View.GONE;
         noResults.setVisibility(viewVisibility);
     }

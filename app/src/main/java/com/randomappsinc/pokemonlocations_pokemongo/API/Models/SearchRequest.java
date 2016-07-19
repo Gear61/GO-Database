@@ -1,5 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.API.Models;
 
+import android.location.Location;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -19,10 +21,10 @@ public class SearchRequest {
         this.pokemon_id = pokemonId;
     }
 
-    public void setLocation(double latitude, double longitude) {
+    public void setLocation(Location location) {
         this.location = new LatLong();
-        this.location.setLatitude(latitude);
-        this.location.setLongitude(longitude);
+        this.location.setLatitude(location.getLatitude());
+        this.location.setLongitude(location.getLongitude());
     }
 
     public class LatLong {

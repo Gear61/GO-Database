@@ -1,7 +1,5 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,6 +54,7 @@ public class AddListingActivity extends StandardActivity {
         EventBus.getDefault().register(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        location = new PokeLocation();
         currentFrequencyIndex = -1;
         pokemonInput.setAdapter(new PokemonACAdapter(this, R.layout.pokemon_ac_item, new ArrayList<String>()));
         pokemonInput.requestFocus();
@@ -108,7 +107,6 @@ public class AddListingActivity extends StandardActivity {
         }, 250);
         if (resultCode == RESULT_OK) {
             Place place = PlaceAutocomplete.getPlace(this, data);
-            location = new PokeLocation();
             location.setPlaceId(place.getId());
             location.setDisplayName(place.getName().toString());
             location.setAddress(place.getAddress().toString());
@@ -116,6 +114,10 @@ public class AddListingActivity extends StandardActivity {
             location.setLongitude(place.getLatLng().longitude);
             String locationDisplay = place.getName() + "\n" + place.getAddress().toString();
             locationInput.setText(locationDisplay);
+
+            System.out.println(place.getId() + " || " + place.getName().toString() + " || " +
+            place.getAddress().toString() + " || " + place.getLatLng().latitude + " || " +
+            place.getLatLng().longitude);
         } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             UIUtils.showSnackbar(parent, getString(R.string.google_locations_down));
         }

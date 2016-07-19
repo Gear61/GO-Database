@@ -31,6 +31,8 @@ public class PokeLocation implements Parcelable {
     @Expose
     private String address;
 
+    @SerializedName("up_votes")
+    @Expose
     private int score;
 
     @SerializedName("lat")
@@ -41,8 +43,16 @@ public class PokeLocation implements Parcelable {
     @Expose
     private double longitude;
 
+    @SerializedName("common_pokemon")
+    @Expose
     private List<Integer> commonPokemon;
+
+    @SerializedName("uncommon_pokemon")
+    @Expose
     private List<Integer> uncommonPokemon;
+
+    @SerializedName("rare_pokemon")
+    @Expose
     private List<Integer> rarePokemon;
 
     public PokeLocation() {}

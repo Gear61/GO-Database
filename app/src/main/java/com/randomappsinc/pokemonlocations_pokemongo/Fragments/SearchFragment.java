@@ -14,23 +14,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SearchCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SearchRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.MainActivity;
+import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActivity;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.SearchAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PermissionUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import butterknife.OnItemClick;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 
@@ -39,19 +52,24 @@ import io.nlopez.smartlocation.SmartLocation;
  */
 public class SearchFragment extends Fragment {
     @Bind(R.id.search_input) AutoCompleteTextView searchInput;
-    @Bind(R.id.no_results) View noResults;
+    @Bind(R.id.search_results) ListView searchResults;
+    @Bind(R.id.no_results) TextView noResults;
 
     private MaterialDialog progressDialog;
     private boolean locationFetched;
     private Handler locationChecker;
     private Runnable locationCheckTask;
+    private SearchAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.search, container, false);
         ButterKnife.bind(this, rootView);
+        EventBus.getDefault().register(this);
 
         searchInput.setAdapter(new PokemonACAdapter(getActivity(), R.layout.pokemon_ac_item, new ArrayList<String>()));
+        adapter = new SearchAdapter(getActivity(), noResults);
+        searchResults.setAdapter(adapter);
 
         locationChecker = new Handler();
         locationCheckTask = new Runnable() {
@@ -129,6 +147,14 @@ public class SearchFragment extends Fragment {
                             locationChecker.removeCallbacks(locationCheckTask);
                             locationFetched = true;
                             progressDialog.setContent(R.string.finding_pokemon);
+
+                            int pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
+                            SearchRequest request = new SearchRequest();
+                            request.setPokemonId(pokemonId);
+                            request.setLocation(location);
+                            RestClient.get().getPokemonService()
+                                    .doSearch(request)
+                                    .enqueue(new SearchCallback());
                         }
                     });
             locationChecker.postDelayed(locationCheckTask, 10000L);
@@ -165,9 +191,32 @@ public class SearchFragment extends Fragment {
         ((MainActivity) getActivity()).showSnackbar(message);
     }
 
+    @OnItemClick(R.id.search_results)
+    public void onResultClick(int position) {
+        PokeLocation place = adapter.getItem(position);
+        Intent intent = new Intent(getActivity(), PokeLocationActivity.class);
+        intent.putExtra(PokeLocation.KEY, place);
+        startActivity(intent);
+    }
+
+    @Subscribe
+    public void onEvent(List<PokeLocation> results) {
+        progressDialog.dismiss();
+        adapter.processResults(results);
+    }
+
+    @Subscribe
+    public void onEvent(String event) {
+        if (event.equals(SearchCallback.SEARCH_FAIL)) {
+            progressDialog.dismiss();
+            showSnackbar(getString(R.string.search_fail));
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 }

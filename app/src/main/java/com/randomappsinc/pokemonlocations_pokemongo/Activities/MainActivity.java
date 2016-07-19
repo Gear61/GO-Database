@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
+        UIUtils.hideKeyboard(this);
         super.startActivityForResult(intent, requestCode);
         overridePendingTransition(R.anim.slide_left_out, R.anim.slide_left_in);
     }

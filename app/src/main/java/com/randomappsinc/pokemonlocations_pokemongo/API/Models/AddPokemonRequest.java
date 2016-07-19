@@ -11,11 +11,11 @@ import java.util.List;
  * Created by alexanderchiou on 7/18/16.
  */
 public class AddPokemonRequest {
-    @SerializedName("pokemon_data")
+    @SerializedName("location")
     @Expose
     private PokeLocation location;
 
-    @SerializedName("location")
+    @SerializedName("pokemon_data")
     @Expose
     private List<PokemonPosting> pokemon = new ArrayList<>();
 

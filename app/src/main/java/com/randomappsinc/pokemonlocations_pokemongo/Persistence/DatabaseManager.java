@@ -1,5 +1,8 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.VoteCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.VoteRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
@@ -54,68 +57,93 @@ public class DatabaseManager {
         }
     };
 
+    // Upvote/downvote
     public void processUpvote(PokeLocation place) {
-        int currentScore = getVote(place);
+        int oldScore = getVote(place);
+        int movement = 0;
         final VoteDO voteDO = new VoteDO();
         voteDO.setPlaceId(place.getPlaceId());
 
-        switch (currentScore) {
+        switch (oldScore) {
+            // Upvote to neutral
             case 1:
-                place.setScore(place.getScore() - 1);
+                movement = -1;
                 voteDO.setVote(0);
                 break;
+            // Neutral to upvote
             case 0:
+                movement = 1;
                 place.setScore(place.getScore() + 1);
                 voteDO.setVote(1);
                 break;
+            // Downvote to upvote
             case -1:
-                place.setScore(place.getScore() + 2);
+                movement = 2;
                 voteDO.setVote(1);
                 break;
         }
 
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(voteDO);
-            }
-        });
+        place.setScore(place.getScore() + movement);
+        updateVote(voteDO);
 
         if (isLocationFavorited(place)) {
             addOrUpdateLocation(place);
         }
+
+        VoteRequest voteRequest = new VoteRequest();
+        voteRequest.setPlaceId(place.getPlaceId());
+        voteRequest.setAmount(movement);
+        RestClient.get().getPokemonService()
+                .voteLocation(voteRequest)
+                .enqueue(new VoteCallback(oldScore, place));
     }
 
     public void processDownvote(PokeLocation place) {
-        int currentScore = getVote(place);
+        int oldScore = getVote(place);
+        int movement = 0;
         final VoteDO voteDO = new VoteDO();
         voteDO.setPlaceId(place.getPlaceId());
 
-        switch (currentScore) {
+        switch (oldScore) {
+            // Upvote to downvote
             case 1:
-                place.setScore(place.getScore() - 2);
+                movement = -2;
                 voteDO.setVote(-1);
                 break;
+            // Neutral to downvote
             case 0:
-                place.setScore(place.getScore() - 1);
+                movement = -1;
                 voteDO.setVote(-1);
                 break;
+            // Downvote to neutral
             case -1:
-                place.setScore(place.getScore() + 1);
+                movement = 1;
                 voteDO.setVote(0);
                 break;
         }
 
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(voteDO);
-            }
-        });
+        place.setScore(place.getScore() + movement);
+        updateVote(voteDO);
 
         if (isLocationFavorited(place)) {
             addOrUpdateLocation(place);
         }
+
+        VoteRequest voteRequest = new VoteRequest();
+        voteRequest.setPlaceId(place.getPlaceId());
+        voteRequest.setAmount(movement);
+        RestClient.get().getPokemonService()
+                .voteLocation(voteRequest)
+                .enqueue(new VoteCallback(oldScore, place));
+    }
+
+    public void updateVote(final VoteDO vote) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(vote);
+            }
+        });
     }
 
     public int getVote(PokeLocation place) {
@@ -129,6 +157,7 @@ public class DatabaseManager {
         }
     }
 
+    // Favorites
     public List<PokeLocation> getFavorites () {
         List<PokeLocation> favorites = new ArrayList<>();
         List<PokeLocationDO> pokeLocationDOs = realm.where(PokeLocationDO.class).findAll();

@@ -1,7 +1,10 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -97,6 +100,12 @@ public class AddListingActivity extends StandardActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideKeyboard();
+            }
+        }, 250);
         if (resultCode == RESULT_OK) {
             Place place = PlaceAutocomplete.getPlace(this, data);
             location = new PokeLocation();
@@ -110,6 +119,10 @@ public class AddListingActivity extends StandardActivity {
         } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             UIUtils.showSnackbar(parent, getString(R.string.google_locations_down));
         }
+    }
+
+    private void hideKeyboard() {
+        UIUtils.hideKeyboard(this);
     }
 
     @OnClick(R.id.frequency)

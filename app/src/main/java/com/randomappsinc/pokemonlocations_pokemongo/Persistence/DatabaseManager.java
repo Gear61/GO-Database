@@ -82,7 +82,7 @@ public class DatabaseManager {
         });
 
         if (isLocationFavorited(place)) {
-            updateLocation(place);
+            addOrUpdateLocation(place);
         }
     }
 
@@ -114,7 +114,7 @@ public class DatabaseManager {
         });
 
         if (isLocationFavorited(place)) {
-            updateLocation(place);
+            addOrUpdateLocation(place);
         }
     }
 
@@ -156,16 +156,7 @@ public class DatabaseManager {
         });
     }
 
-    public void favoriteLocation(final PokeLocation pokeLocation) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.copyToRealm(pokeLocation.toPokeLocationDO());
-            }
-        });
-    }
-
-    public void updateLocation(final PokeLocation pokeLocation) {
+    public void addOrUpdateLocation(final PokeLocation pokeLocation) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -186,5 +177,12 @@ public class DatabaseManager {
                 realm.copyToRealm(pokeFindingDO);
             }
         });
+    }
+
+    public PokeFindingDO getFinding(int pokemonId, PokeLocation place) {
+        return realm.where(PokeFindingDO.class)
+                .equalTo("pokemonId", pokemonId)
+                .equalTo("placeId", place.getPlaceId())
+                .findFirst();
     }
 }

@@ -8,7 +8,10 @@ import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActivity;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
@@ -52,6 +55,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
     public class PokemonViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.pokemon_icon) ImageView pokemonPicture;
         @BindString(R.string.add_finding_question) String addFindingQuestion;
+        @BindString(R.string.my_finding_template) String myFindingTemplate;
 
         private Pokemon pokemon;
 
@@ -71,19 +75,30 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
         @OnClick(R.id.pokemon_parent)
         public void addPokeFinding() {
-            new MaterialDialog.Builder(context)
-                    .content(String.format(addFindingQuestion, pokemon.getName(), context.getPlace().getDisplayName()))
-                    .items(R.array.flag_frequency_options)
-                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                        @Override
-                        public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                            context.submitPokefinding(pokemon, text.toString());
-                            return true;
-                        }
-                    })
-                    .positiveText(R.string.choose)
-                    .negativeText(android.R.string.no)
-                    .show();
+            PokeLocation place = context.getPlace();
+            PokeFindingDO findingDO = DatabaseManager.get().getFinding(pokemon.getId(), place);
+            if (findingDO == null) {
+                new MaterialDialog.Builder(context)
+                        .content(String.format(addFindingQuestion, pokemon.getName(), place.getDisplayName()))
+                        .items(R.array.flag_frequency_options)
+                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                                context.submitPokefinding(pokemon, text.toString());
+                                return true;
+                            }
+                        })
+                        .positiveText(R.string.choose)
+                        .negativeText(android.R.string.no)
+                        .show();
+            } else {
+                new MaterialDialog.Builder(context)
+                        .title(R.string.pokemon_finding)
+                        .content(String.format(myFindingTemplate,
+                                pokemon.getName(), findingDO.getFrequency().toLowerCase(), place.getDisplayName()))
+                        .positiveText(android.R.string.yes)
+                        .show();
+            }
         }
     }
 }

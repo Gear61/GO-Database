@@ -34,4 +34,6 @@
     <string name="location_icon">{ion-location}</string>
     <string name="upvote_icon">{ion-arrow-up-b}</string>
     <string name="downvote_icon">{ion-arrow-down-b}</string>
+
+    <string name="navigate_with">Navigate with</string>
 </resources>

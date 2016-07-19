@@ -6,11 +6,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="favorites">Favorites</string>
-    <string name="poke_findings">My Poke Findings</string>
+    <string name="my_findings">My Findings</string>
     <string name="settings">Settings</string>
     <string-array name="nav_drawer_tabs">
         <item>@string/favorites</item>
-        <item>@string/poke_findings</item>
+        <item>@string/my_findings</item>
         <item>@string/settings</item>
     </string-array>
 
@@ -37,6 +37,6 @@
     <string name="got_it">GOT IT</string>
     <string name="sharing_instructions">
         To start sharing your Pokemon findings with the rest of the community,
-        simply click this journal button.
+        simply click the journal button.
     </string>
 </resources>

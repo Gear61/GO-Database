@@ -1,5 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -20,6 +22,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by alexanderchiou on 7/17/16.
@@ -86,9 +89,19 @@ public class PokeLocationActivity extends StandardActivity {
         // TODO: Make API call
         PokeFindingDO pokeFindingDO = new PokeFindingDO();
         pokeFindingDO.setPokemonId(pokemon.getId());
+        pokeFindingDO.setPlaceId(place.getPlaceId());
         pokeFindingDO.setFrequency(frequency);
         pokeFindingDO.setLocationName(place.getDisplayName());
         DatabaseManager.get().addPokeFinding(pokeFindingDO);
+    }
+
+    @OnClick(R.id.start_navigation)
+    public void startHeadingHere() {
+            String mapUri = "google.navigation:q=" + place.getDisplayName()
+                    + ", " + place.getAddress();
+            startActivity(Intent.createChooser(
+                    new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
+                    getString(R.string.navigate_with)));
     }
 
     @Override
@@ -110,7 +123,7 @@ public class PokeLocationActivity extends StandardActivity {
                 if (DatabaseManager.get().isLocationFavorited(place)) {
                     DatabaseManager.get().unfavoriteLocation(place);
                 } else {
-                    DatabaseManager.get().favoriteLocation(place);
+                    DatabaseManager.get().addOrUpdateLocation(place);
                 }
                 invalidateOptionsMenu();
                 return true;

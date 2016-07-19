@@ -27,8 +27,12 @@
 
     <!-- Error messages -->
     <string name="no_frequency">Please tell us how rare this Pokemon is here.</string>
+    <string name="no_place">Please tell us where this Pokemon shares up.</string>
+    <string name="already_submitted">You have already shared your opinion on %1$s at %2$s with the community.</string>
 
     <string name="add_finding_question">How rare do you think %1$s is at %2$s?</string>
+
+    <string name="share_success">You have successfully shared your Pokemon Finding with the community. Thank you!</string>
 
     <!-- Icons -->
     <string name="time_icon">{ion-android-time}</string>

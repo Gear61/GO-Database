@@ -6,12 +6,11 @@ package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -46,8 +45,7 @@ public class UIUtils {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static int getDpInPixels(int numDp) {
-        Resources resources = MyApplication.getAppContext().getResources();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, numDp, resources.getDisplayMetrics());
+    public static void showKeyboard(Activity activity) {
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 }

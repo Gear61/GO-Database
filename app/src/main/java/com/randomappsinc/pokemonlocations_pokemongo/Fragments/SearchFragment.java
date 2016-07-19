@@ -196,7 +196,7 @@ public class SearchFragment extends Fragment {
         PokeLocation place = adapter.getItem(position);
         Intent intent = new Intent(getActivity(), PokeLocationActivity.class);
         intent.putExtra(PokeLocation.KEY, place);
-        startActivity(intent);
+        getActivity().startActivity(intent);
     }
 
     @Subscribe

@@ -86,7 +86,6 @@ public class PokeLocationActivity extends StandardActivity {
     }
 
     public void submitPokefinding(Pokemon pokemon, String frequency) {
-        // TODO: Make API call
         PokeFindingDO pokeFindingDO = new PokeFindingDO();
         pokeFindingDO.setPokemonId(pokemon.getId());
         pokeFindingDO.setPlaceId(place.getPlaceId());

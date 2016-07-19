@@ -14,6 +14,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
@@ -81,8 +82,13 @@ public class PokeLocationActivity extends StandardActivity {
         return place;
     }
 
-    public void submitPokefinding(Pokemon pokemon, float frequency) {
+    public void submitPokefinding(Pokemon pokemon, String frequency) {
         // TODO: Make API call
+        PokeFindingDO pokeFindingDO = new PokeFindingDO();
+        pokeFindingDO.setPokemonId(pokemon.getId());
+        pokeFindingDO.setFrequency(frequency);
+        pokeFindingDO.setLocationName(place.getDisplayName());
+        DatabaseManager.get().addPokeFinding(pokeFindingDO);
     }
 
     @Override

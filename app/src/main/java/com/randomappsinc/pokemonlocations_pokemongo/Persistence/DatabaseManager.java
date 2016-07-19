@@ -1,6 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.VoteDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
@@ -79,6 +80,10 @@ public class DatabaseManager {
                 realm.copyToRealmOrUpdate(voteDO);
             }
         });
+
+        if (isLocationFavorited(place)) {
+            updateLocation(place);
+        }
     }
 
     public void processDownvote(PokeLocation place) {
@@ -107,6 +112,10 @@ public class DatabaseManager {
                 realm.copyToRealmOrUpdate(voteDO);
             }
         });
+
+        if (isLocationFavorited(place)) {
+            updateLocation(place);
+        }
     }
 
     public int getVote(PokeLocation place) {
@@ -152,6 +161,29 @@ public class DatabaseManager {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealm(pokeLocation.toPokeLocationDO());
+            }
+        });
+    }
+
+    public void updateLocation(final PokeLocation pokeLocation) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(pokeLocation.toPokeLocationDO());
+            }
+        });
+    }
+
+    // Pokemon Findings
+    public List<PokeFindingDO> getFindings () {
+        return realm.where(PokeFindingDO.class).findAll();
+    }
+
+    public void addPokeFinding(final PokeFindingDO pokeFindingDO) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(pokeFindingDO);
             }
         });
     }

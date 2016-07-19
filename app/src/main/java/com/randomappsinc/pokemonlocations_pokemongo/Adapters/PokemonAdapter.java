@@ -77,7 +77,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
                     .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                         @Override
                         public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                            context.submitPokefinding(pokemon, PokemonUtils.getFrequency(which));
+                            context.submitPokefinding(pokemon, text.toString());
                             return true;
                         }
                     })

@@ -10,11 +10,11 @@
 
     <ImageView
         android:id="@+id/pokemon_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
+        android:layout_width="85dp"
+        android:layout_height="85dp"/>
 
     <TextView
-        android:id="@+id/pokemon_name"
+        android:id="@+id/finding_info"
         android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

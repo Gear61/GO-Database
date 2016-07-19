@@ -23,6 +23,8 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @Bind(R.id.parent) View parent;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        addListing.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_android_add).colorRes(R.color.white));
+        addListing.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_ios_bookmarks).colorRes(R.color.white));
 
         navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         navDrawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
@@ -54,9 +56,24 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         SearchFragment searchFragment = new SearchFragment();
         fragmentManager.beginTransaction().replace(R.id.container, searchFragment).commit();
 
-        if (PreferencesManager.get().shouldAskToRate()) {
+        if (PreferencesManager.get().shouldShowShareTutorial()) {
+            showTutorial();
+        } else if (PreferencesManager.get().shouldAskToRate()) {
             showPleaseRateDialog();
         }
+    }
+
+    public void showTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this);
+        MaterialShowcaseView addListExplanation = new MaterialShowcaseView.Builder(this)
+                .setTarget(addListing)
+                .setTitleText(R.string.welcome)
+                .setDismissText(R.string.got_it)
+                .setContentText(R.string.sharing_instructions)
+                .withCircleShape()
+                .build();
+        sequence.addSequenceItem(addListExplanation);
+        sequence.start();
     }
 
     @OnClick(R.id.add_pokemon_listing)

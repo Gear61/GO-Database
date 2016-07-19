@@ -1,8 +1,14 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
+import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
+
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO;
+import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,5 +72,18 @@ public class PokemonUtils {
         location.setRarePokemon(rarePokemon);
 
         return location;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static Spanned getFindingInfo(PokeFindingDO pokeFindingDO) {
+        Context context = MyApplication.getAppContext();
+        String pokemonName = PokemonServer.get().getPokemonName(pokeFindingDO.getPokemonId());
+        String pokemonPrefix = context.getString(R.string.pokemon_prefix);
+        String locationPrefix = context.getString(R.string.location_prefix);
+        String frequencyPrefix = context.getString(R.string.frequency_prefix);
+        String info = "<b>" + pokemonPrefix + "</b>" + pokemonName + "<br><b>"
+                + locationPrefix + "</b>" + pokeFindingDO.getLocationName() + "<br><b>"
+                + frequencyPrefix + "</b>" + pokeFindingDO.getFrequency();
+        return Html.fromHtml(info);
     }
 }

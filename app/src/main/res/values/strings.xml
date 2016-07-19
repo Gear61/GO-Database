@@ -32,4 +32,11 @@
     <string name="no_im_good">No, I\'m good</string>
 
     <string name="submit">Submit</string>
+
+    <string name="welcome">Welcome!</string>
+    <string name="got_it">GOT IT</string>
+    <string name="sharing_instructions">
+        To start sharing your Pokemon findings with the rest of the community,
+        simply click this journal button.
+    </string>
 </resources>

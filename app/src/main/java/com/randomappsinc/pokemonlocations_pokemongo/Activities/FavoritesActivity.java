@@ -41,4 +41,10 @@ public class FavoritesActivity extends StandardActivity {
         intent.putExtra(PokeLocation.KEY, place);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.syncWithDb();
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="add_pokemon_listing">Add Pokemon Listing</string>
+    <string name="report_pokemon_finding">Report Pokemon Finding</string>
     <string name="location_hint">Where does it show up?</string>
     <string name="frequency_hint">How rare is it here?</string>
 

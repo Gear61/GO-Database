@@ -11,13 +11,19 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.AddPokemonRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -37,18 +43,26 @@ public class AddListingActivity extends StandardActivity {
 
     private int currentFrequencyIndex;
     private PokeLocation location;
+    private MaterialDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_listing);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         currentFrequencyIndex = -1;
         pokemonInput.setAdapter(new PokemonACAdapter(this, R.layout.pokemon_ac_item, new ArrayList<String>()));
         pokemonInput.requestFocus();
         UIUtils.showKeyboard(this);
+
+        progressDialog = new MaterialDialog.Builder(this)
+                .content(R.string.submitting_finding)
+                .progress(true, 0)
+                .cancelable(false)
+                .build();
     }
 
     @OnTextChanged(value = R.id.pokemon_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -116,16 +130,33 @@ public class AddListingActivity extends StandardActivity {
                 .show();
     }
 
+    @Subscribe
+    public void onEvent(String event) {
+        switch (event) {
+            case AddPokemonCallback.ADD_POKEMON_SUCCESS:
+                pokemonInput.setText("");
+                frequencyInput.setText("");
+                currentFrequencyIndex = -1;
+                progressDialog.dismiss();
+                UIUtils.showSnackbar(parent, getString(R.string.share_pokemon_success));
+                break;
+            case AddPokemonCallback.ADD_POKEMON_FAILURE:
+                progressDialog.dismiss();
+                UIUtils.showSnackbar(parent, getString(R.string.add_pokemon_fail));
+                break;
+        }
+    }
+
     @OnClick(R.id.add_pokemon_listing)
     public void addListing() {
         UIUtils.hideKeyboard(this);
 
         String pokemonName = pokemonInput.getText().toString();
-        String frequency = frequencyInput.getText().toString();
+        String frequencyText = frequencyInput.getText().toString();
 
         if (!PokemonServer.get().isValidPokemon(pokemonName)) {
             UIUtils.showSnackbar(parent, getString(R.string.invalid_pokemon));
-        } else if (frequency.isEmpty()) {
+        } else if (frequencyText.isEmpty()) {
             UIUtils.showSnackbar(parent, getString(R.string.no_frequency));
         } else if (location.getPlaceId() == null) {
             UIUtils.showSnackbar(parent, getString(R.string.no_place));
@@ -136,22 +167,22 @@ public class AddListingActivity extends StandardActivity {
                         pokemonName, location.getDisplayName());
                 UIUtils.showSnackbar(parent, dupeMessage);
             } else {
-                PokeFindingDO pokeFindingDO = new PokeFindingDO();
-                pokeFindingDO.setPokemonId(pokemonId);
-                pokeFindingDO.setPlaceId(location.getPlaceId());
-                pokeFindingDO.setLocationName(location.getDisplayName());
-                pokeFindingDO.setFrequency(frequency);
-                DatabaseManager.get().addPokeFinding(pokeFindingDO);
+                float frequencyValue = PokemonUtils.getFrequency(currentFrequencyIndex);
 
-                ArrayList<Integer> commonPokemon = new ArrayList<>();
-                commonPokemon.add(pokemonId);
-                location.setCommonPokemon(commonPokemon);
-                location.setUncommonPokemon(commonPokemon);
-                location.setRarePokemon(commonPokemon);
-                DatabaseManager.get().addOrUpdateLocation(location);
-
-                UIUtils.showSnackbar(parent, getString(R.string.share_success));
+                progressDialog.show();
+                AddPokemonRequest addPokemonRequest = new AddPokemonRequest();
+                addPokemonRequest.setLocation(location);
+                addPokemonRequest.addPokemon(pokemonId, frequencyValue);
+                RestClient.get().getPokemonService()
+                        .addPokemon(addPokemonRequest)
+                        .enqueue(new AddPokemonCallback(pokemonId, location, frequencyText));
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

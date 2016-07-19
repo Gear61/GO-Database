@@ -23,11 +23,11 @@ public class PokeLocation implements Parcelable {
     @Expose
     private String placeId;
 
-    @SerializedName("display_name")
+    @SerializedName("display_main")
     @Expose
     private String displayName;
 
-    @SerializedName("address")
+    @SerializedName("display_secondary")
     @Expose
     private String address;
 

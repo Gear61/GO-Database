@@ -3,6 +3,8 @@ package com.randomappsinc.pokemonlocations_pokemongo.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO;
 
@@ -17,12 +19,28 @@ import io.realm.RealmList;
 public class PokeLocation implements Parcelable {
     public static final String KEY = "pokeLocation";
 
+    @SerializedName("place_id")
+    @Expose
     private String placeId;
+
+    @SerializedName("display_name")
+    @Expose
     private String displayName;
+
+    @SerializedName("address")
+    @Expose
     private String address;
+
     private int score;
+
+    @SerializedName("lat")
+    @Expose
     private double latitude;
+
+    @SerializedName("long")
+    @Expose
     private double longitude;
+
     private List<Integer> commonPokemon;
     private List<Integer> uncommonPokemon;
     private List<Integer> rarePokemon;

@@ -38,7 +38,7 @@ public class PokemonServer {
             int currentIndex = 1;
             while ((pokemon = reader.readLine()) != null) {
                 pokemonList.add(pokemon);
-                nameToIdMappings.put(pokemon, currentIndex);
+                nameToIdMappings.put(pokemon.toLowerCase(), currentIndex);
                 idToNameMappings.put(currentIndex, pokemon);
                 currentIndex++;
             }
@@ -67,7 +67,7 @@ public class PokemonServer {
     }
 
     public int getPokemonId(String pokemonName) {
-        return nameToIdMappings.get(pokemonName);
+        return nameToIdMappings.get(pokemonName.toLowerCase());
     }
 
     public String getPokemonName(int id) {

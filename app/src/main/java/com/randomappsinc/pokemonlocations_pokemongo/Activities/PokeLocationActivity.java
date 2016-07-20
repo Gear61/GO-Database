@@ -11,14 +11,20 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.AddPokemonRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokeLocationViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,6 +53,7 @@ public class PokeLocationActivity extends StandardActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pokelocation);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         place = getIntent().getParcelableExtra(PokeLocation.KEY);
@@ -85,13 +92,15 @@ public class PokeLocationActivity extends StandardActivity {
         return place;
     }
 
-    public void submitPokefinding(Pokemon pokemon, String frequency) {
-        PokeFindingDO pokeFindingDO = new PokeFindingDO();
-        pokeFindingDO.setPokemonId(pokemon.getId());
-        pokeFindingDO.setPlaceId(place.getPlaceId());
-        pokeFindingDO.setFrequency(frequency);
-        pokeFindingDO.setLocationName(place.getDisplayName());
-        DatabaseManager.get().addPokeFinding(pokeFindingDO);
+    public void submitPokefinding(Pokemon pokemon, int frequencyIndex, String frequency) {
+        progressDialog.show();
+        float frequencyScore = PokemonUtils.getFrequency(frequencyIndex);
+        AddPokemonRequest addPokemonRequest = new AddPokemonRequest();
+        addPokemonRequest.setLocation(place);
+        addPokemonRequest.addPokemon(pokemon.getId(), frequencyScore);
+        RestClient.get().getPokemonService()
+                .addPokemon(addPokemonRequest)
+                .enqueue(new AddPokemonCallback(pokemon.getId(), place, frequency));
     }
 
     @OnClick(R.id.start_navigation)
@@ -101,6 +110,26 @@ public class PokeLocationActivity extends StandardActivity {
             startActivity(Intent.createChooser(
                     new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
                     getString(R.string.navigate_with)));
+    }
+
+    @Subscribe
+    public void onEvent(String event) {
+        switch (event) {
+            case AddPokemonCallback.ADD_POKEMON_SUCCESS:
+                progressDialog.dismiss();
+                UIUtils.showSnackbar(parent, getString(R.string.share_pokemon_success));
+                break;
+            case AddPokemonCallback.ADD_POKEMON_FAILURE:
+                progressDialog.dismiss();
+                UIUtils.showSnackbar(parent, getString(R.string.add_pokemon_fail));
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

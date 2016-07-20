@@ -114,10 +114,6 @@ public class AddListingActivity extends StandardActivity {
             location.setLongitude(place.getLatLng().longitude);
             String locationDisplay = place.getName() + "\n" + place.getAddress().toString();
             locationInput.setText(locationDisplay);
-
-            System.out.println(place.getId() + " || " + place.getName().toString() + " || " +
-            place.getAddress().toString() + " || " + place.getLatLng().latitude + " || " +
-            place.getLatLng().longitude);
         } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             UIUtils.showSnackbar(parent, getString(R.string.google_locations_down));
         }
@@ -171,10 +167,10 @@ public class AddListingActivity extends StandardActivity {
 
         if (!PokemonServer.get().isValidPokemon(pokemonName)) {
             UIUtils.showSnackbar(parent, getString(R.string.invalid_pokemon));
-        } else if (frequencyText.isEmpty()) {
-            UIUtils.showSnackbar(parent, getString(R.string.no_frequency));
         } else if (location.getPlaceId() == null) {
             UIUtils.showSnackbar(parent, getString(R.string.no_place));
+        } else if (frequencyText.isEmpty()) {
+                UIUtils.showSnackbar(parent, getString(R.string.no_frequency));
         } else {
             int pokemonId = PokemonServer.get().getPokemonId(pokemonName);
             if (DatabaseManager.get().getFinding(pokemonId, location) != null) {

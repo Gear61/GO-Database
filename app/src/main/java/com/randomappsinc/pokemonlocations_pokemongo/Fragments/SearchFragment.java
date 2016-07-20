@@ -199,6 +199,12 @@ public class SearchFragment extends Fragment {
         getActivity().startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
     @Subscribe
     public void onEvent(List<PokeLocation> results) {
         progressDialog.dismiss();

@@ -91,6 +91,7 @@ public class AddListingActivity extends StandardActivity {
                     .IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
                     .setFilter(establishmentFilter)
                     .build(this);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivityForResult(intent, 1);
         } catch (Exception e) {
             UIUtils.showSnackbar(parent, getString(R.string.google_locations_down));

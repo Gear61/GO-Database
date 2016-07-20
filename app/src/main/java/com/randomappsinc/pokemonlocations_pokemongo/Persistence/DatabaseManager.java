@@ -73,7 +73,6 @@ public class DatabaseManager {
             // Neutral to upvote
             case 0:
                 movement = 1;
-                place.setScore(place.getScore() + 1);
                 voteDO.setVote(1);
                 break;
             // Downvote to upvote

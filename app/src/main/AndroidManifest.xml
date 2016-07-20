@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Geo API KEY for dev: AIzaSyAayt8MJ1l7lStd9ljhgB97xWc5zxI7a50 -->
+        <!-- Geo API KEY for DEV: AIzaSyAayt8MJ1l7lStd9ljhgB97xWc5zxI7a50 -->
+        <!-- Geo API KEY for LIVE: AIzaSyA36FVfMeSU3NHzJX7aVcz-6M7M4bBemB8 -->
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

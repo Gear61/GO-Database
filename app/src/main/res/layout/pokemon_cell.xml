@@ -2,7 +2,8 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pokemon_parent"
-    android:background="@color/white"
+    android:background="@drawable/pokemon_cell_background"
+    android:padding="3dp"
     android:layout_width="85dp"
     android:layout_height="85dp"
     android:layout_marginLeft="5dp"
@@ -16,8 +17,6 @@
     <com.joanzapata.iconify.widget.IconTextView
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginRight="2dp"
         android:text="@string/journal_icon"
         android:textColor="@color/white"
         android:textSize="18dp"

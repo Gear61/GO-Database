@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by alexanderchiou on 7/19/16.
  */
-public class SearchResults {
+public class LocationsResult {
     @SerializedName("locations")
     @Expose
     private List<PokeLocation> locations = new ArrayList<>();

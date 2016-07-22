@@ -193,6 +193,15 @@ public class DatabaseManager {
         });
     }
 
+    public List<String> getFavoriteIds() {
+        List<String> placeIds = new ArrayList<>();
+        List<PokeLocationDO> favorites = realm.where(PokeLocationDO.class).findAll();
+        for (PokeLocationDO locationDO : favorites) {
+            placeIds.add(locationDO.getPlaceId());
+        }
+        return placeIds;
+    }
+
     // Pokemon Findings
     public List<PokeFindingDO> getFindings () {
         return realm.where(PokeFindingDO.class).findAll();

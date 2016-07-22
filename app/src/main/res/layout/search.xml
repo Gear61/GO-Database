@@ -20,6 +20,7 @@
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:imeOptions="actionSearch"
+            android:completionThreshold="1"
             style="@style/text_input"/>
 
         <com.joanzapata.iconify.widget.IconTextView

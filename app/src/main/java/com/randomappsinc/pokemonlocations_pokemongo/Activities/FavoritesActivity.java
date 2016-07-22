@@ -5,9 +5,18 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.FavoritesCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncFavoritesRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.FavoritesAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,6 +37,7 @@ public class FavoritesActivity extends StandardActivity {
         setContentView(R.layout.regular_listview);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        EventBus.getDefault().register(this);
 
         noContent.setText(R.string.no_favorites);
         adapter = new FavoritesAdapter(this, noContent);
@@ -46,5 +56,27 @@ public class FavoritesActivity extends StandardActivity {
     protected void onResume() {
         super.onResume();
         adapter.syncWithDb();
+
+        List<String> favoriteIds = DatabaseManager.get().getFavoriteIds();
+        if (!favoriteIds.isEmpty()) {
+            SyncFavoritesRequest request = new SyncFavoritesRequest();
+            request.setPlaceIds(favoriteIds);
+            RestClient.get().getPokemonService()
+                    .syncFavorites(request)
+                    .enqueue(new FavoritesCallback());
+        }
+    }
+
+    @Subscribe
+    public void onEvent(String event) {
+        if (event.equals(FavoritesCallback.FAVORITES_UPDATED)) {
+            adapter.syncWithDb();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -69,8 +69,9 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             pokemon.setId(pokemonList.get(position));
             pokemon.setName(PokemonServer.get().getPokemonName(pokemonList.get(position)));
 
-            String imageUrl = PokemonUtils.getPokemonUrl(pokemon.getName());
-            Picasso.with(context).load(imageUrl).into(pokemonPicture);
+            Picasso.with(context)
+                    .load(PokemonUtils.getPokemonIcon(pokemon.getId()))
+                    .into(pokemonPicture);
         }
 
         @OnClick(R.id.pokemon_parent)

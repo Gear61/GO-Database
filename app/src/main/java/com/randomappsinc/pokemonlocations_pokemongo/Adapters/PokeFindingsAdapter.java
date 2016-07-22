@@ -70,9 +70,8 @@ public class PokeFindingsAdapter extends BaseAdapter {
 
         @SuppressWarnings("deprecation")
         public void loadItem(PokeFindingDO pokeFindingDO) {
-            String pokemonName = PokemonServer.get().getPokemonName(pokeFindingDO.getPokemonId());
             Picasso.with(context)
-                    .load(PokemonUtils.getPokemonUrl(pokemonName))
+                    .load(PokemonUtils.getPokemonIcon(pokeFindingDO.getPokemonId()))
                     .into(pokemonPicture);
             findingInfo.setText(PokemonUtils.getFindingInfo(pokeFindingDO));
         }

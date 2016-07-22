@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pokemon Locator</string>
+    <string name="app_name">Poke Locator</string>
     <string name="choose">Choose</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

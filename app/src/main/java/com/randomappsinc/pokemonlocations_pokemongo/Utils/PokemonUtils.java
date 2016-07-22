@@ -10,6 +10,9 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocat
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +20,29 @@ import java.util.List;
  * Created by alexanderchiou on 7/17/16.
  */
 public class PokemonUtils {
-    public static String getPokemonUrl(String pokemonName) {
-        String url = "https://img.pokemondb.net/artwork/%s.jpg";
-        if (pokemonName.equals("Nidoran♀")) {
-            pokemonName = "nidoran-f";
+    public static File getPokemonIcon(int pokemonId) {
+        Context context = MyApplication.getAppContext();
+        File file = new File(context.getFilesDir() +  "/" + String.valueOf(pokemonId) + ".png");
+        FileOutputStream fos = null;
+        try {
+            InputStream fileStream = MyApplication.getAppContext().getAssets()
+                    .open("icons/" + String.valueOf(pokemonId) + ".png");
+            byte[] data = new byte[2048];
+            int nbread;
+            fos = new FileOutputStream(file);
+            while((nbread = fileStream.read(data)) > -1) {
+                fos.write(data, 0, nbread);
+            }
         }
-        if (pokemonName.equals("Nidoran♂")) {
-            pokemonName = "nidoran-m";
+        catch (Exception ignored) {}
+        finally {
+            if (fos != null){
+                try {
+                    fos.close();
+                } catch (Exception ignored) {}
+            }
         }
-        return String.format(url, pokemonName.toLowerCase());
+        return file;
     }
 
     public static float getFrequency(int index) {

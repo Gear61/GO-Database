@@ -45,8 +45,9 @@ public class PokemonACAdapter extends ArrayAdapter<String> {
         public void loadPokemon(int position) {
             if (position < suggestions.size()) {
                 String pokemonText = suggestions.get(position);
+                int pokemonId = PokemonServer.get().getPokemonId(pokemonText);
                 Picasso.with(context)
-                        .load(PokemonUtils.getPokemonUrl(pokemonText))
+                        .load(PokemonUtils.getPokemonIcon(pokemonId))
                         .into(pokemonIcon);
                 pokemonName.setText(pokemonText);
             }

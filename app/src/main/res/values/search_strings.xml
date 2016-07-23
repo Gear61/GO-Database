@@ -8,10 +8,13 @@
 
     <string name="start_searching">
         Type in the name of the Pokemon you want
-        and hit the {ion-android-search} on your keyboard to start searching!
+        and hit the {ion-android-search} to start searching!
     </string>
 
     <string name="search_fail">We failed to find Pokemon for you. Please try again later.</string>
-    <string name="no_results">No search results to display.</string>
+    <string name="no_results">
+        It looks like we don\'t have any data on that Pokemon in your area. {ion-sad-outline}\n\n
+        Click the {ion-ios-bookmarks} to start changing that!
+    </string>
     <string name="invalid_pokemon">Please enter in a valid Pokemon name.</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,28 +11,45 @@
     android:padding="10dp">
 
     <FrameLayout
-        android:id="@+id/search_term_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/search"
+            android:layout_gravity="end|center_vertical"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            card_view:contentPadding="5dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardBackgroundColor="@color/app_red"
+            card_view:cardCornerRadius="3dp"
+            card_view:cardElevation="2dp">
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v7.widget.CardView>
 
         <AutoCompleteTextView
             android:id="@+id/search_input"
             android:hint="@string/pokemon_name"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:imeOptions="actionSearch"
             android:completionThreshold="1"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="40dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="18dp"
+            android:layout_marginRight="55dp"
+            android:layout_height="44dp"
+            android:imeOptions="actionSearch"
             style="@style/text_input"/>
 
         <com.joanzapata.iconify.widget.IconTextView
-            android:text="@string/search_icon"
-            style="@style/input_icon"/>
-
-        <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/clear_search"
-            android:text="@string/clear_icon"
-            android:layout_gravity="center_vertical|end"
-            style="@style/input_icon"/>
+            android:layout_marginRight="55dp"
+            style="@style/clear_icon" />
     </FrameLayout>
 
     <com.joanzapata.iconify.widget.IconTextView

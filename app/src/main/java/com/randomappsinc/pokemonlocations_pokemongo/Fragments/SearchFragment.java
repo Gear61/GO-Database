@@ -14,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SearchCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SearchRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
@@ -54,6 +57,7 @@ public class SearchFragment extends Fragment {
     @Bind(R.id.search_input) AutoCompleteTextView searchInput;
     @Bind(R.id.search_results) ListView searchResults;
     @Bind(R.id.no_results) TextView noResults;
+    @Bind(R.id.search_icon) ImageView searchIcon;
 
     private MaterialDialog progressDialog;
     private boolean locationFetched;
@@ -70,6 +74,10 @@ public class SearchFragment extends Fragment {
         searchInput.setAdapter(new PokemonACAdapter(getActivity(), R.layout.pokemon_ac_item, new ArrayList<String>()));
         adapter = new SearchAdapter(getActivity(), noResults);
         searchResults.setAdapter(adapter);
+
+        searchIcon.setImageDrawable(
+                new IconDrawable(getActivity(), IoniconsIcons.ion_android_search)
+                        .colorRes(R.color.white));
 
         locationChecker = new Handler();
         locationCheckTask = new Runnable() {
@@ -98,19 +106,28 @@ public class SearchFragment extends Fragment {
     @OnEditorAction(R.id.search_input)
     public boolean onKeyPress(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            UIUtils.hideKeyboard(getActivity());
-            if (PokemonServer.get().isValidPokemon(searchInput.getText().toString())) {
-                if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    doSearch();
-                } else {
-                    askForLocation();
-                }
-            } else {
-                showSnackbar(getString(R.string.invalid_pokemon));
-            }
+            fullSearch();
             return true;
         }
         return false;
+    }
+
+    @OnClick(R.id.search)
+    public void onSearchClick() {
+        fullSearch();
+    }
+
+    private void fullSearch() {
+        UIUtils.hideKeyboard(getActivity());
+        if (PokemonServer.get().isValidPokemon(searchInput.getText().toString())) {
+            if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                doSearch();
+            } else {
+                askForLocation();
+            }
+        } else {
+            showSnackbar(getString(R.string.invalid_pokemon));
+        }
     }
 
     private void askForLocation() {

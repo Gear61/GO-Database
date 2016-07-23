@@ -23,28 +23,7 @@ public class AddPokemonRequest {
         this.location = location;
     }
 
-    public void addPokemon(int pokemonId, float frequency) {
-        PokemonPosting posting = new PokemonPosting();
-        posting.setPokemonId(pokemonId);
-        posting.setRarity(frequency);
+    public void addPokemonPosting(PokemonPosting posting) {
         pokemon.add(posting);
-    }
-
-    public class PokemonPosting {
-        @SerializedName("pokemon_id")
-        @Expose
-        private int pokemonId;
-
-        @SerializedName("rarity")
-        @Expose
-        private float rarity;
-
-        public void setPokemonId(int pokemonId) {
-            this.pokemonId = pokemonId;
-        }
-
-        public void setRarity(float rarity) {
-            this.rarity = rarity;
-        }
     }
 }

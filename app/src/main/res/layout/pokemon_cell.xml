@@ -15,6 +15,7 @@
         android:layout_height="match_parent"/>
 
     <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/poke_icon"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:text="@string/journal_icon"

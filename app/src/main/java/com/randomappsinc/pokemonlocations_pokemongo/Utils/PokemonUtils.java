@@ -60,8 +60,19 @@ public class PokemonUtils {
         }
     }
 
-    public static String getFrequency() {
-        return "";
+    public static String getFrequency(float score) {
+        Context context = MyApplication.getAppContext();
+        if (score == 3F) {
+            return context.getString(R.string.common);
+        } else if (score == 2F) {
+            return context.getString(R.string.uncommon);
+        } else if (score == 1F) {
+            return context.getString(R.string.rare);
+        } else if (score == -0.5F) {
+            return context.getString(R.string.non_existent);
+        } else {
+            return context.getString(R.string.common);
+        }
     }
 
     public static PokeLocation getLocationFromDO(PokeLocationDO locationDO) {

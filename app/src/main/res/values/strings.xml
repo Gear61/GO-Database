@@ -41,4 +41,7 @@
         To start sharing your Pokemon findings with the rest of the community,
         simply click the journal button.
     </string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

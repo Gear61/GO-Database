@@ -40,6 +40,11 @@
         You have successfully shared your Pokemon Finding(s) with the community. Thank you!
     </string>
 
+    <string name="delete_title">Confirm Pokemon Deletion</string>
+    <string name="delete_pokemon_confirmation">
+        Are you sure you want to delete %1$s from your Findings list?
+    </string>
+
     <!-- Icons -->
     <string name="time_icon">{ion-android-time}</string>
 </resources>

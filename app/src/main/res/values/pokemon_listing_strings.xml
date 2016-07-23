@@ -3,19 +3,20 @@
     <string name="report_pokemon_finding">Report Pokemon Finding</string>
     <string name="location_hint">Where do these Pokemon appear?</string>
     <string name="frequency_hint">How rare is it here?</string>
+    <string name="pokemon_form">Pokemon Form</string>
 
     <string name="common">Common</string>
     <string name="uncommon">Uncommon</string>
     <string name="rare">Rare</string>
 
-    <string name="frequency_title">Frequency (Wait Time)</string>
-    <string name="common_option">Common (5&#8211;15 minutes)</string>
-    <string name="uncommon_option">Uncommon (30&#8211;45 minutes)</string>
+    <string name="frequency_title"><u>Frequency (Wait Time)</u></string>
+    <string name="common_option">Common (5&#8211;15 min.)</string>
+    <string name="uncommon_option">Uncommon (30&#8211;45 min.)</string>
     <string name="rare_option">Rare (1 hour+)</string>
     <string-array name="frequency_options">
-        <item>@string/common</item>
-        <item>@string/uncommon</item>
-        <item>@string/rare</item>
+        <item>@string/common_option</item>
+        <item>@string/uncommon_option</item>
+        <item>@string/rare_option</item>
     </string-array>
 
     <string name="non_existent">Non-existent</string>
@@ -31,7 +32,7 @@
     <!-- Error messages -->
     <string name="no_place">Please tell us where this Pokemon shows up.</string>
     <string name="no_frequency">Please tell us how rare this Pokemon is here.</string>
-    <string name="already_submitted">You have already reported on %1$s at %2$s.</string>
+    <string name="already_attached">You have already attached %1$s to this report.</string>
     <string name="add_pokemon_fail">We failed to process your Pokemon Finding. Please try again later.</string>
 
     <string name="add_finding_question">How rare do you think %1$s is at %2$s?</string>
@@ -42,7 +43,7 @@
 
     <string name="delete_title">Confirm Pokemon Deletion</string>
     <string name="delete_pokemon_confirmation">
-        Are you sure you want to delete %1$s from your Findings list?
+        Are you sure you want to delete %1$s from your report?
     </string>
 
     <!-- Icons -->

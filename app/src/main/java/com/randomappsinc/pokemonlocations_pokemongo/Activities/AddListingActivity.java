@@ -3,10 +3,12 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
@@ -16,6 +18,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.AddPokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.PokemonFormViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
@@ -38,7 +41,9 @@ public class AddListingActivity extends StandardActivity {
 
     private PokeLocation location;
     private MaterialDialog progressDialog;
+    private MaterialDialog pokeFormDialog;
     private AddPokemonAdapter addPokemonAdapter;
+    private PokemonFormViewHolder pokemonFormHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +61,37 @@ public class AddListingActivity extends StandardActivity {
                 .cancelable(false)
                 .build();
 
+        pokeFormDialog = new MaterialDialog.Builder(this)
+                .title(R.string.pokemon_form)
+                .customView(R.layout.pokemon_form, true)
+                .cancelable(false)
+                .positiveText(R.string.add)
+                .negativeText(android.R.string.no)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        PokemonPosting posting = pokemonFormHolder.getPosting();
+                        addPokemonAdapter.addPokemonPosting(posting);
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        pokemonFormHolder.clearForm();
+                    }
+                })
+                .build();
+        View addButton = pokeFormDialog.getActionButton(DialogAction.POSITIVE);
+        pokemonFormHolder = new PokemonFormViewHolder(this, pokeFormDialog.getCustomView(), addButton);
+
         addPokemonAdapter = new AddPokemonAdapter(this);
         pokemonToAdd.setAdapter(addPokemonAdapter);
+    }
+
+    @OnClick(R.id.add_pokemon)
+    public void addPokemon() {
+        pokemonFormHolder.setAlreadyChosen(addPokemonAdapter.getAlreadyAdded());
+        pokeFormDialog.show();
     }
 
     @OnClick(R.id.location_input)

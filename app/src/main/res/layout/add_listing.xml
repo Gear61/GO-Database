@@ -55,6 +55,8 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pokemon_to_add"
+                    android:visibility="visible"
+                    android:layout_marginTop="0dp"
                     style="@style/pokemon_gallery_style"/>
             </LinearLayout>
 

@@ -31,6 +31,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/frequency_title"
         android:textColor="@color/dark_gray"
         android:textSize="18sp"
@@ -38,8 +39,17 @@
 
     <Spinner
         android:id="@+id/frequency_input"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawSelectorOnTop="true"
-        android:entries="@array/frequency_options"/>
+        android:layout_marginTop="5dp"
+        android:drawSelectorOnTop="true"/>
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/app_red"
+        android:textSize="18sp"
+        android:visibility="gone"/>
 </LinearLayout>

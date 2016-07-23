@@ -56,7 +56,7 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
     public Set<String> getAlreadyAdded() {
         Set<String> alreadyAdded = new HashSet<>();
         for (PokemonPosting posting : postings) {
-            alreadyAdded.add(PokemonServer.get().getPokemonName(posting.getPokemonId()));
+            alreadyAdded.add(PokemonServer.get().getPokemonName(posting.getPokemonId()).toLowerCase());
         }
         return alreadyAdded;
     }
@@ -96,7 +96,7 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
                     .load(PokemonUtils.getPokemonIcon(posting.getPokemonId()))
                     .into(pokemonPicture);
             String rarity = PokemonUtils.getFrequency(posting.getRarity());
-            rarityIcon.setText(rarity.charAt(0));
+            rarityIcon.setText(rarity.subSequence(0, 1));
         }
 
         @OnClick(R.id.pokemon_parent)

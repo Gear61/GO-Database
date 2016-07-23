@@ -13,6 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.AddPokemonRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokeLocationViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
@@ -25,6 +26,9 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,15 +96,18 @@ public class PokeLocationActivity extends StandardActivity {
         return place;
     }
 
-    public void submitPokefinding(Pokemon pokemon, int frequencyIndex, String frequency) {
+    public void submitPokefinding(Pokemon pokemon, int frequencyIndex) {
         progressDialog.show();
         float frequencyScore = PokemonUtils.getFrequency(frequencyIndex);
         AddPokemonRequest addPokemonRequest = new AddPokemonRequest();
         addPokemonRequest.setLocation(place);
-        addPokemonRequest.addPokemon(pokemon.getId(), frequencyScore);
+        List<PokemonPosting> postings = new ArrayList<>();
+        PokemonPosting posting = new PokemonPosting();
+        posting.setPokemonId(pokemon.getId());
+        posting.setRarity(frequencyScore);
         RestClient.get().getPokemonService()
                 .addPokemon(addPokemonRequest)
-                .enqueue(new AddPokemonCallback(pokemon.getId(), place, frequency));
+                .enqueue(new AddPokemonCallback(place, postings));
     }
 
     @OnClick(R.id.start_navigation)

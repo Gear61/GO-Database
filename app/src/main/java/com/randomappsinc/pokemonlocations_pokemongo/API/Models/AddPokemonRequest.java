@@ -17,13 +17,13 @@ public class AddPokemonRequest {
 
     @SerializedName("pokemon_data")
     @Expose
-    private List<PokemonPosting> pokemon = new ArrayList<>();
+    private List<PokemonPosting> pokemon;
 
     public void setLocation(PokeLocation location) {
         this.location = location;
     }
 
-    public void addPokemonPosting(PokemonPosting posting) {
-        pokemon.add(posting);
+    public void setPostings(List<PokemonPosting> postings) {
+        this.pokemon = postings;
     }
 }

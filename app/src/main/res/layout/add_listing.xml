@@ -52,6 +52,10 @@
                         android:textColor="@color/gray"
                         style="@style/add_pokemon_title"/>
                 </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/pokemon_to_add"
+                    style="@style/pokemon_gallery_style"/>
             </LinearLayout>
 
             <TextView

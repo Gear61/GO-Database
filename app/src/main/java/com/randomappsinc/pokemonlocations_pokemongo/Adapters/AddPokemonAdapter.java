@@ -18,7 +18,9 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -49,6 +51,14 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
 
     public List<PokemonPosting> getPostings() {
         return postings;
+    }
+
+    public Set<String> getAlreadyAdded() {
+        Set<String> alreadyAdded = new HashSet<>();
+        for (PokemonPosting posting : postings) {
+            alreadyAdded.add(PokemonServer.get().getPokemonName(posting.getPokemonId()));
+        }
+        return alreadyAdded;
     }
 
     @Override

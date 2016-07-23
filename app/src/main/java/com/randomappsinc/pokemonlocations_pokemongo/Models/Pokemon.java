@@ -6,6 +6,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.Models;
 public class Pokemon {
     private int id;
     private String name;
+    private float frequency;
 
     public int getId() {
         return id;
@@ -21,5 +22,13 @@ public class Pokemon {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public float getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(float frequency) {
+        this.frequency = frequency;
     }
 }

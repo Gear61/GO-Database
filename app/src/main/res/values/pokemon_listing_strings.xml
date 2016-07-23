@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="report_pokemon_finding">Report Pokemon Finding</string>
-    <string name="location_hint">Where does it show up?</string>
+    <string name="location_hint">Where do these Pokemon appear?</string>
     <string name="frequency_hint">How rare is it here?</string>
 
-    <string name="how_often_hint">How rare is this Pokemon here?</string>
     <string name="common">Common</string>
     <string name="uncommon">Uncommon</string>
     <string name="rare">Rare</string>
-    <string name="frequency_title">Frequency Options</string>
+
+    <string name="frequency_title">Frequency (Wait Time)</string>
+    <string name="common_option">Common (5&#8211;15 minutes)</string>
+    <string name="uncommon_option">Uncommon (30&#8211;45 minutes)</string>
+    <string name="rare_option">Rare (1 hour+)</string>
     <string-array name="frequency_options">
         <item>@string/common</item>
         <item>@string/uncommon</item>
@@ -23,18 +26,18 @@
         <item>@string/non_existent</item>
     </string-array>
 
-    <string name="submitting_finding">Submitting Pokemon Finding&#8230;</string>
+    <string name="submitting_finding">Submitting Pokemon Finding(s)&#8230;</string>
 
     <!-- Error messages -->
     <string name="no_place">Please tell us where this Pokemon shows up.</string>
     <string name="no_frequency">Please tell us how rare this Pokemon is here.</string>
-    <string name="already_submitted">You have already shared your opinion on %1$s at %2$s with the community.</string>
+    <string name="already_submitted">You have already reported on %1$s at %2$s.</string>
     <string name="add_pokemon_fail">We failed to process your Pokemon Finding. Please try again later.</string>
 
     <string name="add_finding_question">How rare do you think %1$s is at %2$s?</string>
 
     <string name="share_pokemon_success">
-        You have successfully shared your Pokemon Finding with the community. Thank you!
+        You have successfully shared your Pokemon Finding(s) with the community. Thank you!
     </string>
 
     <!-- Icons -->

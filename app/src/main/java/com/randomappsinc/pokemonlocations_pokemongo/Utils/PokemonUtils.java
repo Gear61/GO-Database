@@ -60,6 +60,10 @@ public class PokemonUtils {
         }
     }
 
+    public static String getFrequency() {
+        return "";
+    }
+
     public static PokeLocation getLocationFromDO(PokeLocationDO locationDO) {
         PokeLocation location = new PokeLocation();
 

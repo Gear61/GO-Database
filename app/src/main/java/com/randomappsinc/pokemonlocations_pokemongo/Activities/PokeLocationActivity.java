@@ -101,10 +101,14 @@ public class PokeLocationActivity extends StandardActivity {
         float frequencyScore = PokemonUtils.getFrequency(frequencyIndex);
         AddPokemonRequest addPokemonRequest = new AddPokemonRequest();
         addPokemonRequest.setLocation(place);
+
         List<PokemonPosting> postings = new ArrayList<>();
         PokemonPosting posting = new PokemonPosting();
         posting.setPokemonId(pokemon.getId());
         posting.setRarity(frequencyScore);
+        postings.add(posting);
+        addPokemonRequest.setPostings(postings);
+
         RestClient.get().getPokemonService()
                 .addPokemon(addPokemonRequest)
                 .enqueue(new AddPokemonCallback(place, postings));

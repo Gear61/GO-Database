@@ -3,9 +3,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.API.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,13 +23,6 @@ public class AddPokemonRequest {
     }
 
     public void setPostings(List<PokemonPosting> postings) {
-        pokemonToAdd = new ArrayList<>();
-
-        // Strip away postings the user has already submitted
-        for (PokemonPosting posting : postings) {
-            if (DatabaseManager.get().getFinding(posting.getPokemonId(), location) == null) {
-                pokemonToAdd.add(posting);
-            }
-        }
+        this.pokemonToAdd = postings;
     }
 }

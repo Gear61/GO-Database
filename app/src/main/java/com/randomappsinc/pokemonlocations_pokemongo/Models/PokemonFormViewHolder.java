@@ -53,7 +53,6 @@ public class PokemonFormViewHolder {
         posting.setPokemonId(PokemonServer.get().getPokemonId(pokemonInput.getText().toString()));
         String choice = frequencyChoice.getSelectedItem().toString();
         posting.setRarity(PokemonUtils.getFrequency(choice));
-        clearForm();
         return posting;
     }
 
@@ -65,7 +64,6 @@ public class PokemonFormViewHolder {
         pokemonInput.setText("");
         frequencyChoice.setSelection(0);
         error.setVisibility(View.GONE);
-        addButton.setEnabled(true);
     }
 
     @OnClick(R.id.clear_pokemon)

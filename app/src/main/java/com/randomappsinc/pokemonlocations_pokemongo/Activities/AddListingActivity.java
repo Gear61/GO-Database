@@ -72,12 +72,7 @@ public class AddListingActivity extends StandardActivity {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         PokemonPosting posting = pokemonFormHolder.getPosting();
                         addPokemonAdapter.addPokemonPosting(posting);
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        pokemonFormHolder.clearForm();
+                        pokemonToAdd.scrollToPosition(addPokemonAdapter.getItemCount() - 1);
                     }
                 })
                 .build();
@@ -91,6 +86,7 @@ public class AddListingActivity extends StandardActivity {
     @OnClick(R.id.add_pokemon)
     public void addPokemon() {
         pokemonFormHolder.setAlreadyChosen(addPokemonAdapter.getAlreadyAdded());
+        pokemonFormHolder.clearForm();
         pokeFormDialog.show();
     }
 
@@ -137,6 +133,9 @@ public class AddListingActivity extends StandardActivity {
     public void onEvent(String event) {
         switch (event) {
             case AddPokemonCallback.ADD_POKEMON_SUCCESS:
+                addPokemonAdapter.clearPostings();
+                location = new PokeLocation();
+                locationInput.setText("");
                 progressDialog.dismiss();
                 UIUtils.showSnackbar(parent, getString(R.string.share_pokemon_success));
                 break;
@@ -151,15 +150,21 @@ public class AddListingActivity extends StandardActivity {
     public void addListing() {
         UIUtils.hideKeyboard(this);
 
-        progressDialog.show();
-        AddPokemonRequest request = new AddPokemonRequest();
-        List<PokemonPosting> postingList = addPokemonAdapter.getPostings();
+        if (addPokemonAdapter.getItemCount() == 0) {
+            UIUtils.showSnackbar(parent, getString(R.string.no_pokemon));
+        } else if (location.getPlaceId() == null) {
+            UIUtils.showSnackbar(parent, getString(R.string.no_place));
+        } else {
+            progressDialog.show();
+            AddPokemonRequest request = new AddPokemonRequest();
+            List<PokemonPosting> postingList = addPokemonAdapter.getPostings(location);
 
-        request.setLocation(location);
-        request.setPostings(postingList);
-        RestClient.get().getPokemonService()
-                .addPokemon(request)
-                .enqueue(new AddPokemonCallback(location, postingList));
+            request.setLocation(location);
+            request.setPostings(postingList);
+            RestClient.get().getPokemonService()
+                    .addPokemon(request)
+                    .enqueue(new AddPokemonCallback(location, postingList));
+        }
     }
 
     @Override

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
@@ -44,13 +46,25 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
         notifyDataSetChanged();
     }
 
+    public void clearPostings() {
+        postings.clear();
+        notifyDataSetChanged();
+    }
+
     public void deletePokemon(int position) {
         postings.remove(position);
         notifyDataSetChanged();
     }
 
-    public List<PokemonPosting> getPostings() {
-        return postings;
+    public List<PokemonPosting> getPostings(PokeLocation location) {
+        List<PokemonPosting> purePostings = new ArrayList<>();
+        // Strip away postings the user has already submitted
+        for (PokemonPosting posting : postings) {
+            if (DatabaseManager.get().getFinding(posting.getPokemonId(), location) == null) {
+                purePostings.add(posting);
+            }
+        }
+        return purePostings;
     }
 
     public Set<String> getAlreadyAdded() {

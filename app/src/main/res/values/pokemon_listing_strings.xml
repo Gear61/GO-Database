@@ -30,8 +30,8 @@
     <string name="submitting_finding">Submitting Pokemon Finding(s)&#8230;</string>
 
     <!-- Error messages -->
-    <string name="no_place">Please tell us where this Pokemon shows up.</string>
-    <string name="no_frequency">Please tell us how rare this Pokemon is here.</string>
+    <string name="no_pokemon">Please attach at least 1 Pokemon to your report.</string>
+    <string name="no_place">Please tell us where these Pokemon appear.</string>
     <string name="already_attached">You have already attached %1$s to this report.</string>
     <string name="add_pokemon_fail">We failed to process your Pokemon Finding. Please try again later.</string>
 

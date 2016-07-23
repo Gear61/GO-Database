@@ -9,7 +9,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
@@ -83,13 +82,8 @@ public class AddListingActivity extends StandardActivity {
     @OnClick(R.id.location_input)
     public void chooseLocation() {
         try {
-            AutocompleteFilter establishmentFilter = new AutocompleteFilter.Builder()
-                    .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ESTABLISHMENT)
-                    .build();
-
             Intent intent = new PlaceAutocomplete
                     .IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                    .setFilter(establishmentFilter)
                     .build(this);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivityForResult(intent, 1);

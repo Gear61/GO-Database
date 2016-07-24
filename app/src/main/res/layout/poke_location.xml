@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/start_navigation"
+            android:layout_alignParentBottom="true"
+            android:text="@string/start_heading_here"
+            style="@style/ripple_button_style"
+            app:rd_style="@style/button_ripple_attributes"/>
+
+        <ScrollView
+            android:layout_above="@+id/start_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/poke_location_cell"/>
+
+                <LinearLayout
+                    android:layout_marginTop="0dp"
+                    style="@style/gallery_title_container">
+
+                    <TextView
+                        android:text="@string/common_title"
+                        style="@style/frequency_title"/>
+
+                    <LinearLayout
+                        android:id="@+id/add_common_pokemon"
+                        android:layout_marginTop="3dp"
+                        style="@style/add_button_container">
+
+                        <com.joanzapata.iconify.widget.IconTextView
+                            style="@style/add_journal_icon"/>
+
+                        <TextView
+                            style="@style/add_text"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/common_pokemon"
+                    style="@style/pokemon_gallery_style"/>
+
+                <LinearLayout style="@style/gallery_title_container">
+                    <TextView
+                        android:text="@string/uncommon_title"
+                        style="@style/frequency_title"/>
+
+                    <LinearLayout
+                        android:id="@+id/add_uncommon_pokemon"
+                        android:layout_marginTop="3dp"
+                        style="@style/add_button_container">
+
+                        <com.joanzapata.iconify.widget.IconTextView
+                            style="@style/add_journal_icon"/>
+
+                        <TextView
+                            style="@style/add_text"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/uncommon_pokemon"
+                    style="@style/pokemon_gallery_style"/>
+
+                <LinearLayout style="@style/gallery_title_container">
+                    <TextView
+                        android:text="@string/rare_title"
+                        style="@style/frequency_title"/>
+
+                    <LinearLayout
+                        android:id="@+id/add_rare_pokemon"
+                        android:layout_marginTop="3dp"
+                        style="@style/add_button_container">
+
+                        <com.joanzapata.iconify.widget.IconTextView
+                            style="@style/add_journal_icon"/>
+
+                        <TextView
+                            style="@style/add_text"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rare_pokemon"
+                    android:layout_marginBottom="10dp"
+                    style="@style/pokemon_gallery_style"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

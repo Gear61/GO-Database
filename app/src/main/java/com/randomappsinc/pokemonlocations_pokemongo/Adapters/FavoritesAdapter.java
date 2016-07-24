@@ -57,7 +57,7 @@ public class FavoritesAdapter extends BaseAdapter {
         PokeLocationViewHolder holder;
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.pokelocation_cell, parent, false);
+            view = vi.inflate(R.layout.poke_location_cell, parent, false);
             holder = new PokeLocationViewHolder(view);
             view.setTag(holder);
         } else {

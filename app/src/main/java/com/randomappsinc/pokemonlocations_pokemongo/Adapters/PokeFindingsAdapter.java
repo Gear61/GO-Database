@@ -81,7 +81,7 @@ public class PokeFindingsAdapter extends BaseAdapter {
         PokeFindingViewHolder holder;
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.pokefinding_cell, parent, false);
+            view = vi.inflate(R.layout.poke_finding_cell, parent, false);
             holder = new PokeFindingViewHolder(view);
             view.setTag(holder);
         } else {

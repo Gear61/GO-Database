@@ -33,31 +33,21 @@
                     android:id="@+id/add_pokemon"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/add_button_background"
-                    android:gravity="center_horizontal">
+                    style="@style/add_button_container">
 
                     <com.joanzapata.iconify.widget.IconTextView
                         android:layout_marginTop="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/journal_icon"
-                        android:textColor="@color/gray"
-                        android:textSize="48sp"/>
+                        android:textSize="48dp"
+                        style="@style/add_journal_icon"/>
 
                     <TextView
                         android:layout_marginTop="3dp"
-                        android:text="@string/add"
                         android:textSize="16dp"
-                        android:textColor="@color/gray"
-                        style="@style/add_pokemon_title"/>
+                        style="@style/add_text"/>
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pokemon_to_add"
-                    android:visibility="visible"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="0dp"
                     style="@style/pokemon_gallery_style"/>
             </LinearLayout>
 

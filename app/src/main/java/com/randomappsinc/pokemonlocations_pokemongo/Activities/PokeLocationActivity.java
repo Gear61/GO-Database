@@ -45,17 +45,13 @@ public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.uncommon_pokemon) RecyclerView uncommonPokemon;
     @Bind(R.id.rare_pokemon) RecyclerView rarePokemon;
 
-    @Bind(R.id.no_common_pokemon) View noCommon;
-    @Bind(R.id.no_uncommon_pokemon) View noUncommon;
-    @Bind(R.id.no_rare_pokemon) View noRare;
-
     private PokeLocation place;
     private MaterialDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pokelocation);
+        setContentView(R.layout.poke_location);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,26 +66,9 @@ public class PokeLocationActivity extends StandardActivity {
         PokeLocationViewHolder viewHolder = new PokeLocationViewHolder(findViewById(R.id.pokelocation_parent));
         viewHolder.loadItem(place);
 
-        if (place.getCommonPokemon().isEmpty()) {
-            noCommon.setVisibility(View.VISIBLE);
-        } else {
-            commonPokemon.setVisibility(View.VISIBLE);
-            commonPokemon.setAdapter(new PokemonAdapter(this, place.getCommonPokemon()));
-        }
-
-        if (place.getUncommonPokemon().isEmpty()) {
-            noUncommon.setVisibility(View.VISIBLE);
-        } else {
-            uncommonPokemon.setVisibility(View.VISIBLE);
-            uncommonPokemon.setAdapter(new PokemonAdapter(this, place.getUncommonPokemon()));
-        }
-
-        if (place.getRarePokemon().isEmpty()) {
-            noRare.setVisibility(View.VISIBLE);
-        } else {
-            rarePokemon.setVisibility(View.VISIBLE);
-            rarePokemon.setAdapter(new PokemonAdapter(this, place.getRarePokemon()));
-        }
+        commonPokemon.setAdapter(new PokemonAdapter(this, place.getCommonPokemon()));
+        uncommonPokemon.setAdapter(new PokemonAdapter(this, place.getUncommonPokemon()));
+        rarePokemon.setAdapter(new PokemonAdapter(this, place.getRarePokemon()));
     }
 
     public PokeLocation getPlace() {

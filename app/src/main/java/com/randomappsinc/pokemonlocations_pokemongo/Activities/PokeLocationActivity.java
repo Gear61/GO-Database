@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SingleLocationCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.AddPokemonRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncLocationsRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokeLocationViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
@@ -47,6 +49,10 @@ public class PokeLocationActivity extends StandardActivity {
 
     private PokeLocation place;
     private MaterialDialog progressDialog;
+    private boolean notInitialLoad;
+    private PokemonAdapter commonAdapter;
+    private PokemonAdapter uncommonAdapter;
+    private PokemonAdapter rareAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +72,48 @@ public class PokeLocationActivity extends StandardActivity {
         PokeLocationViewHolder viewHolder = new PokeLocationViewHolder(findViewById(R.id.pokelocation_parent));
         viewHolder.loadItem(place);
 
-        commonPokemon.setAdapter(new PokemonAdapter(this, place.getCommonPokemon()));
-        uncommonPokemon.setAdapter(new PokemonAdapter(this, place.getUncommonPokemon()));
-        rarePokemon.setAdapter(new PokemonAdapter(this, place.getRarePokemon()));
+        commonAdapter = new PokemonAdapter(this, place.getCommonPokemon());
+        uncommonAdapter = new PokemonAdapter(this, place.getUncommonPokemon());
+        rareAdapter = new PokemonAdapter(this, place.getRarePokemon());
+
+        commonPokemon.setAdapter(commonAdapter);
+        uncommonPokemon.setAdapter(uncommonAdapter);
+        rarePokemon.setAdapter(rareAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (notInitialLoad) {
+            List<String> placeId = new ArrayList<>();
+            placeId.add(place.getPlaceId());
+            SyncLocationsRequest request = new SyncLocationsRequest();
+            request.setPlaceIds(placeId);
+            RestClient.get().getPokemonService()
+                    .syncLocations(request)
+                    .enqueue(new SingleLocationCallback());
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        notInitialLoad = true;
+    }
+
+    @OnClick({R.id.add_common_pokemon, R.id.add_uncommon_pokemon, R.id.add_rare_pokemon})
+    public void addPokemon(View view) {
+        Intent intent = new Intent(this, AddListingActivity.class);
+        intent.putExtra(AddListingActivity.LOCATION_KEY, place);
+        switch (view.getId()) {
+            case R.id.add_uncommon_pokemon:
+                intent.putExtra(AddListingActivity.FREQUENCY_INDEX_KEY, 1);
+                break;
+            case R.id.add_rare_pokemon:
+                intent.putExtra(AddListingActivity.FREQUENCY_INDEX_KEY, 2);
+                break;
+        }
+        startActivity(intent);
     }
 
     public PokeLocation getPlace() {
@@ -113,6 +158,16 @@ public class PokeLocationActivity extends StandardActivity {
                 progressDialog.dismiss();
                 UIUtils.showSnackbar(parent, getString(R.string.add_pokemon_fail));
                 break;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(PokeLocation updatedLocation) {
+        if (place.getPlaceId().equals(updatedLocation.getPlaceId())) {
+            place = updatedLocation;
+            commonAdapter.setPokemonList(place.getCommonPokemon());
+            uncommonAdapter.setPokemonList(place.getUncommonPokemon());
+            rareAdapter.setPokemonList(place.getRarePokemon());
         }
     }
 

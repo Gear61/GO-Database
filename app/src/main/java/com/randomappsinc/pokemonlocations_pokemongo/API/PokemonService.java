@@ -3,7 +3,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.API;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.AddPokemonRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LocationsResult;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SearchRequest;
-import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncFavoritesRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncLocationsRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.VoteRequest;
 
 import retrofit2.Call;
@@ -24,5 +24,5 @@ public interface PokemonService {
     Call<BlankResponse> voteLocation(@Body VoteRequest request);
 
     @POST("locationInfo/")
-    Call<LocationsResult> syncFavorites(@Body SyncFavoritesRequest request);
+    Call<LocationsResult> syncLocations(@Body SyncLocationsRequest request);
 }

@@ -6,7 +6,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.FavoritesCallback;
-import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncFavoritesRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncLocationsRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.FavoritesAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
@@ -59,10 +59,10 @@ public class FavoritesActivity extends StandardActivity {
 
         List<String> favoriteIds = DatabaseManager.get().getFavoriteIds();
         if (!favoriteIds.isEmpty()) {
-            SyncFavoritesRequest request = new SyncFavoritesRequest();
+            SyncLocationsRequest request = new SyncLocationsRequest();
             request.setPlaceIds(favoriteIds);
             RestClient.get().getPokemonService()
-                    .syncFavorites(request)
+                    .syncLocations(request)
                     .enqueue(new FavoritesCallback());
         }
     }

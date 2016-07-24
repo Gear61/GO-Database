@@ -25,6 +25,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.Bind;
@@ -35,6 +36,9 @@ import butterknife.OnClick;
  * Created by alexanderchiou on 7/15/16.
  */
 public class AddListingActivity extends StandardActivity {
+    public static final String LOCATION_KEY = "location";
+    public static final String FREQUENCY_INDEX_KEY = "frequencyIndex";
+
     @Bind(R.id.parent) View parent;
     @Bind(R.id.location_input) EditText locationInput;
     @Bind(R.id.pokemon_to_add) RecyclerView pokemonToAdd;
@@ -81,6 +85,21 @@ public class AddListingActivity extends StandardActivity {
 
         addPokemonAdapter = new AddPokemonAdapter(this);
         pokemonToAdd.setAdapter(addPokemonAdapter);
+
+        loadForm();
+    }
+
+    public void loadForm() {
+        PokeLocation preFill = getIntent().getParcelableExtra(LOCATION_KEY);
+        if (preFill != null) {
+            location = preFill;
+            String locationDisplay = location.getDisplayName() + "\n" + location.getAddress();
+            locationInput.setText(locationDisplay);
+            int frequencyIndex = getIntent().getIntExtra(FREQUENCY_INDEX_KEY, 0);
+            pokemonFormHolder.setFrequency(frequencyIndex);
+            pokemonFormHolder.setAlreadyChosen(new HashSet<String>());
+            pokeFormDialog.show();
+        }
     }
 
     @OnClick(R.id.add_pokemon)

@@ -36,6 +36,11 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
         this.pokemonList = pokemonList;
     }
 
+    public void setPokemonList(List<Integer> newPokemon) {
+        pokemonList = newPokemon;
+        notifyDataSetChanged();
+    }
+
     @Override
     public PokemonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.pokemon_cell, parent, false);

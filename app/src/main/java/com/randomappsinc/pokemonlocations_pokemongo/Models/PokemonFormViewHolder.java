@@ -48,6 +48,10 @@ public class PokemonFormViewHolder {
         frequencyChoice.setAdapter(adapter);
     }
 
+    public void setFrequency(int index) {
+        frequencyChoice.setSelection(index);
+    }
+
     public PokemonPosting getPosting() {
         PokemonPosting posting = new PokemonPosting();
         posting.setPokemonId(PokemonServer.get().getPokemonId(pokemonInput.getText().toString()));

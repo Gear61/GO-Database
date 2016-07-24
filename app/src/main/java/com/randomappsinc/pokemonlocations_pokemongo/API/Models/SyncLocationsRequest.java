@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alexanderchiou on 7/21/16.
  */
-public class SyncFavoritesRequest {
+public class SyncLocationsRequest {
     @SerializedName("place_ids")
     @Expose
     private List<String> placeIds;

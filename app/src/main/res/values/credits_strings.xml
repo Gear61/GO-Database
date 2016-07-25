@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sprites_credit_title">Sprites Credit</string>
     <string name="credits_intro">
         Below are the artists behind the awesome Pokemon sprites in this app.
         Click on any one to see which of the Pokemon they drew and get a link

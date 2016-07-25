@@ -67,7 +67,7 @@
 
         <activity
             android:name=".Activities.CreditsActivity"
-            android:label="@string/sprites_credit_title"
+            android:label="@string/sprites_credit"
             android:screenOrientation="portrait">
         </activity>
     </application>

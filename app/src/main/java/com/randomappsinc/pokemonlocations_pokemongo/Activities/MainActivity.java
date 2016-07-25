@@ -23,6 +23,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
@@ -71,9 +72,26 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 .setDismissText(R.string.got_it)
                 .setContentText(R.string.sharing_instructions)
                 .withCircleShape()
+                .setListener(new IShowcaseListener() {
+                    @Override
+                    public void onShowcaseDisplayed(MaterialShowcaseView materialShowcaseView) {}
+
+                    @Override
+                    public void onShowcaseDismissed(MaterialShowcaseView materialShowcaseView) {
+                        showArtistsDialog();
+                    }
+                })
                 .build();
         sequence.addSequenceItem(addListExplanation);
         sequence.start();
+    }
+
+    private void showArtistsDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.support_title)
+                .content(R.string.support_creators)
+                .positiveText(R.string.will_do)
+                .show();
     }
 
     @OnClick(R.id.add_pokemon_listing)

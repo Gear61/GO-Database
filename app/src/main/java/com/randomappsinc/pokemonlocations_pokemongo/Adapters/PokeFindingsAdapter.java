@@ -67,7 +67,6 @@ public class PokeFindingsAdapter extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
 
-        @SuppressWarnings("deprecation")
         public void loadItem(PokeFindingDO pokeFindingDO) {
             Picasso.with(context)
                     .load(PokemonUtils.getPokemonIcon(pokeFindingDO.getPokemonId()))

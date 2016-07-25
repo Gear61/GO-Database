@@ -39,6 +39,9 @@ public class SettingsActivity extends StandardActivity {
     public void onItemClick(int position) {
         Intent intent = null;
         switch (position) {
+            case 0:
+                intent = new Intent(this, CreditsActivity.class);
+                break;
             case 1:
                 String uriText = "mailto:" + SUPPORT_EMAIL + "?subject=" + Uri.encode(feedbackSubject);
                 Uri mailUri = Uri.parse(uriText);

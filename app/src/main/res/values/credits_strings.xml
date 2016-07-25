@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sprites_credit_title">Sprites Credit</string>
+    <string name="credits_intro">
+        Below are the artists behind the awesome Pokemon sprites in this app.
+        Click on any one to see which of the Pokemon they drew and get a link
+        to their artist profile pages.
+    </string>
+    <string-array name="artists">
+        <item>JoshR691</item>
+        <item>DannyMyBrother</item>
+        <item>SelenaEde</item>
+        <item>CatnipCrusader</item>
+        <item>abyssalisk</item>
+        <item>deisaso123</item>
+        <item>GROOVES</item>
+        <item>thewiredslain</item>
+        <item>SmithyGCN</item>
+    </string-array>
+</resources>

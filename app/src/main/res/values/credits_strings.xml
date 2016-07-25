@@ -17,4 +17,6 @@
         <item>thewiredslain</item>
         <item>SmithyGCN</item>
     </string-array>
+
+    <string name="view_artist_profile">View Artist Profile</string>
 </resources>

@@ -46,6 +46,9 @@ public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.common_pokemon) RecyclerView commonPokemon;
     @Bind(R.id.uncommon_pokemon) RecyclerView uncommonPokemon;
     @Bind(R.id.rare_pokemon) RecyclerView rarePokemon;
+    @Bind(R.id.no_common_pokemon) View noCommonPokemon;
+    @Bind(R.id.no_uncommon_pokemon) View noUncommonPokemon;
+    @Bind(R.id.no_rare_pokemon) View noRarePokemon;
 
     private PokeLocation place;
     private MaterialDialog progressDialog;
@@ -72,13 +75,40 @@ public class PokeLocationActivity extends StandardActivity {
         PokeLocationViewHolder viewHolder = new PokeLocationViewHolder(findViewById(R.id.pokelocation_parent));
         viewHolder.loadItem(place);
 
-        commonAdapter = new PokemonAdapter(this, place.getCommonPokemon());
-        uncommonAdapter = new PokemonAdapter(this, place.getUncommonPokemon());
-        rareAdapter = new PokemonAdapter(this, place.getRarePokemon());
-
+        commonAdapter = new PokemonAdapter(this);
+        uncommonAdapter = new PokemonAdapter(this);
+        rareAdapter = new PokemonAdapter(this);
         commonPokemon.setAdapter(commonAdapter);
         uncommonPokemon.setAdapter(uncommonAdapter);
         rarePokemon.setAdapter(rareAdapter);
+        setGalleries();
+    }
+
+    private void setGalleries() {
+        if (!place.getCommonPokemon().isEmpty()) {
+            commonAdapter.setPokemonList(place.getCommonPokemon());
+            noCommonPokemon.setVisibility(View.GONE);
+            commonPokemon.setVisibility(View.VISIBLE);
+        } else {
+            commonPokemon.setVisibility(View.GONE);
+            noCommonPokemon.setVisibility(View.VISIBLE);
+        }
+        if (!place.getUncommonPokemon().isEmpty()) {
+            uncommonAdapter.setPokemonList(place.getUncommonPokemon());
+            noUncommonPokemon.setVisibility(View.GONE);
+            uncommonPokemon.setVisibility(View.VISIBLE);
+        } else {
+            uncommonPokemon.setVisibility(View.GONE);
+            noUncommonPokemon.setVisibility(View.VISIBLE);
+        }
+        if (!place.getRarePokemon().isEmpty()) {
+            rareAdapter.setPokemonList(place.getRarePokemon());
+            noRarePokemon.setVisibility(View.GONE);
+            rarePokemon.setVisibility(View.VISIBLE);
+        } else {
+            rarePokemon.setVisibility(View.GONE);
+            noRarePokemon.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -165,9 +195,7 @@ public class PokeLocationActivity extends StandardActivity {
     public void onEvent(PokeLocation updatedLocation) {
         if (place.getPlaceId().equals(updatedLocation.getPlaceId())) {
             place = updatedLocation;
-            commonAdapter.setPokemonList(place.getCommonPokemon());
-            uncommonAdapter.setPokemonList(place.getUncommonPokemon());
-            rareAdapter.setPokemonList(place.getRarePokemon());
+            setGalleries();
         }
     }
 

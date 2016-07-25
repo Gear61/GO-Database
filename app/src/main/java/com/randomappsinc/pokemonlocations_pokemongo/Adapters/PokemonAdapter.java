@@ -17,6 +17,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -31,9 +32,9 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
     private PokeLocationActivity context;
     private List<Integer> pokemonList;
 
-    public PokemonAdapter(PokeLocationActivity context, List<Integer> pokemonList) {
+    public PokemonAdapter(PokeLocationActivity context) {
         this.context = context;
-        this.pokemonList = pokemonList;
+        this.pokemonList = new ArrayList<>();
     }
 
     public void setPokemonList(List<Integer> newPokemon) {

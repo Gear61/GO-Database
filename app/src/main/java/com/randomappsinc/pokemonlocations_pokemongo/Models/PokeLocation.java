@@ -9,6 +9,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocat
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.realm.RealmList;
@@ -18,6 +19,7 @@ import io.realm.RealmList;
  */
 public class PokeLocation implements Parcelable {
     public static final String KEY = "pokeLocation";
+    public static final int NUM_PREVIEWS = 7;
 
     @SerializedName("place_id")
     @Expose
@@ -127,6 +129,38 @@ public class PokeLocation implements Parcelable {
 
     public void setRarePokemon(List<Integer> rarePokemon) {
         this.rarePokemon = rarePokemon;
+    }
+
+    public List<Integer> getPokemonPreviews(int seedId) {
+        List<Integer> previewIds = new ArrayList<>();
+        if (seedId > 0) {
+            previewIds.add(seedId);
+        }
+
+        List<Integer> masterList = new ArrayList<>();
+        for (Integer pokemonId : commonPokemon) {
+            if (pokemonId != seedId) {
+                masterList.add(pokemonId);
+            }
+        }
+        for (Integer pokemonId : uncommonPokemon) {
+            if (pokemonId != seedId) {
+                masterList.add(pokemonId);
+            }
+        }
+        for (Integer pokemonId : rarePokemon) {
+            if (pokemonId != seedId) {
+                masterList.add(pokemonId);
+            }
+        }
+        Collections.shuffle(masterList);
+
+        int seedPresence = seedId > 0 ? 1 : 0;
+        for (int i = 0; i < NUM_PREVIEWS - seedPresence && i < masterList.size(); i++) {
+            previewIds.add(masterList.get(i));
+        }
+
+        return previewIds;
     }
 
     public PokeLocationDO toPokeLocationDO() {

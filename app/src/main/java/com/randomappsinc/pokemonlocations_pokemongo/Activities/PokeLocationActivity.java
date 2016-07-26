@@ -17,7 +17,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.Models.AddPokemonRequest
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncLocationsRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
-import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokeLocationViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
@@ -33,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -42,13 +42,19 @@ import butterknife.OnClick;
 public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.score) TextView score;
+    @Bind(R.id.upvote) TextView upvote;
+    @Bind(R.id.downvote) TextView downvote;
     @Bind(R.id.display_name) TextView displayName;
+    @Bind(R.id.address) TextView address;
     @Bind(R.id.common_pokemon) RecyclerView commonPokemon;
     @Bind(R.id.uncommon_pokemon) RecyclerView uncommonPokemon;
     @Bind(R.id.rare_pokemon) RecyclerView rarePokemon;
     @Bind(R.id.no_common_pokemon) View noCommonPokemon;
     @Bind(R.id.no_uncommon_pokemon) View noUncommonPokemon;
     @Bind(R.id.no_rare_pokemon) View noRarePokemon;
+
+    @BindColor(R.color.app_red) int red;
+    @BindColor(R.color.dark_gray) int darkGray;
 
     private PokeLocation place;
     private MaterialDialog progressDialog;
@@ -72,8 +78,9 @@ public class PokeLocationActivity extends StandardActivity {
                 .cancelable(false)
                 .build();
 
-        PokeLocationViewHolder viewHolder = new PokeLocationViewHolder(findViewById(R.id.pokelocation_parent));
-        viewHolder.loadItem(place);
+        displayName.setText(place.getDisplayName());
+        address.setText(place.getAddress());
+        loadScoreModule();
 
         commonAdapter = new PokemonAdapter(this);
         uncommonAdapter = new PokemonAdapter(this);
@@ -82,6 +89,37 @@ public class PokeLocationActivity extends StandardActivity {
         uncommonPokemon.setAdapter(uncommonAdapter);
         rarePokemon.setAdapter(rareAdapter);
         setGalleries();
+    }
+
+    private void loadScoreModule() {
+        score.setText(String.valueOf(place.getScore()));
+        int currentVote = DatabaseManager.get().getVote(place);
+        switch (currentVote) {
+            case 1:
+                upvote.setTextColor(red);
+                downvote.setTextColor(darkGray);
+                break;
+            case 0:
+                upvote.setTextColor(darkGray);
+                downvote.setTextColor(darkGray);
+                break;
+            case -1:
+                upvote.setTextColor(darkGray);
+                downvote.setTextColor(red);
+                break;
+        }
+    }
+
+    @OnClick(R.id.upvote)
+    public void upvote() {
+        DatabaseManager.get().processUpvote(place);
+        loadScoreModule();
+    }
+
+    @OnClick(R.id.downvote)
+    public void downvote() {
+        DatabaseManager.get().processDownvote(place);
+        loadScoreModule();
     }
 
     private void setGalleries() {

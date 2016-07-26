@@ -64,6 +64,7 @@ public class SearchFragment extends Fragment {
     private Handler locationChecker;
     private Runnable locationCheckTask;
     private SearchAdapter adapter;
+    private int pokemonId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -165,10 +166,10 @@ public class SearchFragment extends Fragment {
                             locationFetched = true;
                             progressDialog.setContent(R.string.finding_pokemon);
 
-                            int pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
+                            pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
                             SearchRequest request = new SearchRequest();
                             request.setPokemonId(pokemonId);
-                            request.setLocation(location);
+                            request.setLocation(location.getLatitude(), location.getLongitude());
                             RestClient.get().getPokemonService()
                                     .doSearch(request)
                                     .enqueue(new SearchCallback());
@@ -225,7 +226,7 @@ public class SearchFragment extends Fragment {
     @Subscribe
     public void onEvent(List<PokeLocation> results) {
         progressDialog.dismiss();
-        adapter.processResults(results);
+        adapter.processResults(results, pokemonId);
     }
 
     @Subscribe

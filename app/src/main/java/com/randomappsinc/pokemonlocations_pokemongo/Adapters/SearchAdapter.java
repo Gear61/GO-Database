@@ -20,6 +20,7 @@ public class SearchAdapter extends BaseAdapter {
     private Context context;
     private List<PokeLocation> results;
     private TextView noResults;
+    private int pokemonId;
 
     public SearchAdapter(Context context, TextView noResults) {
         this.context = context;
@@ -27,8 +28,9 @@ public class SearchAdapter extends BaseAdapter {
         this.noResults = noResults;
     }
 
-    public void processResults(List<PokeLocation> locations) {
+    public void processResults(List<PokeLocation> locations, int pokemonId) {
         this.results = locations;
+        this.pokemonId = pokemonId;
         notifyDataSetChanged();
         setNoContent();
     }
@@ -60,12 +62,12 @@ public class SearchAdapter extends BaseAdapter {
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = vi.inflate(R.layout.poke_location_cell, parent, false);
-            holder = new PokeLocationViewHolder(view);
+            holder = new PokeLocationViewHolder(view, context);
             view.setTag(holder);
         } else {
             holder = (PokeLocationViewHolder) view.getTag();
         }
-        holder.loadItem(getItem(position));
+        holder.loadItem(getItem(position), pokemonId);
         return view;
     }
 }

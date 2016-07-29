@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SearchCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.NearbyRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SearchRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.MainActivity;
@@ -163,18 +164,19 @@ public class SearchFragment extends Fragment {
                             locationFetched = true;
                             progressDialog.setContent(R.string.finding_pokemon);
 
-                            SearchRequest request = new SearchRequest();
-                            request.setLocation(location.getLatitude(), location.getLongitude());
-
                             String pokemonName = searchInput.getText().toString();
                             if (PokemonServer.get().isValidPokemon(pokemonName)) {
                                 pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
+                                SearchRequest request = new SearchRequest();
+                                request.setLocation(location.getLatitude(), location.getLongitude());
                                 request.setPokemonId(pokemonId);
                                 RestClient.get().getPokemonService()
                                         .doSearch(request)
                                         .enqueue(new SearchCallback());
                             } else {
                                 pokemonId = 0;
+                                NearbyRequest request = new NearbyRequest();
+                                request.setLocation(location.getLatitude(), location.getLongitude());
                                 RestClient.get().getPokemonService()
                                         .searchNearby(request)
                                         .enqueue(new SearchCallback());

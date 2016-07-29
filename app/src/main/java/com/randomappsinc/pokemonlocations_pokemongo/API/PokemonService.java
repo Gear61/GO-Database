@@ -2,6 +2,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.API;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.AddPokemonRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LocationsResult;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.NearbyRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SearchRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncLocationsRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.VoteRequest;
@@ -17,6 +18,9 @@ public interface PokemonService {
     @POST("findPokemon/")
     Call<LocationsResult> doSearch(@Body SearchRequest request);
 
+    @POST("findPokemon/")
+    Call<LocationsResult> searchNearby(@Body NearbyRequest request);
+
     @POST("addPokemon/")
     Call<BlankResponse> addPokemon(@Body AddPokemonRequest request);
 
@@ -25,7 +29,4 @@ public interface PokemonService {
 
     @POST("locationInfo/")
     Call<LocationsResult> syncLocations(@Body SyncLocationsRequest request);
-
-    @POST("nearby/")
-    Call<LocationsResult> searchNearby(@Body SearchRequest request);
 }

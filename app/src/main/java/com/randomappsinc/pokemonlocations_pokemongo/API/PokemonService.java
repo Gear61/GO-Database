@@ -25,4 +25,7 @@ public interface PokemonService {
 
     @POST("locationInfo/")
     Call<LocationsResult> syncLocations(@Body SyncLocationsRequest request);
+
+    @POST("nearby/")
+    Call<LocationsResult> searchNearby(@Body SearchRequest request);
 }

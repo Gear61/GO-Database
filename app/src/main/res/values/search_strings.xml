@@ -7,8 +7,8 @@
     <string name="finding_pokemon">Finding you Pokemon&#8230;</string>
 
     <string name="start_searching">
-        Type in the name of the Pokemon you want
-        and hit the {ion-android-search} to start searching!
+        Hit the {ion-android-search} to start searching for Pokemon hotspots near you!\n\n
+        Narrow your search by letting us know which Pokemon you want!
     </string>
 
     <string name="search_fail">We failed to find Pokemon for you. Please try again later.</string>

@@ -1,6 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -120,14 +121,10 @@ public class SearchFragment extends Fragment {
 
     private void fullSearch() {
         UIUtils.hideKeyboard(getActivity());
-        if (PokemonServer.get().isValidPokemon(searchInput.getText().toString())) {
-            if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                doSearch();
-            } else {
-                askForLocation();
-            }
+        if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            doSearch();
         } else {
-            showSnackbar(getString(R.string.invalid_pokemon));
+            askForLocation();
         }
     }
 
@@ -166,13 +163,22 @@ public class SearchFragment extends Fragment {
                             locationFetched = true;
                             progressDialog.setContent(R.string.finding_pokemon);
 
-                            pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
                             SearchRequest request = new SearchRequest();
-                            request.setPokemonId(pokemonId);
                             request.setLocation(location.getLatitude(), location.getLongitude());
-                            RestClient.get().getPokemonService()
-                                    .doSearch(request)
-                                    .enqueue(new SearchCallback());
+
+                            String pokemonName = searchInput.getText().toString();
+                            if (PokemonServer.get().isValidPokemon(pokemonName)) {
+                                pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
+                                request.setPokemonId(pokemonId);
+                                RestClient.get().getPokemonService()
+                                        .doSearch(request)
+                                        .enqueue(new SearchCallback());
+                            } else {
+                                pokemonId = 0;
+                                RestClient.get().getPokemonService()
+                                        .searchNearby(request)
+                                        .enqueue(new SearchCallback());
+                            }
                         }
                     });
             locationChecker.postDelayed(locationCheckTask, 10000L);
@@ -214,7 +220,17 @@ public class SearchFragment extends Fragment {
         PokeLocation place = adapter.getItem(position);
         Intent intent = new Intent(getActivity(), PokeLocationActivity.class);
         intent.putExtra(PokeLocation.KEY, place);
-        getActivity().startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            PokeLocation location = data.getParcelableExtra(PokeLocation.KEY);
+            if (location != null) {
+                adapter.updateLocation(location);
+            }
+        }
     }
 
     @Override
@@ -235,6 +251,13 @@ public class SearchFragment extends Fragment {
             progressDialog.dismiss();
             showSnackbar(getString(R.string.search_fail));
         }
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        UIUtils.hideKeyboard(getActivity());
+        super.startActivityForResult(intent, requestCode);
+        getActivity().overridePendingTransition(R.anim.slide_left_out, R.anim.slide_left_in);
     }
 
     @Override

@@ -15,16 +15,6 @@ public class SearchRequest {
     @Expose
     private LatLong location;
 
-    public void setPokemonId(int pokemonId) {
-        this.pokemon_id = pokemonId;
-    }
-
-    public void setLocation(double latitude, double longitude) {
-        this.location = new LatLong();
-        this.location.setLatitude(latitude);
-        this.location.setLongitude(longitude);
-    }
-
     public class LatLong {
         @SerializedName("lat")
         @Expose
@@ -41,5 +31,15 @@ public class SearchRequest {
         public void setLongitude(double longitude) {
             this.longitude = longitude;
         }
+    }
+
+    public void setPokemonId(int pokemonId) {
+        this.pokemon_id = pokemonId;
+    }
+
+    public void setLocation(double latitude, double longitude) {
+        this.location = new LatLong();
+        this.location.setLatitude(latitude);
+        this.location.setLongitude(longitude);
     }
 }

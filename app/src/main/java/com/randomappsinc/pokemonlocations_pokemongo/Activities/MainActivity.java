@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     private void showArtistsDialog() {
         new MaterialDialog.Builder(this)
+                .cancelable(false)
                 .title(R.string.support_title)
                 .content(R.string.support_creators)
                 .positiveText(R.string.will_do)

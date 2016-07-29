@@ -238,9 +238,12 @@ public class PokeLocationActivity extends StandardActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra(PokeLocation.KEY, place);
+        setResult(RESULT_OK, intent);
         EventBus.getDefault().unregister(this);
+        super.finish();
     }
 
     @Override

@@ -41,6 +41,16 @@ public class SearchAdapter extends BaseAdapter {
         noResults.setVisibility(viewVisibility);
     }
 
+    public void updateLocation(PokeLocation pokeLocation) {
+        for (int i = 0; i < getCount(); i++) {
+            if (getItem(i).getPlaceId().equals(pokeLocation.getPlaceId())) {
+                results.set(i, pokeLocation);
+                break;
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return results.size();

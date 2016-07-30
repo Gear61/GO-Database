@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -19,6 +20,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.AddPokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokemonFormViewHolder;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
@@ -80,6 +82,7 @@ public class AddListingActivity extends StandardActivity {
                     }
                 })
                 .build();
+        pokeFormDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         View addButton = pokeFormDialog.getActionButton(DialogAction.POSITIVE);
         pokemonFormHolder = new PokemonFormViewHolder(this, pokeFormDialog.getCustomView(), addButton);
 
@@ -153,10 +156,15 @@ public class AddListingActivity extends StandardActivity {
         switch (event) {
             case AddPokemonCallback.ADD_POKEMON_SUCCESS:
                 addPokemonAdapter.clearPostings();
-                location = new PokeLocation();
                 locationInput.setText("");
                 progressDialog.dismiss();
-                UIUtils.showSnackbar(parent, getString(R.string.share_pokemon_success));
+                if (DatabaseManager.get().isLocationFavorited(location)) {
+                    UIUtils.showSnackbar(parent, getString(R.string.share_pokemon_success));
+                } else {
+                    PokeLocation locationHolder = location;
+
+                }
+                location = new PokeLocation();
                 break;
             case AddPokemonCallback.ADD_POKEMON_FAILURE:
                 progressDialog.dismiss();

@@ -9,23 +9,19 @@
 
     <string name="favorites">Favorites</string>
     <string name="my_findings">My Findings</string>
-    <string name="sprites_credit">Sprites Credit</string>
     <string name="settings">Settings</string>
     <string-array name="nav_drawer_tabs">
         <item>@string/favorites</item>
         <item>@string/my_findings</item>
-        <item>@string/sprites_credit</item>
         <item>@string/settings</item>
     </string-array>
 
     <string name="star_icon">{ion-android-star}</string>
     <string name="journal_icon">{ion-ios-bookmarks}</string>
-    <string name="art_icon">{ion-paintbrush}</string>
     <string name="settings_icon">{ion-android-settings}</string>
     <string-array name="nav_drawer_icons">
         <item>@string/star_icon</item>
         <item>@string/journal_icon</item>
-        <item>@string/art_icon</item>
         <item>@string/settings_icon</item>
     </string-array>
 
@@ -48,15 +44,5 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
-    <!-- Support the creators -->
-    <string name="support_title">Support the Artists</string>
-    <string name="support_creators">
-        The Pokemon sprites used in this app are free for non-commercial use,
-        used with permission, and most importantly, made by AWESOME fans of the Pokemon series.
-        Please visit the \"Sprite Credits\" page from the side menu
-        to see the FANTASTIC artists behind the art in this app.
-    </string>
-    <string name="will_do">Will do</string>
     <string name="close">Close</string>
 </resources>

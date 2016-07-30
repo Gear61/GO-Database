@@ -17,12 +17,13 @@ import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
+import io.realm.RealmSchema;
 
 /**
  * Created by alexanderchiou on 7/17/16.
  */
 public class DatabaseManager {
-    private static final int CURRENT_REALM_VERSION = 0;
+    private static final int CURRENT_REALM_VERSION = 1;
     private static DatabaseManager instance;
 
     public static DatabaseManager get() {
@@ -53,7 +54,15 @@ public class DatabaseManager {
     RealmMigration migration = new RealmMigration() {
         @Override
         public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
-            // No migrations yet, so empty for now
+            RealmSchema schema = realm.getSchema();
+
+            // Add saved locations
+            if (oldVersion == 0) {
+                schema.create("SavedLocationDO")
+                        .addField("displayName", String.class)
+                        .addField("latitude", double.class)
+                        .addField("longitude", double.class);
+            }
         }
     };
 

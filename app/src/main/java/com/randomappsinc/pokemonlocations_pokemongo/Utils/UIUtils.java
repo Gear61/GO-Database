@@ -10,12 +10,14 @@ import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.Menu;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
+import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 public class UIUtils {
@@ -45,7 +47,22 @@ public class UIUtils {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static void showKeyboard(Activity activity) {
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    public static void addFavoriteSnackbar(final View parent, String message, final PokeLocation location) {
+        final Context context = MyApplication.getAppContext();
+        Snackbar snackbar = Snackbar.make(parent, message, Snackbar.LENGTH_INDEFINITE);
+        View rootView = snackbar.getView();
+        snackbar.getView().setBackgroundColor(context.getResources().getColor(R.color.app_red));
+        TextView tv = (TextView) rootView.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+        snackbar.setAction(android.R.string.yes, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseManager.get().addOrUpdateLocation(location);
+                RestClient.get().syncFavorites();
+                showSnackbar(parent, context.getString(R.string.location_favorited));
+            }
+        });
+        snackbar.setActionTextColor(Color.WHITE);
+        snackbar.show();
     }
 }

@@ -6,17 +6,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.FavoritesCallback;
-import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncLocationsRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.FavoritesAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -56,15 +52,7 @@ public class FavoritesActivity extends StandardActivity {
     protected void onResume() {
         super.onResume();
         adapter.syncWithDb();
-
-        List<String> favoriteIds = DatabaseManager.get().getFavoriteIds();
-        if (!favoriteIds.isEmpty()) {
-            SyncLocationsRequest request = new SyncLocationsRequest();
-            request.setPlaceIds(favoriteIds);
-            RestClient.get().getPokemonService()
-                    .syncLocations(request)
-                    .enqueue(new FavoritesCallback());
-        }
+        RestClient.get().syncFavorites();
     }
 
     @Subscribe

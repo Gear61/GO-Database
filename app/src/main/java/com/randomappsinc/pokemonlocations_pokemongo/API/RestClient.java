@@ -1,5 +1,11 @@
 package com.randomappsinc.pokemonlocations_pokemongo.API;
 
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.FavoritesCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncLocationsRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+
+import java.util.List;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -29,5 +35,16 @@ public class RestClient {
 
     public PokemonService getPokemonService() {
         return pokemonService;
+    }
+
+    public void syncFavorites() {
+        List<String> favoriteIds = DatabaseManager.get().getFavoriteIds();
+        if (!favoriteIds.isEmpty()) {
+            SyncLocationsRequest request = new SyncLocationsRequest();
+            request.setPlaceIds(favoriteIds);
+            RestClient.get().getPokemonService()
+                    .syncLocations(request)
+                    .enqueue(new FavoritesCallback());
+        }
     }
 }

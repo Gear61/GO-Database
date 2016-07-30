@@ -47,15 +47,15 @@ public class PokeLocation implements Parcelable {
 
     @SerializedName("common_pokemon")
     @Expose
-    private List<Integer> commonPokemon;
+    private List<Integer> commonPokemon = new ArrayList<>();
 
     @SerializedName("uncommon_pokemon")
     @Expose
-    private List<Integer> uncommonPokemon;
+    private List<Integer> uncommonPokemon = new ArrayList<>();
 
     @SerializedName("rare_pokemon")
     @Expose
-    private List<Integer> rarePokemon;
+    private List<Integer> rarePokemon = new ArrayList<>();
 
     public PokeLocation() {}
 

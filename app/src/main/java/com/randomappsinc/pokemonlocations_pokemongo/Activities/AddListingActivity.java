@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -44,6 +45,7 @@ public class AddListingActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.location_input) EditText locationInput;
     @Bind(R.id.pokemon_to_add) RecyclerView pokemonToAdd;
+    @BindString(R.string.share_and_favorite) String favTemplate;
 
     private PokeLocation location;
     private MaterialDialog progressDialog;
@@ -162,7 +164,8 @@ public class AddListingActivity extends StandardActivity {
                     UIUtils.showSnackbar(parent, getString(R.string.share_pokemon_success));
                 } else {
                     PokeLocation locationHolder = location;
-
+                    String message = String.format(favTemplate, locationHolder.getDisplayName());
+                    UIUtils.addFavoriteSnackbar(parent, message, locationHolder);
                 }
                 location = new PokeLocation();
                 break;
@@ -176,7 +179,6 @@ public class AddListingActivity extends StandardActivity {
     @OnClick(R.id.add_pokemon_listing)
     public void addListing() {
         UIUtils.hideKeyboard(this);
-
         if (addPokemonAdapter.getItemCount() == 0) {
             UIUtils.showSnackbar(parent, getString(R.string.no_pokemon));
         } else if (location.getPlaceId() == null) {

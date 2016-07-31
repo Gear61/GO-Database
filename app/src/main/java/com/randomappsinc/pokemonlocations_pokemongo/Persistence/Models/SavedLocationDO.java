@@ -1,9 +1,11 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models;
 
+import io.realm.RealmObject;
+
 /**
  * Created by alexanderchiou on 7/29/16.
  */
-public class SavedLocationDO {
+public class SavedLocationDO extends RealmObject {
     private String displayName;
     private double latitude;
     private double longitude;

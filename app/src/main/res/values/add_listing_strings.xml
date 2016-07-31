@@ -44,7 +44,7 @@
         Report shared! Would you like to add %1$s to your favorites?
     </string>
 
-    <string name="delete_title">Confirm Pokemon Deletion</string>
+    <string name="delete_pokemon_title">Confirm Pokemon Deletion</string>
     <string name="delete_pokemon_confirmation">
         Are you sure you want to delete %1$s from your report?
     </string>

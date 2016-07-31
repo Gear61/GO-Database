@@ -6,7 +6,9 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.VoteDO;
+import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 
@@ -17,6 +19,7 @@ import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
+import io.realm.RealmResults;
 import io.realm.RealmSchema;
 
 /**
@@ -230,5 +233,87 @@ public class DatabaseManager {
                 .equalTo("pokemonId", pokemonId)
                 .equalTo("placeId", place.getPlaceId())
                 .findFirst();
+    }
+
+    // My Locations
+    public List<String> getMyLocations() {
+        List<String> locationNames = new ArrayList<>();
+
+        RealmResults<SavedLocationDO> locationDOs = realm.where(SavedLocationDO.class).findAll();
+        locationDOs.sort("displayName");
+        for (SavedLocationDO locationDO : locationDOs) {
+            locationNames.add(locationDO.getDisplayName());
+        }
+
+        return locationNames;
+    }
+
+    public void addMyLocation(final SavedLocationDO locationDO) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(locationDO);
+            }
+        });
+    }
+
+    public void deleteMyLocation(final String displayName) {
+        if (PreferencesManager.get().getCurrentLocation().equals(displayName)) {
+            PreferencesManager.get().resetCurrentLocation();
+        }
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(SavedLocationDO.class)
+                        .equalTo("displayName", displayName)
+                        .findFirst()
+                        .deleteFromRealm();
+            }
+        });
+    }
+
+    public void updateMyLocation(final String oldName, final SavedLocationDO locationDO) {
+        if (PreferencesManager.get().getCurrentLocation().equals(oldName)) {
+            PreferencesManager.get().setCurrentLocation(locationDO.getDisplayName());
+        }
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                SavedLocationDO savedLocationDO = realm.where(SavedLocationDO.class)
+                        .equalTo("displayName", oldName)
+                        .findFirst();
+                savedLocationDO.setDisplayName(locationDO.getDisplayName());
+                savedLocationDO.setLatitude(locationDO.getLatitude());
+                savedLocationDO.setLongitude(locationDO.getLongitude());
+            }
+        });
+    }
+
+    public String[] getLocationsArray() {
+        List<String> locationsList = new ArrayList<>();
+        locationsList.add(MyApplication.getAppContext().getString(R.string.automatic));
+        locationsList.addAll(getMyLocations());
+        String[] locationsArray = new String[locationsList.size()];
+        return locationsList.toArray(locationsArray);
+    }
+
+    public int getCurrentLocationIndex() {
+        String[] locationOptions = getLocationsArray();
+
+        String currentLocation = PreferencesManager.get().getCurrentLocation();
+        for (int i = 0; i < locationOptions.length; i++) {
+            if (locationOptions[i].equals(currentLocation)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public boolean alreadyHasLocation(String displayName) {
+        return realm.where(SavedLocationDO.class)
+                .equalTo("displayName", displayName)
+                .findFirst() != null;
     }
 }

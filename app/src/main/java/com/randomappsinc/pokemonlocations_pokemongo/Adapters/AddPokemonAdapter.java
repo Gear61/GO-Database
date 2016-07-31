@@ -118,7 +118,7 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
             PokemonPosting posting = postings.get(position);
             String pokemonName = PokemonServer.get().getPokemonName(posting.getPokemonId());
             new MaterialDialog.Builder(context)
-                    .title(R.string.delete_title)
+                    .title(R.string.delete_pokemon_title)
                     .content(String.format(deleteTemplate, pokemonName))
                     .positiveText(R.string.yes)
                     .negativeText(R.string.no)

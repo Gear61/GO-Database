@@ -71,5 +71,11 @@
             android:label="@string/credits_title"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".Activities.MyLocationsActivity"
+            android:label="@string/my_locations"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

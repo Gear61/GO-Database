@@ -5,7 +5,7 @@ import io.realm.RealmObject;
 /**
  * Created by alexanderchiou on 7/17/16.
  */
-public class PokeFindingDO extends RealmObject{
+public class PokeFindingDO extends RealmObject {
     private int pokemonId;
     private String placeId;
     private String locationName;

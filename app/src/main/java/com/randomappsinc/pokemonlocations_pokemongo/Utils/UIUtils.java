@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.Icon;
@@ -18,6 +19,7 @@ import com.joanzapata.iconify.IconDrawable;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 public class UIUtils {
@@ -63,6 +65,27 @@ public class UIUtils {
             }
         });
         snackbar.setActionTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    public static void showSetCurrentSnackbar(final String location, final View parent, final BaseAdapter adapter) {
+        final Context context = MyApplication.getAppContext();
+        Snackbar snackbar = Snackbar.make(parent, context.getString(R.string.location_added), Snackbar.LENGTH_INDEFINITE);
+        View rootView = snackbar.getView();
+        snackbar.getView().setBackgroundColor(context.getResources().getColor(R.color.app_red));
+        TextView tv = (TextView) rootView.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+        snackbar.setActionTextColor(Color.WHITE);
+        snackbar.setAction(android.R.string.yes, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreferencesManager.get().setCurrentLocation(location);
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
+                showSnackbar(parent, context.getString(R.string.current_location_set));
+            }
+        });
         snackbar.show();
     }
 }

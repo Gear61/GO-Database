@@ -3,6 +3,8 @@
     <string name="location">Location</string>
     <string name="location_view">Location View</string>
     <string name="getting_your_location">Getting your location&#8230;</string>
+    <string name="automatic">Automatic</string>
+    <string name="set_current_location">Set current location</string>
 
     <string name="location_permission_reason">
         This app searches for nearby Pokemon by getting your current location,
@@ -11,7 +13,8 @@
 
     <!-- Permissions and error cases-->
     <string name="location_services_needed">
-        In order for this app to work, you need to enable location services
+        Your current location is \"Automatic\",
+        which means that you need to enable location services
         and then wait a couple seconds before searching for Pokemon.
         Would you like to do that now?
     </string>
@@ -39,4 +42,10 @@
     <string name="downvote_icon">{ion-arrow-down-b}</string>
 
     <string name="navigate_with">Navigate with</string>
+
+    <!-- Current location -->
+    <string name="current_location_set">Your current location has been set.</string>
+    <string name="choose_current_location">Choose Current Location</string>
+    <string name="current_instructions">Your current location is where Poke Locator searches for Pokemon.</string>
+    <string name="add_location_title">Add Location</string>
 </resources>

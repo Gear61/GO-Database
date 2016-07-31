@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -16,6 +18,7 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
@@ -106,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 intent = new Intent(this, PokeFindingsActivity.class);
                 break;
             case 2:
+                intent = new Intent(this, MyLocationsActivity.class);
+                break;
+            case 3:
                 intent = new Intent(this, SettingsActivity.class);
                 break;
         }
@@ -132,5 +138,70 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                     }
                 })
                 .show();
+    }
+
+    private void chooseCurrentLocation() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.choose_current_location)
+                .content(R.string.current_instructions)
+                .items(DatabaseManager.get().getLocationsArray())
+                .itemsCallbackSingleChoice(DatabaseManager.get().getCurrentLocationIndex(),
+                        new MaterialDialog.ListCallbackSingleChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                PreferencesManager.get().setCurrentLocation(text.toString());
+                                UIUtils.showSnackbar(parent, getString(R.string.current_location_set));
+                                return true;
+                            }
+                        })
+                .positiveText(R.string.choose)
+                .negativeText(android.R.string.cancel)
+                .neutralText(R.string.add_location_title)
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        addLocation();
+                    }
+                })
+                .show();
+    }
+
+    private void addLocation() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.add_location_title)
+                .input(getString(R.string.location), "", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, @NonNull CharSequence input) {
+                        String currentInput = input.toString().trim();
+                    }
+                })
+                .alwaysCallInputCallback()
+                .positiveText(R.string.add)
+                .negativeText(android.R.string.no)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String newLocation = dialog.getInputEditText().getText().toString();
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        UIUtils.loadMenuIcon(menu, R.id.set_current_location, IoniconsIcons.ion_android_map);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.set_current_location:
+                drawerLayout.closeDrawers();
+                chooseCurrentLocation();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

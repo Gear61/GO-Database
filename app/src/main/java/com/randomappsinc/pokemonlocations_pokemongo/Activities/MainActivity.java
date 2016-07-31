@@ -2,6 +2,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,13 +20,19 @@ import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.nlopez.smartlocation.OnGeocodingListener;
+import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.geocoding.utils.LocationAddress;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
@@ -35,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Bind(R.id.add_pokemon_listing) FloatingActionButton addListing;
 
     private NavigationDrawerFragment navDrawerFragment;
+    private MaterialDialog processingLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,12 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         } else if (PreferencesManager.get().shouldAskToRate()) {
             showPleaseRateDialog();
         }
+
+        processingLocation = new MaterialDialog.Builder(this)
+                .content(R.string.processing_location)
+                .progress(true, 0)
+                .cancelable(false)
+                .build();
     }
 
     public void showTutorial() {
@@ -172,7 +186,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 .input(getString(R.string.location), "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, @NonNull CharSequence input) {
-                        String currentInput = input.toString().trim();
+                        String locationInput = input.toString().trim();
+                        boolean submitEnabled = !(locationInput.isEmpty()
+                                || DatabaseManager.get().alreadyHasLocation(locationInput));
+                        dialog.getActionButton(DialogAction.POSITIVE).setEnabled(submitEnabled);
                     }
                 })
                 .alwaysCallInputCallback()
@@ -182,9 +199,33 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         String newLocation = dialog.getInputEditText().getText().toString();
+                        processLocation(newLocation);
                     }
                 })
                 .show();
+    }
+
+    public void processLocation(final String locationName) {
+        processingLocation.show();
+        SmartLocation.with(this).geocoding()
+                .direct(locationName, new OnGeocodingListener() {
+                    @Override
+                    public void onLocationResolved(String name, List<LocationAddress> results) {
+                        if (!results.isEmpty()) {
+                            Location location = results.get(0).getLocation();
+                            SavedLocationDO locationDO = new SavedLocationDO();
+                            locationDO.setDisplayName(locationName);
+                            locationDO.setLatitude(location.getLatitude());
+                            locationDO.setLongitude(location.getLongitude());
+                            DatabaseManager.get().addMyLocation(locationDO);
+                            processingLocation.dismiss();
+                            UIUtils.showSetCurrentSnackbar(locationDO.getDisplayName(), parent, null);
+                        } else {
+                            processingLocation.dismiss();
+                            UIUtils.showSnackbar(parent, getString(R.string.process_location_failed));
+                        }
+                    }
+                });
     }
 
     @Override

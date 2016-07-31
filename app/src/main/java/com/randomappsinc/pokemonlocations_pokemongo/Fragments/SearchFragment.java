@@ -32,6 +32,8 @@ import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActiv
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.SearchAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PermissionUtils;
@@ -122,10 +124,16 @@ public class SearchFragment extends Fragment {
 
     private void fullSearch() {
         UIUtils.hideKeyboard(getActivity());
-        if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            doSearch();
+        if (PreferencesManager.get().getCurrentLocation().equals(getString(R.string.automatic))) {
+            if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                doAutomaticSearch();
+            } else {
+                askForLocation();
+            }
         } else {
-            askForLocation();
+            String currentLocation = PreferencesManager.get().getCurrentLocation();
+            SavedLocationDO locationDO = DatabaseManager.get().getLocation(currentLocation);
+            doSearch(locationDO.getLatitude(), locationDO.getLongitude());
         }
     }
 
@@ -150,7 +158,7 @@ public class SearchFragment extends Fragment {
         PermissionUtils.requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, 1);
     }
 
-    private void doSearch() {
+    private void doAutomaticSearch() {
         if (SmartLocation.with(getActivity()).location().state().locationServicesEnabled()) {
             progressDialog.setContent(R.string.getting_your_location);
             progressDialog.show();
@@ -162,25 +170,7 @@ public class SearchFragment extends Fragment {
                         public void onLocationUpdated(Location location) {
                             locationChecker.removeCallbacks(locationCheckTask);
                             locationFetched = true;
-                            progressDialog.setContent(R.string.finding_pokemon);
-
-                            String pokemonName = searchInput.getText().toString();
-                            if (PokemonServer.get().isValidPokemon(pokemonName)) {
-                                pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
-                                SearchRequest request = new SearchRequest();
-                                request.setLocation(location.getLatitude(), location.getLongitude());
-                                request.setPokemonId(pokemonId);
-                                RestClient.get().getPokemonService()
-                                        .doSearch(request)
-                                        .enqueue(new SearchCallback());
-                            } else {
-                                pokemonId = 0;
-                                NearbyRequest request = new NearbyRequest();
-                                request.setLocation(location.getLatitude(), location.getLongitude());
-                                RestClient.get().getPokemonService()
-                                        .searchNearby(request)
-                                        .enqueue(new SearchCallback());
-                            }
+                            doSearch(location.getLatitude(), location.getLongitude());
                         }
                     });
             locationChecker.postDelayed(locationCheckTask, 10000L);
@@ -189,11 +179,36 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    private void doSearch(double latitude, double longitude) {
+        progressDialog.setContent(R.string.finding_pokemon);
+        if (!progressDialog.isShowing()) {
+            progressDialog.show();
+        }
+
+        String pokemonName = searchInput.getText().toString();
+        if (PokemonServer.get().isValidPokemon(pokemonName)) {
+            pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
+            SearchRequest request = new SearchRequest();
+            request.setLocation(latitude, longitude);
+            request.setPokemonId(pokemonId);
+            RestClient.get().getPokemonService()
+                    .doSearch(request)
+                    .enqueue(new SearchCallback());
+        } else {
+            pokemonId = 0;
+            NearbyRequest request = new NearbyRequest();
+            request.setLocation(latitude, longitude);
+            RestClient.get().getPokemonService()
+                    .searchNearby(request)
+                    .enqueue(new SearchCallback());
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         // If they give us access to their location, run the search, otherwise, pester them for permission
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            doSearch();
+            doAutomaticSearch();
         } else {
             requestLocation();
         }

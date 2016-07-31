@@ -13,6 +13,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.realm.DynamicRealm;
@@ -240,21 +241,24 @@ public class DatabaseManager {
         List<String> locationNames = new ArrayList<>();
 
         RealmResults<SavedLocationDO> locationDOs = realm.where(SavedLocationDO.class).findAll();
-        locationDOs.sort("displayName");
         for (SavedLocationDO locationDO : locationDOs) {
             locationNames.add(locationDO.getDisplayName());
         }
+
+        Collections.sort(locationNames);
 
         return locationNames;
     }
 
     public void addMyLocation(final SavedLocationDO locationDO) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.copyToRealm(locationDO);
-            }
-        });
+        if (!alreadyHasLocation(locationDO.getDisplayName())) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.copyToRealm(locationDO);
+                }
+            });
+        }
     }
 
     public void deleteMyLocation(final String displayName) {
@@ -315,5 +319,11 @@ public class DatabaseManager {
         return realm.where(SavedLocationDO.class)
                 .equalTo("displayName", displayName)
                 .findFirst() != null;
+    }
+
+    public SavedLocationDO getLocation(String displayName) {
+        return realm.where(SavedLocationDO.class)
+                .equalTo("displayName", displayName)
+                .findFirst();
     }
 }

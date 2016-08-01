@@ -48,4 +48,6 @@
     <string name="choose_current_location">Choose Current Location</string>
     <string name="current_instructions">Your current location is where Poke Locator searches for Pokemon.</string>
     <string name="add_location_title">Add Location</string>
+
+    <string name="miles_away">%.2f miles away</string>
 </resources>

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
@@ -21,16 +22,20 @@ public class SearchAdapter extends BaseAdapter {
     private List<PokeLocation> results;
     private TextView noResults;
     private int pokemonId;
+    private LatLong location;
 
     public SearchAdapter(Context context, TextView noResults) {
         this.context = context;
         this.results = new ArrayList<>();
         this.noResults = noResults;
+        this.location = new LatLong();
     }
 
-    public void processResults(List<PokeLocation> locations, int pokemonId) {
+    public void processResults(List<PokeLocation> locations, int pokemonId, LatLong location) {
         this.results = locations;
         this.pokemonId = pokemonId;
+        this.location.setLatitude(location.getLatitude());
+        this.location.setLongitude(location.getLongitude());
         notifyDataSetChanged();
         setNoContent();
     }
@@ -77,7 +82,7 @@ public class SearchAdapter extends BaseAdapter {
         } else {
             holder = (PokeLocationViewHolder) view.getTag();
         }
-        holder.loadItem(getItem(position), pokemonId);
+        holder.loadItem(getItem(position), pokemonId, location);
         return view;
     }
 }

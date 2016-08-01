@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SearchCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.NearbyRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.SearchRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
@@ -74,6 +75,7 @@ public class SearchFragment extends Fragment {
     private Runnable locationCheckTask;
     private SearchAdapter adapter;
     private int pokemonId;
+    private LatLong searchedLocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,10 +102,12 @@ public class SearchFragment extends Fragment {
                 }
             }
         };
+
         progressDialog = new MaterialDialog.Builder(getActivity())
                 .progress(true, 0)
                 .cancelable(false)
                 .build();
+        searchedLocation = new LatLong();
 
         if (PreferencesManager.get().shouldShowShareTutorial()) {
             showTutorial();
@@ -213,6 +217,9 @@ public class SearchFragment extends Fragment {
     }
 
     private void doSearch(double latitude, double longitude) {
+        searchedLocation.setLatitude(latitude);
+        searchedLocation.setLongitude(longitude);
+
         progressDialog.setContent(R.string.finding_pokemon);
         if (!progressDialog.isShowing()) {
             progressDialog.show();
@@ -292,7 +299,7 @@ public class SearchFragment extends Fragment {
     @Subscribe
     public void onEvent(List<PokeLocation> results) {
         progressDialog.dismiss();
-        adapter.processResults(results, pokemonId);
+        adapter.processResults(results, pokemonId, searchedLocation);
     }
 
     @Subscribe

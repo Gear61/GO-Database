@@ -22,4 +22,24 @@ public class LocationUtils {
         options.add(context.getString(R.string.delete_location));
         return options.toArray(new String[options.size()]);
     }
+
+    public static double getDistance(double latitude1, double longitude1,
+                                     double latitude2, double longitude2) {
+        double theta = longitude1 - longitude2;
+        double dist = Math.sin(degreeToRadians(latitude1)) * Math.sin(degreeToRadians(latitude2))
+                + Math.cos(degreeToRadians(latitude1)) * Math.cos(degreeToRadians(latitude2))
+                * Math.cos(degreeToRadians(theta));
+        dist = Math.acos(dist);
+        dist = radianToDegree(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private static double degreeToRadians(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double radianToDegree(double rad) {
+        return (rad * 180 / Math.PI);
+    }
 }

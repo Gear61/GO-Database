@@ -153,6 +153,7 @@ public class PokeLocationActivity extends StandardActivity {
     protected void onResume() {
         super.onResume();
         if (notInitialLoad) {
+            invalidateOptionsMenu();
             List<String> placeId = new ArrayList<>();
             placeId.add(place.getPlaceId());
             SyncLocationsRequest request = new SyncLocationsRequest();

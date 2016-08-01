@@ -9,7 +9,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocat
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.realm.RealmList;
@@ -138,7 +137,7 @@ public class PokeLocation implements Parcelable {
         }
 
         List<Integer> masterList = new ArrayList<>();
-        for (Integer pokemonId : commonPokemon) {
+        for (Integer pokemonId : rarePokemon) {
             if (pokemonId != seedId) {
                 masterList.add(pokemonId);
             }
@@ -148,12 +147,11 @@ public class PokeLocation implements Parcelable {
                 masterList.add(pokemonId);
             }
         }
-        for (Integer pokemonId : rarePokemon) {
+        for (Integer pokemonId : commonPokemon) {
             if (pokemonId != seedId) {
                 masterList.add(pokemonId);
             }
         }
-        Collections.shuffle(masterList);
 
         int seedPresence = seedId > 0 ? 1 : 0;
         for (int i = 0; i < NUM_PREVIEWS - seedPresence && i < masterList.size(); i++) {
@@ -161,6 +159,11 @@ public class PokeLocation implements Parcelable {
         }
 
         return previewIds;
+    }
+
+    public int getExtraPokemon() {
+        int totalPokemon = commonPokemon.size() + uncommonPokemon.size() + rarePokemon.size();
+        return totalPokemon - NUM_PREVIEWS + 1;
     }
 
     public PokeLocationDO toPokeLocationDO() {

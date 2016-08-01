@@ -29,7 +29,9 @@ public class PokeLocationViewHolder {
     @Bind(R.id.display_name) TextView displayName;
     @Bind(R.id.preview_gallery) View previewGallery;
     @Bind({R.id.pokemon1, R.id.pokemon2, R.id.pokemon3, R.id.pokemon4,
-           R.id.pokemon5, R.id.pokemon6, R.id.pokemon7}) List<ImageView> pokemonPreviews;
+           R.id.pokemon5, R.id.pokemon6}) List<ImageView> pokemonPreviews;
+    @Bind(R.id.pokemon7) ImageView finalPreview;
+    @Bind(R.id.overflow_number) TextView overflow;
 
     @BindColor(R.color.dark_gray) int darkGray;
     @BindColor(R.color.app_red) int red;
@@ -48,8 +50,8 @@ public class PokeLocationViewHolder {
 
         if (PreferencesManager.get().areImagesEnabled()) {
             previewGallery.setVisibility(View.VISIBLE);
-            List<Integer> previewIds = pokeLocation.getPokemonPreviews(pokemonId);
-            for (int i = 0; i < PokeLocation.NUM_PREVIEWS; i++) {
+            List<Integer> previewIds = place.getPokemonPreviews(pokemonId);
+            for (int i = 0; i < PokeLocation.NUM_PREVIEWS - 1; i++) {
                 if (i >= previewIds.size()) {
                     pokemonPreviews.get(i).setVisibility(View.GONE);
                 } else {
@@ -57,6 +59,25 @@ public class PokeLocationViewHolder {
                             .load(PokemonUtils.getPokemonIcon(previewIds.get(i)))
                             .into(pokemonPreviews.get(i));
                     pokemonPreviews.get(i).setVisibility(View.VISIBLE);
+                }
+            }
+
+            if (previewIds.size() < PokeLocation.NUM_PREVIEWS) {
+                finalPreview.setVisibility(View.GONE);
+                overflow.setVisibility(View.GONE);
+            } else {
+                int extraPokemon = place.getExtraPokemon();
+                if (extraPokemon == 1) {
+                    overflow.setVisibility(View.GONE);
+                    Picasso.with(context)
+                            .load(PokemonUtils.getPokemonIcon(previewIds.get(6)))
+                            .into(finalPreview);
+                    finalPreview.setVisibility(View.VISIBLE);
+                } else {
+                    finalPreview.setVisibility(View.GONE);
+                    String overflowText = "+" + String.valueOf(extraPokemon);
+                    overflow.setText(overflowText);
+                    overflow.setVisibility(View.VISIBLE);
                 }
             }
         } else {

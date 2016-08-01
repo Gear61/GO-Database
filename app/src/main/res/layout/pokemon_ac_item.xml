@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/pokemon_icon"
+        android:background="@drawable/pokemon_cell_background"
         android:layout_width="50dp"
         android:layout_height="50dp"/>
 

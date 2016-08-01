@@ -27,6 +27,8 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SearchCallback
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.NearbyRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.SearchRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
+import com.randomappsinc.pokemonlocations_pokemongo.Activities.MainActivity;
+import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActivity;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.SearchAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;

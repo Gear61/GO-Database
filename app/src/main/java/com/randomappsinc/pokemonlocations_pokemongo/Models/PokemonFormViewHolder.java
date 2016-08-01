@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;

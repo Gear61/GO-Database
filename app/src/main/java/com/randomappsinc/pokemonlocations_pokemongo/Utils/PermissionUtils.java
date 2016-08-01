@@ -2,6 +2,8 @@ package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
 import android.app.Fragment;
 import android.content.pm.PackageManager;
+import android.support.v13.app.FragmentCompat;
+import android.support.v4.content.ContextCompat;
 
 /**
  * Created by alexanderchiou on 7/15/16.

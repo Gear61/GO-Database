@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.realm.DynamicRealm;
+import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmResults;

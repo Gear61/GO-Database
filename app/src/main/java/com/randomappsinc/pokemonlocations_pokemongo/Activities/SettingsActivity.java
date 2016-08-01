@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.IconItemsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import butterknife.Bind;

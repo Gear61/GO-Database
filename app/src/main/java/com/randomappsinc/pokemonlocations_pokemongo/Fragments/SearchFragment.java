@@ -47,21 +47,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnItemClick;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by alexanderchiou on 7/14/16.
  */
 public class SearchFragment extends Fragment {
     @Bind(R.id.search_input) AutoCompleteTextView searchInput;
+    @Bind(R.id.search) View searchButton;
     @Bind(R.id.search_results) ListView searchResults;
     @Bind(R.id.no_results) TextView noResults;
     @Bind(R.id.search_icon) ImageView searchIcon;
+    @BindColor(R.color.transparent_red) int transparentRed;
 
     private MaterialDialog progressDialog;
     private boolean locationFetched;
@@ -100,7 +105,35 @@ public class SearchFragment extends Fragment {
                 .cancelable(false)
                 .build();
 
+        if (PreferencesManager.get().shouldShowShareTutorial()) {
+            showTutorial();
+        }
+
         return rootView;
+    }
+
+    public void showTutorial() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(mainActivity);
+        MaterialShowcaseView searchExplanation = new MaterialShowcaseView.Builder(mainActivity)
+                .setMaskColour(transparentRed)
+                .setTarget(searchButton)
+                .setDismissText(R.string.got_it)
+                .setContentText(R.string.search_instructions)
+                .setShapePadding(UIUtils.getDpInPixels(15))
+                .build();
+        sequence.addSequenceItem(searchExplanation);
+
+        MaterialShowcaseView addListExplanation = new MaterialShowcaseView.Builder(mainActivity)
+                .setMaskColour(transparentRed)
+                .setTarget(mainActivity.getAddListing())
+                .setDismissText(R.string.got_it)
+                .setContentText(R.string.sharing_instructions)
+                .withCircleShape()
+                .build();
+        sequence.addSequenceItem(addListExplanation);
+        sequence.start();
     }
 
     @OnClick(R.id.clear_search)

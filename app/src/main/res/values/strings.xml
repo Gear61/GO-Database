@@ -39,9 +39,13 @@
 
     <string name="submit">Submit</string>
 
-    <string name="welcome">Welcome!</string>
     <string name="got_it">GOT IT</string>
+    <string name="search_instructions">
+        Simply hit the search button to start searching for Pokemon hotspots nearby.
+        Click the map button in the toolbar to tell us where to search.
+    </string>
     <string name="sharing_instructions">
+        This app is powered entirely by users like you!
         To start sharing your Pokemon findings with the rest of the community,
         simply click the journal button.
     </string>

@@ -1,7 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.VoteCallback;
-import com.randomappsinc.pokemonlocations_pokemongo.API.Models.VoteRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.VoteRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.List;
 
 import io.realm.DynamicRealm;
-import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmResults;

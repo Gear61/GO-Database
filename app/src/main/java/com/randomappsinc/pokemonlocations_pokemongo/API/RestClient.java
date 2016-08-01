@@ -1,7 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.API;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.FavoritesCallback;
-import com.randomappsinc.pokemonlocations_pokemongo.API.Models.SyncLocationsRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.SyncLocationsRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 
 import java.util.List;

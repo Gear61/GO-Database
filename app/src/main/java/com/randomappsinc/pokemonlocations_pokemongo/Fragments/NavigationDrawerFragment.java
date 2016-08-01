@@ -3,8 +3,6 @@ package com.randomappsinc.pokemonlocations_pokemongo.Fragments;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.randomappsinc.pokemonlocations_pokemongo.Adapters.IconItemsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 

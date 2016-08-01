@@ -9,6 +9,7 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
@@ -47,9 +48,15 @@ public class PokemonACAdapter extends ArrayAdapter<String> {
                 String pokemonText = suggestions.get(position);
                 int pokemonId = PokemonServer.get().getPokemonId(pokemonText);
 
-                Picasso.with(context)
-                        .load(PokemonUtils.getPokemonIcon(pokemonId))
-                        .into(pokemonIcon);
+                if (PreferencesManager.get().areImagesEnabled()) {
+                    pokemonIcon.setVisibility(View.VISIBLE);
+                    Picasso.with(context)
+                            .load(PokemonUtils.getPokemonIcon(pokemonId))
+                            .into(pokemonIcon);
+                } else {
+                    pokemonIcon.setVisibility(View.GONE);
+                }
+
                 pokemonName.setText(pokemonText);
             }
         }

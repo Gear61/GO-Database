@@ -8,7 +8,6 @@ import android.widget.ListView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.randomappsinc.pokemonlocations_pokemongo.Adapters.ArtistsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.ArtistInfoServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;

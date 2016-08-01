@@ -15,6 +15,7 @@ public class PreferencesManager {
     private static final String FIRST_TIME_KEY = "firstTime";
     private static final String SHOULD_SHOW_LOCATION_RATIONALE_KEY = "shouldShowLocationRationale";
     private static final String CURRENT_LOCATION_KEY = "currentLocation";
+    private static final String IMAGES_ENABLED_KEY = "imagesEnabled";
     private static PreferencesManager instance;
 
     private Context context;
@@ -60,5 +61,13 @@ public class PreferencesManager {
 
     public void resetCurrentLocation() {
         setCurrentLocation(context.getString(R.string.automatic));
+    }
+
+    public boolean areImagesEnabled() {
+        return prefs.getBoolean(IMAGES_ENABLED_KEY, false);
+    }
+
+    public void enableImages() {
+        prefs.edit().putBoolean(IMAGES_ENABLED_KEY, true).apply();
     }
 }

@@ -1,4 +1,4 @@
-package com.randomappsinc.pokemonlocations_pokemongo.API.Models;
+package com.randomappsinc.pokemonlocations_pokemongo.API.Models.Results;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

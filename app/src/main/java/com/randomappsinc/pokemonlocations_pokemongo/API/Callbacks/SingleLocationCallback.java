@@ -1,7 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.ApiConstants;
-import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LocationsResult;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Results.LocationsResult;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 
 import org.greenrobot.eventbus.EventBus;

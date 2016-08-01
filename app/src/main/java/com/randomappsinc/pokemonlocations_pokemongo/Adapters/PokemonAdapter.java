@@ -5,13 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActivity;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
@@ -60,6 +61,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
     public class PokemonViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.pokemon_icon) ImageView pokemonPicture;
+        @Bind(R.id.pokemon_name) TextView pokemonName;
         @BindString(R.string.add_finding_question) String addFindingQuestion;
         @BindString(R.string.my_finding_template) String myFindingTemplate;
 
@@ -75,9 +77,17 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             pokemon.setId(pokemonList.get(position));
             pokemon.setName(PokemonServer.get().getPokemonName(pokemonList.get(position)));
 
-            Picasso.with(context)
-                    .load(PokemonUtils.getPokemonIcon(pokemon.getId()))
-                    .into(pokemonPicture);
+            if (PreferencesManager.get().areImagesEnabled()) {
+                pokemonName.setVisibility(View.GONE);
+                pokemonPicture.setVisibility(View.VISIBLE);
+                Picasso.with(context)
+                        .load(PokemonUtils.getPokemonIcon(pokemon.getId()))
+                        .into(pokemonPicture);
+            } else {
+                pokemonPicture.setVisibility(View.GONE);
+                pokemonName.setText(pokemon.getName());
+                pokemonName.setVisibility(View.VISIBLE);
+            }
         }
 
         @OnClick(R.id.pokemon_parent)

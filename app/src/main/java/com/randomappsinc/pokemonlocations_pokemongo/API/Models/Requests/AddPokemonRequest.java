@@ -1,7 +1,8 @@
-package com.randomappsinc.pokemonlocations_pokemongo.API.Models;
+package com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 
 import java.util.List;

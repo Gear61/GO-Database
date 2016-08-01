@@ -14,6 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
@@ -93,6 +94,7 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
 
     public class PokePostingViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.pokemon_icon) ImageView pokemonPicture;
+        @Bind(R.id.pokemon_name) TextView pokemonName;
         @Bind(R.id.poke_icon) TextView rarityIcon;
         @BindString(R.string.delete_pokemon_confirmation) String deleteTemplate;
 
@@ -106,9 +108,19 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
         public void loadPokemon(int position) {
             this.position = position;
             PokemonPosting posting = postings.get(position);
-            Picasso.with(context)
-                    .load(PokemonUtils.getPokemonIcon(posting.getPokemonId()))
-                    .into(pokemonPicture);
+
+            if (PreferencesManager.get().areImagesEnabled()) {
+                pokemonName.setVisibility(View.GONE);
+                pokemonPicture.setVisibility(View.VISIBLE);
+                Picasso.with(context)
+                        .load(PokemonUtils.getPokemonIcon(posting.getPokemonId()))
+                        .into(pokemonPicture);
+            } else {
+                pokemonPicture.setVisibility(View.GONE);
+                pokemonName.setText(PokemonServer.get().getPokemonName(posting.getPokemonId()));
+                pokemonName.setVisibility(View.VISIBLE);
+            }
+
             String rarity = PokemonUtils.getFrequency(posting.getRarity());
             rarityIcon.setText(rarity.subSequence(0, 1));
         }

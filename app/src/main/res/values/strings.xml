@@ -3,6 +3,7 @@
     <string name="app_name">Poke Locator</string>
     <string name="choose">Choose</string>
     <string name="add">Add</string>
+    <string name="send_pokemon_request">Send pokemon request</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

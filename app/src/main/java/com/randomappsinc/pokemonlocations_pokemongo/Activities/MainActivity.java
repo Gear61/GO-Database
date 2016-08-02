@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        UIUtils.loadMenuIcon(menu, R.id.send_request, IoniconsIcons.ion_android_mail);
         UIUtils.loadMenuIcon(menu, R.id.set_current_location, IoniconsIcons.ion_android_map);
         return true;
     }
@@ -226,6 +227,15 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.send_request:
+                drawerLayout.closeDrawers();
+                String uriText = "mailto:" + SettingsActivity.SUPPORT_EMAIL
+                        + "?subject=" + Uri.encode(getString(R.string.pokemon_data_request))
+                        + "&body=" + Uri.encode(getString(R.string.data_request_body));
+                Uri mailUri = Uri.parse(uriText);
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
+                startActivity(Intent.createChooser(sendIntent, getString(R.string.send_email)));
+                return true;
             case R.id.set_current_location:
                 drawerLayout.closeDrawers();
                 chooseCurrentLocation();

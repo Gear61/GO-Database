@@ -4,7 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/send_request"
+        android:title="@string/send_pokemon_request"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/set_current_location"
         android:title="@string/set_current_location"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 </menu>

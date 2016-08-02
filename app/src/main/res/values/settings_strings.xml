@@ -23,4 +23,10 @@
         <item>@string/android_icon</item>
         <item>@string/rate_icon</item>
     </array>
+
+    <!-- Need data -->
+    <string name="pokemon_data_request">Pokemon Data Request</string>
+    <string name="data_request_body">
+        I need help finding Pokemon in my area; I am at:&#160;
+    </string>
 </resources>

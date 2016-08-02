@@ -41,7 +41,7 @@
         You have successfully shared your Pokemon Finding(s) with the community. Thank you!
     </string>
     <string name="share_and_favorite">
-        Report shared! Want to add %1$s to your favorites?
+        Report shared! Add %1$s to favorites?
     </string>
 
     <string name="delete_pokemon_title">Confirm Pokemon Deletion</string>

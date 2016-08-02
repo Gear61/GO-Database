@@ -50,4 +50,22 @@
     <string name="add_location_title">Add Location</string>
 
     <string name="miles_away">%.2f miles away</string>
+
+    <!-- Range -->
+    <string name="set_range_title">Set Range</string>
+    <string name="range_explanation">
+        How close to you do you want the Pokemon results to be?
+    </string>
+    <string name="nearby">Nearby (&lt;1 mi.)</string>
+    <string name="very_close">Very close (1&#8211;5 mi.)</string>
+    <string name="close_option">Close (5&#8211;10 mi.)</string>
+    <string name="far">Far (10&#8211;25 mi.)</string>
+    <string name="very_far">Very far (25+ mi.)</string>
+    <string-array name="range_options">
+        <item>@string/nearby</item>
+        <item>@string/very_close</item>
+        <item>@string/close_option</item>
+        <item>@string/far</item>
+        <item>@string/very_far</item>
+    </string-array>
 </resources>

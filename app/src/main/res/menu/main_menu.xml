@@ -9,6 +9,11 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/set_range"
+        android:title="@string/set_range"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/set_current_location"
         android:title="@string/set_current_location"
         app:showAsAction="ifRoom"/>

@@ -225,12 +225,16 @@ public class SearchFragment extends Fragment {
             progressDialog.show();
         }
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        double range = mainActivity.getRange();
+
         String pokemonName = searchInput.getText().toString();
         if (PokemonServer.get().isValidPokemon(pokemonName)) {
             pokemonId = PokemonServer.get().getPokemonId(searchInput.getText().toString());
             SearchRequest request = new SearchRequest();
             request.setLocation(latitude, longitude);
             request.setPokemonId(pokemonId);
+            request.setRange(range);
             RestClient.get().getPokemonService()
                     .doSearch(request)
                     .enqueue(new SearchCallback());
@@ -238,6 +242,7 @@ public class SearchFragment extends Fragment {
             pokemonId = 0;
             NearbyRequest request = new NearbyRequest();
             request.setLocation(latitude, longitude);
+            request.setRange(range);
             RestClient.get().getPokemonService()
                     .searchNearby(request)
                     .enqueue(new SearchCallback());
@@ -300,6 +305,7 @@ public class SearchFragment extends Fragment {
     public void onEvent(List<PokeLocation> results) {
         progressDialog.dismiss();
         adapter.processResults(results, pokemonId, searchedLocation);
+        searchResults.smoothScrollToPosition(0);
     }
 
     @Subscribe

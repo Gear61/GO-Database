@@ -23,6 +23,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     private NavigationDrawerFragment navDrawerFragment;
     private MaterialDialog processingLocation;
+    private int rangeIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             return;
         }
 
-        setContentView(R.layout.activity_main);
+        rangeIndex = 3;
 
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         addListing.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_ios_bookmarks).colorRes(R.color.white));
@@ -79,6 +82,27 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     public FloatingActionButton getAddListing() {
         return addListing;
+    }
+
+    private void showRangeDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.set_range_title)
+                .content(R.string.range_explanation)
+                .items(R.array.range_options)
+                .itemsCallbackSingleChoice(rangeIndex, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        rangeIndex = which;
+                        return true;
+                    }
+                })
+                .positiveText(R.string.choose)
+                .negativeText(android.R.string.no)
+                .show();
+    }
+
+    public double getRange() {
+        return LocationUtils.getRangeFromIndex(rangeIndex);
     }
 
     @OnClick(R.id.add_pokemon_listing)
@@ -220,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         UIUtils.loadMenuIcon(menu, R.id.send_request, IoniconsIcons.ion_android_mail);
+        UIUtils.loadMenuIcon(menu, R.id.set_range, IoniconsIcons.ion_android_walk);
         UIUtils.loadMenuIcon(menu, R.id.set_current_location, IoniconsIcons.ion_android_map);
         return true;
     }
@@ -235,6 +260,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 Uri mailUri = Uri.parse(uriText);
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.send_email)));
+                return true;
+            case R.id.set_range:
+                drawerLayout.closeDrawers();
+                showRangeDialog();
                 return true;
             case R.id.set_current_location:
                 drawerLayout.closeDrawers();

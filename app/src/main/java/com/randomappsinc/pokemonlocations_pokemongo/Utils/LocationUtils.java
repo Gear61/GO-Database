@@ -42,4 +42,21 @@ public class LocationUtils {
     private static double radianToDegree(double rad) {
         return (rad * 180 / Math.PI);
     }
+
+    public static double getRangeFromIndex(int index) {
+        switch (index) {
+            case 0:
+                return 0.0145;
+            case 1:
+                return 0.0725;
+            case 2:
+                return 0.145;
+            case 3:
+                return 0.362;
+            case 4:
+                return 0.725;
+            default:
+                return 0.25;
+        }
+    }
 }

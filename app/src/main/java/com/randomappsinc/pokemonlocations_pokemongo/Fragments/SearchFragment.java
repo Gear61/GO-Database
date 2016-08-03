@@ -37,6 +37,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PermissionUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
@@ -205,6 +206,9 @@ public class SearchFragment extends Fragment {
                     .start(new OnLocationUpdatedListener() {
                         @Override
                         public void onLocationUpdated(Location location) {
+                            MainActivity activity = (MainActivity) getActivity();
+                            activity.setLastSearched(LocationUtils.getAddressFromLocation(location));
+
                             locationChecker.removeCallbacks(locationCheckTask);
                             locationFetched = true;
                             doSearch(location.getLatitude(), location.getLongitude());

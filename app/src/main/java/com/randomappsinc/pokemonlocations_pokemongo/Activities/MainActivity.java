@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     private NavigationDrawerFragment navDrawerFragment;
     private MaterialDialog processingLocation;
     private int rangeIndex;
+    private String lastSearchedLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 .progress(true, 0)
                 .cancelable(false)
                 .build();
+    }
+
+    public void setLastSearched(String address) {
+        lastSearchedLocation = address;
     }
 
     public FloatingActionButton getAddListing() {
@@ -257,6 +262,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 String uriText = "mailto:" + SettingsActivity.SUPPORT_EMAIL
                         + "?subject=" + Uri.encode(getString(R.string.pokemon_data_request))
                         + "&body=" + Uri.encode(getString(R.string.data_request_body));
+                if (!PreferencesManager.get().getCurrentLocation().equals(getString(R.string.automatic))) {
+                    uriText += Uri.encode(PreferencesManager.get().getCurrentLocation());
+                } else if (lastSearchedLocation != null) {
+                    uriText += Uri.encode(lastSearchedLocation);
+                }
                 Uri mailUri = Uri.parse(uriText);
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.send_email)));

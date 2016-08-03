@@ -1,12 +1,16 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by alexanderchiou on 7/31/16.
@@ -58,5 +62,24 @@ public class LocationUtils {
             default:
                 return 0.25;
         }
+    }
+
+    public static String getAddressFromLocation(Location location) {
+        try {
+            Geocoder geocoder = new Geocoder(MyApplication.getAppContext(), Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                StringBuilder addressText = new StringBuilder();
+                for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                    if (i != 0) {
+                        addressText.append(" ");
+                    }
+                    addressText.append(address.getAddressLine(i));
+                }
+                return addressText.toString();
+            }
+        } catch (Exception ignored) {}
+        return "";
     }
 }

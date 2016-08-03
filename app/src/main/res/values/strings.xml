@@ -12,12 +12,12 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="favorites">Favorites</string>
-    <string name="my_findings">My Findings</string>
+    <string name="journal">Journal</string>
     <string name="my_locations">My Locations</string>
     <string name="settings">Settings</string>
     <string-array name="nav_drawer_tabs">
         <item>@string/favorites</item>
-        <item>@string/my_findings</item>
+        <item>@string/journal</item>
         <item>@string/my_locations</item>
         <item>@string/settings</item>
     </string-array>

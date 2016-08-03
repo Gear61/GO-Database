@@ -43,7 +43,7 @@
 
         <activity
             android:name=".Activities.PokeFindingsActivity"
-            android:label="@string/my_findings"
+            android:label="@string/journal"
             android:screenOrientation="portrait">
         </activity>
 
@@ -63,12 +63,6 @@
         <activity
             android:name=".Activities.PokeLocationActivity"
             android:label="@string/location_view"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
-            android:name=".Activities.CreditsActivity"
-            android:label="@string/credits_title"
             android:screenOrientation="portrait">
         </activity>
 

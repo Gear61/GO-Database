@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Search</string>
+    <string name="perform_search">Perform search</string>
+    <string name="distance_icon">{ion-android-walk}</string>
+    <string name="distance">Distance</string>
+
+    <!-- Range -->
+    <string name="nearby">Nearby (&lt; 1 mi.)</string>
+    <string name="very_close">Very close (1&#8211;5 mi.)</string>
+    <string name="close_option">Close (5&#8211;10 mi.)</string>
+    <string name="far">Far (10&#8211;25 mi.)</string>
+    <string name="very_far">Very far (25+ mi.)</string>
+</resources>

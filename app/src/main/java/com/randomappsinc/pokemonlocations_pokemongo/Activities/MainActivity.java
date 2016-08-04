@@ -2,7 +2,6 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,21 +18,14 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.nlopez.smartlocation.OnGeocodingListener;
-import io.nlopez.smartlocation.SmartLocation;
-import io.nlopez.smartlocation.geocoding.utils.LocationAddress;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @Bind(R.id.parent) View parent;
@@ -41,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Bind(R.id.add_pokemon_listing) FloatingActionButton addListing;
 
     private NavigationDrawerFragment navDrawerFragment;
-    private MaterialDialog processingLocation;
     private int rangeIndex;
     private String lastSearchedLocation;
 
@@ -73,12 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         if (PreferencesManager.get().shouldAskToRate()) {
             showPleaseRateDialog();
         }
-
-        processingLocation = new MaterialDialog.Builder(this)
-                .content(R.string.processing_location)
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
     }
 
     public void setLastSearched(String address) {
@@ -87,23 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     public FloatingActionButton getAddListing() {
         return addListing;
-    }
-
-    private void showRangeDialog() {
-        new MaterialDialog.Builder(this)
-                .title(R.string.set_range_title)
-                .content(R.string.range_explanation)
-                .items(R.array.range_options)
-                .itemsCallbackSingleChoice(rangeIndex, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        rangeIndex = which;
-                        return true;
-                    }
-                })
-                .positiveText(R.string.choose)
-                .negativeText(android.R.string.no)
-                .show();
     }
 
     public double getRange() {
@@ -171,86 +139,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 .show();
     }
 
-    private void chooseCurrentLocation() {
-        new MaterialDialog.Builder(this)
-                .title(R.string.choose_current_location)
-                .content(R.string.current_instructions)
-                .items(DatabaseManager.get().getLocationsArray())
-                .itemsCallbackSingleChoice(DatabaseManager.get().getCurrentLocationIndex(),
-                        new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                PreferencesManager.get().setCurrentLocation(text.toString());
-                                UIUtils.showSnackbar(parent, getString(R.string.current_location_set));
-                                return true;
-                            }
-                        })
-                .positiveText(R.string.choose)
-                .negativeText(android.R.string.cancel)
-                .neutralText(R.string.add_location_title)
-                .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        addLocation();
-                    }
-                })
-                .show();
-    }
-
-    private void addLocation() {
-        new MaterialDialog.Builder(this)
-                .title(R.string.add_location_title)
-                .input(getString(R.string.location), "", new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull MaterialDialog dialog, @NonNull CharSequence input) {
-                        String locationInput = input.toString().trim();
-                        boolean submitEnabled = !(locationInput.isEmpty()
-                                || DatabaseManager.get().alreadyHasLocation(locationInput));
-                        dialog.getActionButton(DialogAction.POSITIVE).setEnabled(submitEnabled);
-                    }
-                })
-                .alwaysCallInputCallback()
-                .positiveText(R.string.add)
-                .negativeText(android.R.string.no)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        String newLocation = dialog.getInputEditText().getText().toString();
-                        processLocation(newLocation);
-                    }
-                })
-                .show();
-    }
-
-    public void processLocation(final String locationName) {
-        processingLocation.show();
-        SmartLocation.with(this).geocoding()
-                .direct(locationName, new OnGeocodingListener() {
-                    @Override
-                    public void onLocationResolved(String name, List<LocationAddress> results) {
-                        if (!results.isEmpty()) {
-                            Location location = results.get(0).getLocation();
-                            SavedLocationDO locationDO = new SavedLocationDO();
-                            locationDO.setDisplayName(locationName);
-                            locationDO.setLatitude(location.getLatitude());
-                            locationDO.setLongitude(location.getLongitude());
-                            DatabaseManager.get().addMyLocation(locationDO);
-                            processingLocation.dismiss();
-                            UIUtils.showSetCurrentSnackbar(locationDO.getDisplayName(), parent, null);
-                        } else {
-                            processingLocation.dismiss();
-                            UIUtils.showSnackbar(parent, getString(R.string.process_location_failed));
-                        }
-                    }
-                });
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         UIUtils.loadMenuIcon(menu, R.id.send_request, IoniconsIcons.ion_android_mail);
-        UIUtils.loadMenuIcon(menu, R.id.set_range, IoniconsIcons.ion_android_walk);
-        UIUtils.loadMenuIcon(menu, R.id.set_current_location, IoniconsIcons.ion_android_map);
+        UIUtils.loadMenuIcon(menu, R.id.search, IoniconsIcons.ion_android_search);
         return true;
     }
 
@@ -271,13 +164,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.send_email)));
                 return true;
-            case R.id.set_range:
+            case R.id.search:
                 drawerLayout.closeDrawers();
-                showRangeDialog();
-                return true;
-            case R.id.set_current_location:
-                drawerLayout.closeDrawers();
-                chooseCurrentLocation();
+                startActivityForResult(new Intent(this, FilterActivity.class), 1);
                 return true;
         }
         return super.onOptionsItemSelected(item);

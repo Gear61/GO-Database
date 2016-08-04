@@ -4,12 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/send_request"
-        android:title="@string/send_pokemon_request"
-        app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/search"
-        android:title="@string/search"
+        android:id="@+id/perform_search"
+        android:title="@string/perform_search"
         app:showAsAction="ifRoom"/>
 </menu>

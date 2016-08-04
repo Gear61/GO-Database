@@ -71,5 +71,11 @@
             android:label="@string/my_locations"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".Activities.FilterActivity"
+            android:label="@string/search"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

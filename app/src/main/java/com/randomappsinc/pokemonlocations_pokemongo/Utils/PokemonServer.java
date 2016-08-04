@@ -57,7 +57,7 @@ public class PokemonServer {
         if (input.isEmpty()) {
             return false;
         } else {
-            String cleanName = input.substring(0, 1).toUpperCase() + input.substring(1);
+            String cleanName = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
             return pokemonList.contains(cleanName);
         }
     }

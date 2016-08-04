@@ -3,6 +3,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import io.nlopez.smartlocation.OnGeocodingListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.geocoding.utils.LocationAddress;
@@ -56,6 +59,13 @@ public class FilterActivity extends StandardActivity {
                 .progress(true, 0)
                 .cancelable(false)
                 .build();
+    }
+
+    @OnTextChanged(value = R.id.pokemon_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterTextChanged(Editable input) {
+        if (PokemonServer.get().isValidPokemon(input.toString())) {
+            UIUtils.hideKeyboard(this);
+        }
     }
 
     @OnClick(R.id.current_location)

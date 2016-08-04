@@ -18,6 +18,7 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Bind(R.id.add_pokemon_listing) FloatingActionButton addListing;
 
     private NavigationDrawerFragment navDrawerFragment;
-    private int rangeIndex;
     private String lastSearchedLocation;
+    private Filter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +48,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             return;
         }
 
-        rangeIndex = 3;
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        filter = new Filter();
         addListing.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_ios_bookmarks).colorRes(R.color.white));
 
         navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     }
 
     public double getRange() {
-        return LocationUtils.getRangeFromIndex(rangeIndex);
+        return LocationUtils.getRangeFromIndex(filter.getDistanceIndex());
     }
 
     @OnClick(R.id.add_pokemon_listing)
@@ -140,6 +140,13 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            filter = data.getParcelableExtra(Filter.KEY);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         UIUtils.loadMenuIcon(menu, R.id.send_request, IoniconsIcons.ion_android_mail);
@@ -166,7 +173,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 return true;
             case R.id.search:
                 drawerLayout.closeDrawers();
-                startActivityForResult(new Intent(this, FilterActivity.class), 1);
+                Intent intent = new Intent(this, FilterActivity.class);
+                intent.putExtra(Filter.KEY, filter);
+                startActivityForResult(intent, 1);
                 return true;
         }
         return super.onOptionsItemSelected(item);

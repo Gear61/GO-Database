@@ -86,6 +86,7 @@
                             android:layout_margin="5dp"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
+                            android:singleLine="false"
                             style="@style/text_input"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>

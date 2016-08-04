@@ -82,4 +82,21 @@ public class LocationUtils {
         } catch (Exception ignored) {}
         return "";
     }
+
+    public static int getCheckboxId(int containerId) {
+        switch (containerId) {
+            case R.id.nearby:
+                return R.id.nearby_toggle;
+            case R.id.very_close:
+                return R.id.very_close_toggle;
+            case R.id.close:
+                return R.id.close_toggle;
+            case R.id.far:
+                return R.id.far_toggle;
+            case R.id.very_far:
+                return R.id.very_far_toggle;
+            default:
+                return R.id.far_toggle;
+        }
+    }
 }

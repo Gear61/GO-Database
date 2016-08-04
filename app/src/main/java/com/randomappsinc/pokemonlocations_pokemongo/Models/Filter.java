@@ -7,8 +7,14 @@ import android.os.Parcelable;
  * Created by alexanderchiou on 8/4/16.
  */
 public class Filter implements Parcelable {
+    public static final String KEY = "filter";
+
     private int pokemonId;
     private int distanceIndex;
+
+    public Filter() {
+        distanceIndex = 3;
+    }
 
     public int getPokemonId() {
         return pokemonId;

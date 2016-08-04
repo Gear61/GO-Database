@@ -1,5 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,12 +15,15 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonACAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
+import com.rey.material.widget.CheckBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +43,11 @@ public class FilterActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.pokemon_name) AutoCompleteTextView pokemonInput;
     @Bind(R.id.current_location) EditText currentLocationInput;
+    @Bind({R.id.nearby_toggle, R.id.very_close_toggle, R.id.close_toggle,
+           R.id.far_toggle, R.id.very_far_toggle}) List<CheckBox> distanceOptions;
 
     private MaterialDialog processingLocation;
+    private Filter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +56,19 @@ public class FilterActivity extends StandardActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        filter = getIntent().getParcelableExtra(Filter.KEY);
         pokemonInput.setAdapter(new PokemonACAdapter(this, R.layout.pokemon_ac_item, new ArrayList<String>()));
+
+        if (filter.getPokemonId() > 0) {
+            pokemonInput.setText(PokemonServer.get().getPokemonName(filter.getPokemonId()));
+        }
 
         String currentLocation = PreferencesManager.get().getCurrentLocation();
         currentLocationInput.setText(currentLocation);
+
+        CheckBox checkBox = distanceOptions.get(filter.getDistanceIndex());
+        checkBox.setCheckedImmediately(true);
+        checkBox.setClickable(false);
 
         processingLocation = new MaterialDialog.Builder(this)
                 .content(R.string.processing_location)
@@ -61,10 +77,57 @@ public class FilterActivity extends StandardActivity {
                 .build();
     }
 
+    @OnClick(R.id.clear_search)
+    public void clearPokemon() {
+        pokemonInput.setText("");
+    }
+
     @OnTextChanged(value = R.id.pokemon_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
         if (PokemonServer.get().isValidPokemon(input.toString())) {
             UIUtils.hideKeyboard(this);
+        }
+    }
+
+    // Distance checkbox clicked
+    @OnClick({R.id.nearby_toggle, R.id.very_close_toggle, R.id.close_toggle,
+              R.id.far_toggle, R.id.very_far_toggle})
+    public void distanceToggleClick(View view) {
+        CheckBox currentlyCheckedIn = distanceOptions.get(filter.getDistanceIndex());
+
+        // If they're checking in something new, do the check, change radius
+        if (currentlyCheckedIn.getId() != view.getId()) {
+            currentlyCheckedIn.setChecked(false);
+            currentlyCheckedIn.setClickable(true);
+            for (int i = 0; i < distanceOptions.size(); i++) {
+                // We found the index of the checkbox they clicked
+                if (view.getId() == distanceOptions.get(i).getId()) {
+                    filter.setDistanceIndex(i);
+                    distanceOptions.get(i).setClickable(false);
+                }
+            }
+        }
+    }
+
+    // Distance container clicked
+    @OnClick({R.id.nearby, R.id.very_close, R.id.close, R.id.far, R.id.very_far})
+    public void distanceBoxClick(View view) {
+        CheckBox currentlyCheckedIn = distanceOptions.get(filter.getDistanceIndex());
+
+        int checkboxId = LocationUtils.getCheckboxId(view.getId());
+
+        // If they're checking in something new, do the check, change radius
+        if (currentlyCheckedIn.getId() != checkboxId) {
+            currentlyCheckedIn.setChecked(false);
+            currentlyCheckedIn.setClickable(true);
+            for (int i = 0; i < distanceOptions.size(); i++) {
+                // We found the index of the container they clicked
+                if (checkboxId == distanceOptions.get(i).getId()) {
+                    filter.setDistanceIndex(i);
+                    distanceOptions.get(i).setChecked(true);
+                    distanceOptions.get(i).setClickable(false);
+                }
+            }
         }
     }
 
@@ -154,6 +217,20 @@ public class FilterActivity extends StandardActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.perform_search:
+                String pokemonName = pokemonInput.getText().toString();
+                if (pokemonName.isEmpty() || PokemonServer.get().isValidPokemon(pokemonName)) {
+                    if (!pokemonName.isEmpty()) {
+                        filter.setPokemonId(PokemonServer.get().getPokemonId(pokemonName));
+                    } else {
+                        filter.setPokemonId(0);
+                    }
+                    Intent intent = new Intent();
+                    intent.putExtra(Filter.KEY, filter);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    UIUtils.showSnackbar(parent, getString(R.string.invalid_pokemon));
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -21,21 +21,25 @@ import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.add_pokemon_listing) FloatingActionButton addListing;
+    @BindColor(R.color.transparent_red) int transparentRed;
 
     private NavigationDrawerFragment navDrawerFragment;
     private String lastSearchedLocation;
     private Filter filter;
+    private SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +62,31 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         navDrawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
 
         FragmentManager fragmentManager = getFragmentManager();
-        SearchFragment searchFragment = new SearchFragment();
+        searchFragment = new SearchFragment();
         fragmentManager.beginTransaction().replace(R.id.container, searchFragment).commit();
 
-        if (PreferencesManager.get().shouldAskToRate()) {
+        if (PreferencesManager.get().shouldShowShareTutorial()) {
+            showTutorial();
+        } else if (PreferencesManager.get().shouldAskToRate()) {
             showPleaseRateDialog();
         }
+    }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public void showTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this);
+        MaterialShowcaseView addListExplanation = new MaterialShowcaseView.Builder(this)
+                .setMaskColour(transparentRed)
+                .setTarget(addListing)
+                .setDismissText(R.string.got_it)
+                .setContentText(R.string.sharing_instructions)
+                .withCircleShape()
+                .build();
+        sequence.addSequenceItem(addListExplanation);
+        sequence.start();
     }
 
     public void setLastSearched(String address) {
@@ -72,10 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     public FloatingActionButton getAddListing() {
         return addListing;
-    }
-
-    public double getRange() {
-        return LocationUtils.getRangeFromIndex(filter.getDistanceIndex());
     }
 
     @OnClick(R.id.add_pokemon_listing)
@@ -143,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             filter = data.getParcelableExtra(Filter.KEY);
+            searchFragment.fullSearch();
         }
     }
 

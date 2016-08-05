@@ -23,7 +23,9 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SearchCallback
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.NearbyRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.SearchRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Results.LocationsResult;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
+import com.randomappsinc.pokemonlocations_pokemongo.API.SingleCallClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.MainActivity;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActivity;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.SearchAdapter;
@@ -48,6 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
+import retrofit2.Call;
 
 /**
  * Created by alexanderchiou on 7/14/16.
@@ -64,12 +67,15 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private SearchAdapter adapter;
     private int pokemonId;
     private LatLong searchedLocation;
+    private SingleCallClient<LocationsResult> searchClient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.search, container, false);
         ButterKnife.bind(this, rootView);
         EventBus.getDefault().register(this);
+
+        searchClient = new SingleCallClient<>();
 
         adapter = new SearchAdapter(getActivity(), noResults);
         searchResults.setAdapter(adapter);
@@ -184,16 +190,14 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
             request.setLocation(latitude, longitude);
             request.setPokemonId(pokemonId);
             request.setRange(LocationUtils.getRangeFromIndex(filter.getDistanceIndex()));
-            RestClient.get().getPokemonService()
-                    .doSearch(request)
-                    .enqueue(new SearchCallback());
+            Call<LocationsResult> call = RestClient.get().getPokemonService().doSearch(request);
+            searchClient.executeCall(call, new SearchCallback());
         } else {
             NearbyRequest request = new NearbyRequest();
             request.setLocation(latitude, longitude);
             request.setRange(LocationUtils.getRangeFromIndex(filter.getDistanceIndex()));
-            RestClient.get().getPokemonService()
-                    .searchNearby(request)
-                    .enqueue(new SearchCallback());
+            Call<LocationsResult> call = RestClient.get().getPokemonService().searchNearby(request);
+            searchClient.executeCall(call, new SearchCallback());
         }
     }
 

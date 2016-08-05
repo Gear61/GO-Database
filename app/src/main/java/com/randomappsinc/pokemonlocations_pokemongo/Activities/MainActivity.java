@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 })
                 .alwaysCallInputCallback()
                 .positiveText(R.string.set)
+                .negativeText(android.R.string.no)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

@@ -3,6 +3,7 @@
     <string name="app_name">Poke Spotter</string>
     <string name="choose">Choose</string>
     <string name="add">Add</string>
+    <string name="welcome">Welcome!</string>
 
     <!-- Action bar -->
     <string name="send_pokemon_request">Send Pokemon request</string>
@@ -57,4 +58,12 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="close">Close</string>
+
+    <!-- First-time location setting -->
+    <string name="looking_where">Where are you looking for Pokemon?</string>
+    <string name="bad_first_location">
+        We were unable to process the location you gave us.
+        Try checking your spelling and being less specific.
+    </string>
+    <string name="set">Set</string>
 </resources>

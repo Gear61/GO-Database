@@ -196,8 +196,9 @@ public class FilterActivity extends StandardActivity {
                             locationDO.setLatitude(location.getLatitude());
                             locationDO.setLongitude(location.getLongitude());
                             DatabaseManager.get().addMyLocation(locationDO);
-                            processingLocation.dismiss();
                             currentLocationInput.setText(locationDO.getDisplayName());
+                            PreferencesManager.get().setCurrentLocation(locationDO.getDisplayName());
+                            processingLocation.dismiss();
                         } else {
                             processingLocation.dismiss();
                             UIUtils.showSnackbar(parent, getString(R.string.process_location_failed));

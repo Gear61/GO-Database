@@ -13,6 +13,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
 public class PreferencesManager {
     private static final String NUM_APP_OPENS_KEY = "numAppOpens";
     private static final String FIRST_TIME_KEY = "firstTime";
+    private static final String FIRST_TIME_SEARCH = "firstTimeSearch";
     private static final String SHOULD_SHOW_LOCATION_RATIONALE_KEY = "shouldShowLocationRationale";
     private static final String CURRENT_LOCATION_KEY = "currentLocation";
     private static final String IMAGES_ENABLED_KEY = "imagesEnabled";
@@ -43,6 +44,12 @@ public class PreferencesManager {
         boolean shouldShow = prefs.getBoolean(FIRST_TIME_KEY, true);
         prefs.edit().putBoolean(FIRST_TIME_KEY, false).apply();
         return shouldShow;
+    }
+
+    public boolean shouldShowWelcome() {
+        boolean isFirstTime = prefs.getBoolean(FIRST_TIME_SEARCH, true);
+        prefs.edit().putBoolean(FIRST_TIME_SEARCH, false).apply();
+        return isFirstTime;
     }
 
     public boolean shouldShowLocationRationale() {

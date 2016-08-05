@@ -23,7 +23,7 @@
         android:id="@+id/no_results"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="65dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

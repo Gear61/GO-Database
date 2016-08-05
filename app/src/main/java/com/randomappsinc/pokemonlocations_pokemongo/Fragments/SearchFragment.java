@@ -90,7 +90,12 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
         };
 
         searchedLocation = new LatLong();
-        fullSearch();
+
+        if (PreferencesManager.get().shouldShowWelcome()) {
+            noResults.setText(R.string.welcome);
+        } else {
+            fullSearch();
+        }
 
         return rootView;
     }
@@ -101,6 +106,7 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     public void fullSearch() {
+        noResults.setText(R.string.finding_pokemon);
         if (PreferencesManager.get().getCurrentLocation().equals(getString(R.string.automatic))) {
             if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
                 doAutomaticSearch();
@@ -136,6 +142,10 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     public void doAutomaticSearch() {
+        // Cancel previous location fetches
+        SmartLocation.with(getActivity()).location().stop();
+        locationChecker.removeCallbacks(locationCheckTask);
+
         loadingSearch.setRefreshing(true);
         if (SmartLocation.with(getActivity()).location().state().locationServicesEnabled()) {
             locationFetched = false;

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,12 +52,12 @@ import io.nlopez.smartlocation.SmartLocation;
 /**
  * Created by alexanderchiou on 7/14/16.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     @Bind(R.id.search_results) ListView searchResults;
     @Bind(R.id.no_results) TextView noResults;
+    @Bind(R.id.loading_search) SwipeRefreshLayout loadingSearch;
     @BindColor(R.color.transparent_red) int transparentRed;
 
-    private MaterialDialog progressDialog;
     private boolean locationFetched;
     private Handler locationChecker;
     private Runnable locationCheckTask;
@@ -73,25 +74,30 @@ public class SearchFragment extends Fragment {
         adapter = new SearchAdapter(getActivity(), noResults);
         searchResults.setAdapter(adapter);
 
+        loadingSearch.setColorSchemeResources(R.color.app_red);
+        loadingSearch.setOnRefreshListener(this);
+
         locationChecker = new Handler();
         locationCheckTask = new Runnable() {
             @Override
             public void run() {
                 SmartLocation.with(getActivity()).location().stop();
                 if (!locationFetched) {
-                    progressDialog.dismiss();
+                    loadingSearch.setRefreshing(false);
                     showSnackbar(getString(R.string.auto_location_fail));
                 }
             }
         };
 
-        progressDialog = new MaterialDialog.Builder(getActivity())
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
         searchedLocation = new LatLong();
+        fullSearch();
 
         return rootView;
+    }
+
+    @Override
+    public void onRefresh() {
+        fullSearch();
     }
 
     public void fullSearch() {
@@ -130,9 +136,8 @@ public class SearchFragment extends Fragment {
     }
 
     public void doAutomaticSearch() {
+        loadingSearch.setRefreshing(true);
         if (SmartLocation.with(getActivity()).location().state().locationServicesEnabled()) {
-            progressDialog.setContent(R.string.getting_your_location);
-            progressDialog.show();
             locationFetched = false;
             SmartLocation.with(getActivity()).location()
                     .oneFix()
@@ -154,13 +159,11 @@ public class SearchFragment extends Fragment {
     }
 
     public void doSearch(double latitude, double longitude) {
+        if (!loadingSearch.isRefreshing()) {
+            loadingSearch.setRefreshing(true);
+        }
         searchedLocation.setLatitude(latitude);
         searchedLocation.setLongitude(longitude);
-
-        progressDialog.setContent(R.string.finding_pokemon);
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
-        }
 
         MainActivity mainActivity = (MainActivity) getActivity();
         Filter filter = mainActivity.getFilter();
@@ -238,7 +241,7 @@ public class SearchFragment extends Fragment {
 
     @Subscribe
     public void onEvent(List<PokeLocation> results) {
-        progressDialog.dismiss();
+        loadingSearch.setRefreshing(false);
         adapter.processResults(results, pokemonId, searchedLocation);
         searchResults.smoothScrollToPosition(0);
     }
@@ -246,7 +249,7 @@ public class SearchFragment extends Fragment {
     @Subscribe
     public void onEvent(String event) {
         if (event.equals(SearchCallback.SEARCH_FAIL)) {
-            progressDialog.dismiss();
+            loadingSearch.setRefreshing(false);
             showSnackbar(getString(R.string.search_fail));
         }
     }

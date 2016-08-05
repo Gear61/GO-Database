@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:padding="10dp">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/loading_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/search_results"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="80dp"
+            android:clipToPadding="false"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/no_results"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:text="@string/start_searching"
+        android:text="@string/finding_pokemon"
         android:textSize="20sp"
-        android:textColor="@color/dark_gray" />
-
-    <ListView
-        android:id="@+id/search_results"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="80dp"
-        android:clipToPadding="false"/>
-</LinearLayout>
+        android:textColor="@color/dark_gray"/>
+</FrameLayout>

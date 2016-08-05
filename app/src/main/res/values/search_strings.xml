@@ -6,15 +6,12 @@
 
     <string name="finding_pokemon">Finding you Pokemon&#8230;</string>
 
-    <string name="start_searching">
-        Hit the {ion-android-search} in the toolbar above to start searching for Pokemon hotspots!
-    </string>
-
     <string name="search_fail">We failed to find Pokemon for you. Please try again later.</string>
     <string name="no_results">
-        It looks like we don\'t have any Pokemon data matching your search criteria.
-        Click the {ion-ios-bookmarks} button to change that!\n\n
-        You can also reach out to us by clicking the {ion-android-mail} in the toolbar above,
-        and we\'ll help you get data in your area!
+        It looks like we don\'t have any Pokemon data matching your search criteria. {ion-sad-outline}
+        Here\'s what you can do to change that:\n\n
+        1. Click the {ion-ios-bookmarks} button to help build up your local Poke Spotter community!\n
+        2. Click the {ion-android-search} to customize your search criteria.\n
+        3. Click the {ion-android-mail} to send us a Pokemon request, and we\'ll help you get data in your area!
     </string>
 </resources>

@@ -36,6 +36,9 @@ public class LocationUtils {
         dist = Math.acos(dist);
         dist = radianToDegree(dist);
         dist = dist * 60 * 1.1515;
+        if (!PreferencesManager.get().getIsAmerican()) {
+            dist = dist * 1.609344;
+        }
         return (dist);
     }
 
@@ -48,19 +51,36 @@ public class LocationUtils {
     }
 
     public static double getRangeFromIndex(int index) {
-        switch (index) {
-            case 0:
-                return 0.0145;
-            case 1:
-                return 0.0725;
-            case 2:
-                return 0.145;
-            case 3:
-                return 0.362;
-            case 4:
-                return 0.725;
-            default:
-                return 0.25;
+        if (PreferencesManager.get().getIsAmerican()) {
+            switch (index) {
+                case 0:
+                    return 0.0145;
+                case 1:
+                    return 0.0725;
+                case 2:
+                    return 0.145;
+                case 3:
+                    return 0.362;
+                case 4:
+                    return 0.725;
+                default:
+                    return 0.25;
+            }
+        } else {
+            switch (index) {
+                case 0:
+                    return 0.018;
+                case 1:
+                    return 0.09;
+                case 2:
+                    return 0.225;
+                case 3:
+                    return 0.45;
+                case 4:
+                    return 0.9;
+                default:
+                    return 0.45;
+            }
         }
     }
 

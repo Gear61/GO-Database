@@ -63,7 +63,9 @@
     <string name="looking_where">Where are you looking for Pokemon?</string>
     <string name="bad_first_location">
         We were unable to process the location you gave us.
-        Try checking your spelling and being less specific.
+        Before trying again:\n\n1. Check your spelling\n2.
+        Be less specific. City and state/country are enough.\n3.
+        Format your input with commas.
     </string>
     <string name="set">Set</string>
 </resources>

@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     private void showPleaseRateDialog() {
         new MaterialDialog.Builder(this)
+                .cancelable(false)
                 .content(R.string.please_rate)
                 .negativeText(R.string.no_im_good)
                 .positiveText(R.string.will_rate)

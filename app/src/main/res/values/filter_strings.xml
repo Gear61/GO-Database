@@ -13,4 +13,10 @@
     <string name="close_option">Close (5&#8211;10 mi.)</string>
     <string name="far">Far (10&#8211;25 mi.)</string>
     <string name="very_far">Very far (25+ mi.)</string>
+
+    <string name="nearby_km">Nearby (&lt; 2 km.)</string>
+    <string name="very_close_km">Very close (2&#8211;10 km.)</string>
+    <string name="close_option_km">Close (10&#8211;25 km.)</string>
+    <string name="far_km">Far (25&#8211;50 km.)</string>
+    <string name="very_far_km">Very far (50+ km.)</string>
 </resources>

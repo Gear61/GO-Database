@@ -12,6 +12,8 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.StatusRe
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 
+import java.util.Locale;
+
 /**
  * Created by alexanderchiou on 7/14/16.
  */
@@ -21,6 +23,7 @@ public final class MyApplication extends Application {
     private Handler poller;
     private Runnable statusCheckTask;
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -43,6 +46,13 @@ public final class MyApplication extends Application {
         };
 
         poller.post(statusCheckTask);
+
+        if (PreferencesManager.get().shouldSetDistanceUnit()) {
+            Locale currentLocale = getResources().getConfiguration().locale;
+            if (currentLocale.equals(Locale.US)) {
+                PreferencesManager.get().setIsAmerican(true);
+            }
+        }
     }
 
     public static Context getAppContext() {

@@ -38,6 +38,7 @@ public class PokeLocationViewHolder {
     @Bind(R.id.overflow_number) TextView overflow;
 
     @BindString(R.string.miles_away) String milesTemplate;
+    @BindString(R.string.kilometers_away) String kilometersTemplate;
 
     @BindColor(R.color.dark_gray) int darkGray;
     @BindColor(R.color.app_red) int red;
@@ -59,7 +60,11 @@ public class PokeLocationViewHolder {
         } else {
             double distanceValue = LocationUtils.getDistance(place.getLatitude(), place.getLongitude(),
                     location.getLatitude(), location.getLongitude());
-            distance.setText(String.format(milesTemplate, distanceValue));
+            if (PreferencesManager.get().getIsAmerican()) {
+                distance.setText(String.format(milesTemplate, distanceValue));
+            } else {
+                distance.setText(String.format(kilometersTemplate, distanceValue));
+            }
         }
 
         if (PreferencesManager.get().areImagesEnabled()) {

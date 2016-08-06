@@ -14,9 +14,11 @@ public class PreferencesManager {
     private static final String NUM_APP_OPENS_KEY = "numAppOpens";
     private static final String FIRST_TIME_KEY = "firstTime";
     private static final String FIRST_TIME_SEARCH = "firstTimeSearch";
+    private static final String FIRST_TIME_DISTANCE = "firstTimeDistance";
     private static final String SHOULD_SHOW_LOCATION_RATIONALE_KEY = "shouldShowLocationRationale";
     private static final String CURRENT_LOCATION_KEY = "currentLocation";
     private static final String IMAGES_ENABLED_KEY = "imagesEnabled";
+    private static final String IS_AMERICAN_KEY = "isAmerican";
     private static PreferencesManager instance;
 
     private Context context;
@@ -56,6 +58,20 @@ public class PreferencesManager {
         boolean shouldShow = prefs.getBoolean(SHOULD_SHOW_LOCATION_RATIONALE_KEY, true);
         prefs.edit().putBoolean(SHOULD_SHOW_LOCATION_RATIONALE_KEY, false).apply();
         return shouldShow;
+    }
+
+    public boolean shouldSetDistanceUnit() {
+        boolean shouldSet = prefs.getBoolean(FIRST_TIME_DISTANCE, true);
+        prefs.edit().putBoolean(FIRST_TIME_DISTANCE, false).apply();
+        return shouldSet;
+    }
+
+    public void setIsAmerican(boolean isAmerican) {
+        prefs.edit().putBoolean(IS_AMERICAN_KEY, isAmerican).apply();
+    }
+
+    public boolean getIsAmerican() {
+        return prefs.getBoolean(IS_AMERICAN_KEY, false);
     }
 
     public String getCurrentLocation() {

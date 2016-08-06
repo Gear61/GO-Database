@@ -117,7 +117,7 @@
                             style="@style/filter_field_container">
 
                             <TextView
-                                android:text="@string/nearby"
+                                android:id="@+id/nearby_text"
                                 style="@style/filter_field_text"/>
 
                             <com.rey.material.widget.CheckBox
@@ -130,7 +130,7 @@
                             style="@style/filter_field_container">
 
                             <TextView
-                                android:text="@string/very_close"
+                                android:id="@+id/very_close_text"
                                 style="@style/filter_field_text"/>
 
                             <com.rey.material.widget.CheckBox
@@ -143,7 +143,7 @@
                             style="@style/filter_field_container">
 
                             <TextView
-                                android:text="@string/close_option"
+                                android:id="@+id/close_text"
                                 style="@style/filter_field_text"/>
 
                             <com.rey.material.widget.CheckBox
@@ -156,7 +156,7 @@
                             style="@style/filter_field_container">
 
                             <TextView
-                                android:text="@string/far"
+                                android:id="@+id/far_text"
                                 style="@style/filter_field_text"/>
 
                             <com.rey.material.widget.CheckBox
@@ -169,7 +169,7 @@
                             style="@style/filter_field_container">
 
                             <TextView
-                                android:text="@string/very_far"
+                                android:id="@+id/very_far_text"
                                 style="@style/filter_field_text"/>
 
                             <com.rey.material.widget.CheckBox

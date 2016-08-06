@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -45,6 +46,11 @@ public class FilterActivity extends StandardActivity {
     @Bind(R.id.current_location) EditText currentLocationInput;
     @Bind({R.id.nearby_toggle, R.id.very_close_toggle, R.id.close_toggle,
            R.id.far_toggle, R.id.very_far_toggle}) List<CheckBox> distanceOptions;
+    @Bind(R.id.nearby_text) TextView nearbyText;
+    @Bind(R.id.very_close_text) TextView veryCloseText;
+    @Bind(R.id.close_text) TextView closeText;
+    @Bind(R.id.far_text) TextView farText;
+    @Bind(R.id.very_far_text) TextView veryFarText;
 
     private MaterialDialog processingLocation;
     private Filter filter;
@@ -75,6 +81,20 @@ public class FilterActivity extends StandardActivity {
                 .progress(true, 0)
                 .cancelable(false)
                 .build();
+
+        if (PreferencesManager.get().getIsAmerican()) {
+            nearbyText.setText(R.string.nearby);
+            veryCloseText.setText(R.string.very_close);
+            closeText.setText(R.string.close_option);
+            farText.setText(R.string.far);
+            veryFarText.setText(R.string.very_far);
+        } else {
+            nearbyText.setText(R.string.nearby_km);
+            veryCloseText.setText(R.string.very_close_km);
+            closeText.setText(R.string.close_option_km);
+            farText.setText(R.string.far_km);
+            veryFarText.setText(R.string.very_far_km);
+        }
     }
 
     @OnClick(R.id.clear_search)

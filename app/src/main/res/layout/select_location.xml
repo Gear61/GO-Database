@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/location_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/location"
+                    android:textCursorDrawable="@null"
+                    android:paddingRight="40dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"/>
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/clear_location"
+                    android:textColor="@color/white"
+                    style="@style/clear_icon"/>
+            </FrameLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/powered_by_google"
+            android:text="@string/powered_by_google"
+            android:textSize="16sp"
+            android:textColor="@color/dark_gray"
+            android:layout_margin="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+
+        <ListView
+            android:id="@+id/place_suggestions"
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:clipToPadding="false"/>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -51,4 +51,11 @@
 
     <!-- Icons -->
     <string name="time_icon">{ion-android-time}</string>
+
+    <string name="google_locations_down">
+        Google location services are down.
+        Please try to submit your location later.
+    </string>
+    <string name="no_address">No address specified</string>
+    <string name="powered_by_google">Powered by Google</string>
 </resources>

@@ -2,7 +2,6 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,8 +10,6 @@ import android.widget.EditText;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.AddPokemonRequest;
@@ -116,41 +113,17 @@ public class AddListingActivity extends StandardActivity {
 
     @OnClick(R.id.location_input)
     public void chooseLocation() {
-        try {
-            Intent intent = new PlaceAutocomplete
-                    .IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                    .build(this);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivityForResult(intent, 1);
-        } catch (Exception e) {
-            UIUtils.showSnackbar(parent, getString(R.string.google_locations_down));
-        }
+        startActivityForResult(new Intent(this, SelectLocationActivity.class), 1);
+        overridePendingTransition(0, 0);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideKeyboard();
-            }
-        }, 250);
         if (resultCode == RESULT_OK) {
-            Place place = PlaceAutocomplete.getPlace(this, data);
-            location.setPlaceId(place.getId());
-            location.setDisplayName(place.getName().toString());
-            location.setAddress(place.getAddress().toString());
-            location.setLatitude(place.getLatLng().latitude);
-            location.setLongitude(place.getLatLng().longitude);
-            String locationDisplay = place.getName() + "\n" + place.getAddress().toString();
+            location = data.getParcelableExtra(PokeLocation.KEY);
+            String locationDisplay = location.getDisplayName() + "\n" + location.getAddress();
             locationInput.setText(locationDisplay);
-        } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-            UIUtils.showSnackbar(parent, getString(R.string.google_locations_down));
         }
-    }
-
-    private void hideKeyboard() {
-        UIUtils.hideKeyboard(this);
     }
 
     @Subscribe

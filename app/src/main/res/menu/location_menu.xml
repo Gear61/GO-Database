@@ -7,4 +7,9 @@
         android:id="@+id/favorite_location"
         android:title="@string/favorite_location"
         app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/share_location"
+        android:title="@string/share_location"
+        app:showAsAction="ifRoom"/>
 </menu>

@@ -48,4 +48,12 @@
 
     <string name="miles_away">%.2f miles away</string>
     <string name="kilometers_away">%.2f kilometers away</string>
+
+    <!-- Sharing -->
+    <string name="share_location">Share location</string>
+    <string name="name_prefix">Place name:&#160;</string>
+    <string name="address_prefix">Address:&#160;</string>
+    <string name="common_prefix">Common Pokemon:&#160;</string>
+    <string name="uncommon_prefix">Uncommon Pokemon:&#160;</string>
+    <string name="rare_prefix">Rare Pokemon:&#160;</string>
 </resources>

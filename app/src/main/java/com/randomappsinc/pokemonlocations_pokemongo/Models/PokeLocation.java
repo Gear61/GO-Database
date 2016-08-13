@@ -1,5 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Models;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,6 +8,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO;
+import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,6 +168,55 @@ public class PokeLocation implements Parcelable {
     public int getExtraPokemon() {
         int totalPokemon = commonPokemon.size() + uncommonPokemon.size() + rarePokemon.size();
         return totalPokemon - NUM_PREVIEWS + 1;
+    }
+
+    public String getShareText() {
+        Context context = MyApplication.getAppContext();
+
+        StringBuilder shareText = new StringBuilder();
+
+        shareText.append(context.getString(R.string.name_prefix));
+        shareText.append(displayName);
+        shareText.append("\n");
+
+        shareText.append(context.getString(R.string.address_prefix));
+        shareText.append(address);
+        shareText.append("\n");
+
+        if (!commonPokemon.isEmpty()) {
+            shareText.append(context.getString(R.string.common_prefix));
+            for (int i = 0; i < commonPokemon.size(); i++) {
+                if (i != 0) {
+                    shareText.append(", ");
+                }
+                shareText.append(PokemonServer.get().getPokemonName(commonPokemon.get(i)));
+            }
+            shareText.append("\n");
+        }
+
+        if (!uncommonPokemon.isEmpty()) {
+            shareText.append(context.getString(R.string.uncommon_prefix));
+            for (int i = 0; i < uncommonPokemon.size(); i++) {
+                if (i != 0) {
+                    shareText.append(", ");
+                }
+                shareText.append(PokemonServer.get().getPokemonName(uncommonPokemon.get(i)));
+            }
+            shareText.append("\n");
+        }
+
+        if (!rarePokemon.isEmpty()) {
+            shareText.append(context.getString(R.string.rare_prefix));
+            for (int i = 0; i < rarePokemon.size(); i++) {
+                if (i != 0) {
+                    shareText.append(", ");
+                }
+                shareText.append(PokemonServer.get().getPokemonName(rarePokemon.get(i)));
+            }
+            shareText.append("\n");
+        }
+
+        return shareText.toString();
     }
 
     public PokeLocationDO toPokeLocationDO() {

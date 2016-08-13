@@ -8,9 +8,10 @@
 
     <string name="search_fail">We failed to find Pokemon for you. Please try again later.</string>
     <string name="no_results">
-        It looks like we don\'t have any Pokemon data matching your search criteria. {ion-sad-outline}
-        Here\'s what you can do to change that:\n\n1. Click the {ion-ios-bookmarks} button to help build up your
-        local Poke Spotter community!\n2. Click the {ion-android-search} to customize your search criteria.\n3. Click
-        the {ion-android-mail} to send us a Pokemon request, and we\'ll help you get data in your area!
+        Sorry, we don\'t have any Pokemon data matching your search criteria. {ion-sad-outline}
+        Here\'s what you can do to change that:\n\n1. Click the {ion-ios-bookmarks} button to add Pokemon data
+        to your area!\n2. Click the {ion-android-share-alt} to share Poke Spotter with your friends!\n3. Click the
+        {ion-android-search} to expand your search.\n4. Click the {ion-android-mail}
+        to send us a Pokemon data request.
     </string>
 </resources>

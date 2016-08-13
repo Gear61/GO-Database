@@ -249,6 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         UIUtils.loadMenuIcon(menu, R.id.send_request, IoniconsIcons.ion_android_mail);
+        UIUtils.loadMenuIcon(menu, R.id.share_app, IoniconsIcons.ion_android_share_alt);
         UIUtils.loadMenuIcon(menu, R.id.search, IoniconsIcons.ion_android_search);
         return true;
     }
@@ -269,6 +270,12 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 Uri mailUri = Uri.parse(uriText);
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.send_email)));
+                return true;
+            case R.id.share_app:
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_app_message));
+                startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
                 return true;
             case R.id.search:
                 drawerLayout.closeDrawers();

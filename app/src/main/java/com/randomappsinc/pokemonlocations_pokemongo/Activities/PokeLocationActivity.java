@@ -256,6 +256,7 @@ public class PokeLocationActivity extends StandardActivity {
         } else {
             UIUtils.loadMenuIcon(menu, R.id.favorite_location, IoniconsIcons.ion_android_star_outline);
         }
+        UIUtils.loadMenuIcon(menu, R.id.share_location, IoniconsIcons.ion_android_share_alt);
         return true;
     }
 
@@ -269,6 +270,12 @@ public class PokeLocationActivity extends StandardActivity {
                     DatabaseManager.get().addOrUpdateLocation(place);
                 }
                 invalidateOptionsMenu();
+                return true;
+            case R.id.share_location:
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, place.getShareText());
+                startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
                 return true;
         }
         return super.onOptionsItemSelected(item);

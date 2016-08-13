@@ -9,6 +9,11 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/share_app"
+        android:title="@string/share_app_title"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/search"
         android:title="@string/search"
         app:showAsAction="ifRoom"/>

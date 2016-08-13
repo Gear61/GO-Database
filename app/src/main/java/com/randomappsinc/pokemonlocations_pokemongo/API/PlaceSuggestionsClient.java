@@ -1,7 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.API;
 
 import android.os.AsyncTask;
-import android.view.View;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -73,6 +72,9 @@ public class PlaceSuggestionsClient {
                 for (int i = 0; i < autocompletePredictions.getCount(); i++) {
                     String result = autocompletePredictions.get(i).getFullText(null).toString();
                     PokeLocation location = new PokeLocation();
+                    location.setPlaceId(autocompletePredictions.get(i).getPlaceId());
+
+                    // Get display name and address (if possible)
                     int indexOfComma = result.indexOf(",");
                     if (indexOfComma != -1) {
                         location.setDisplayName(result.substring(0, indexOfComma));

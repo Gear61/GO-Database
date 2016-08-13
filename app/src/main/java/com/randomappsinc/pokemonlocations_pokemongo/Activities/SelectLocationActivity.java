@@ -1,5 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,13 @@ import android.widget.ListView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
-import com.randomappsinc.pokemonlocations_pokemongo.API.PlaceSuggestionsClient;
 import com.randomappsinc.pokemonlocations_pokemongo.API.LocationsEvent;
+import com.randomappsinc.pokemonlocations_pokemongo.API.PlaceSuggestionsClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PlaceSuggestionsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
@@ -44,6 +49,7 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
     private GoogleApiClient googleApiClient;
     private PlaceSuggestionsClient locationClient;
     private PlaceSuggestionsAdapter adapter;
+    private PokeLocation chosenLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        chosenLocation = new PokeLocation();
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Places.GEO_DATA_API)
                 .build();
@@ -82,8 +89,12 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
     }
 
     @OnItemClick(R.id.place_suggestions)
-    public void chooseResult() {
-
+    public void chooseResult(int position) {
+        UIUtils.hideKeyboard(this);
+        PokeLocation location = adapter.getItem(position);
+        chosenLocation.setPlaceId(location.getPlaceId());
+        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(googleApiClient, location.getPlaceId());
+        placeResult.setResultCallback(getLocationInfoCallback);
     }
 
     @Subscribe
@@ -96,6 +107,36 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
                 }
             });
         }
+    }
+
+    private ResultCallback<PlaceBuffer> getLocationInfoCallback = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(@NonNull  PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                // Request did not complete successfully
+                UIUtils.showSnackbar(parent, getString(R.string.chosen_location_fail));
+                places.release();
+                return;
+            }
+
+            // Get the Place object from the buffer.
+            Place place = places.get(0);
+
+            chosenLocation.setDisplayName(place.getName().toString());
+            chosenLocation.setAddress(place.getAddress().toString());
+            chosenLocation.setLatitude(place.getLatLng().latitude);
+            chosenLocation.setLongitude(place.getLatLng().longitude);
+
+            places.release();
+            returnLocation(chosenLocation);
+        }
+    };
+
+    private void returnLocation(PokeLocation location) {
+        Intent intent = new Intent();
+        intent.putExtra(PokeLocation.KEY, location);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override

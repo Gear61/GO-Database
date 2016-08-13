@@ -58,4 +58,8 @@
     </string>
     <string name="no_address">No address specified</string>
     <string name="powered_by_google">Powered by Google</string>
+    <string name="chosen_location_fail">
+        We failed to process your location choice.
+        Please try again later.
+    </string>
 </resources>

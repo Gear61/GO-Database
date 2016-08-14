@@ -15,16 +15,16 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:padding="16dp">
 
             <TextView
                 android:text="@string/pokemon"
                 style="@style/add_pokemon_title"/>
 
             <LinearLayout
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -51,7 +51,7 @@
 
             <TextView
                 android:text="@string/location"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="32dp"
                 style="@style/add_pokemon_title"/>
 
             <FrameLayout
@@ -63,7 +63,7 @@
                     android:hint="@string/location_hint"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:paddingLeft="40dp"
                     android:singleLine="false"
                     style="@style/text_input"/>
@@ -77,7 +77,7 @@
             <com.rey.material.widget.Button
                 android:id="@+id/add_pokemon_listing"
                 android:text="@string/submit"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 style="@style/ripple_button_style"
                 app:rd_style="@style/button_ripple_attributes"/>
         </LinearLayout>

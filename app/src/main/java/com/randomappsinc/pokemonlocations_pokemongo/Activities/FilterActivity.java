@@ -43,6 +43,7 @@ import io.nlopez.smartlocation.geocoding.utils.LocationAddress;
 public class FilterActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.pokemon_name) AutoCompleteTextView pokemonInput;
+    @Bind(R.id.clear_pokemon) View clearPokemon;
     @Bind(R.id.current_location) EditText currentLocationInput;
     @Bind({R.id.nearby_toggle, R.id.very_close_toggle, R.id.close_toggle,
            R.id.far_toggle, R.id.very_far_toggle}) List<CheckBox> distanceOptions;
@@ -97,15 +98,20 @@ public class FilterActivity extends StandardActivity {
         }
     }
 
-    @OnClick(R.id.clear_search)
+    @OnClick(R.id.clear_pokemon)
     public void clearPokemon() {
         pokemonInput.setText("");
     }
 
     @OnTextChanged(value = R.id.pokemon_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
-        if (PokemonServer.get().isValidPokemon(input.toString())) {
-            UIUtils.hideKeyboard(this);
+        if (input.length() == 0) {
+            clearPokemon.setVisibility(View.GONE);
+        } else {
+            clearPokemon.setVisibility(View.VISIBLE);
+            if (PokemonServer.get().isValidPokemon(input.toString())) {
+                UIUtils.hideKeyboard(this);
+            }
         }
     }
 

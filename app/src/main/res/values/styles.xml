@@ -1,16 +1,4 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/app_red</item>
-        <item name="colorPrimaryDark">@color/dark_red</item>
-        <item name="colorAccent">@color/app_red</item>
-    </style>
-
-    <style name="no_action_bar" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/app_red</item>
-        <item name="colorPrimaryDark">@color/dark_red</item>
-        <item name="colorAccent">@color/app_red</item>
-    </style>
-
     <style name="text_input">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -75,7 +63,6 @@
     <style name="add_pokemon_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:textColor">@color/dark_gray</item>
         <item name="android:textSize">28dp</item>
     </style>

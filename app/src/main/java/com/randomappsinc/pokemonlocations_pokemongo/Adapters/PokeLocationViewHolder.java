@@ -27,8 +27,8 @@ import butterknife.OnClick;
  */
 public class PokeLocationViewHolder {
     @Bind(R.id.score) TextView score;
-    @Bind(R.id.upvote) TextView upvote;
-    @Bind(R.id.downvote) TextView downvote;
+    @Bind(R.id.like) TextView like;
+    @Bind(R.id.dislike) TextView dislike;
     @Bind(R.id.display_name) TextView displayName;
     @Bind(R.id.distance) TextView distance;
     @Bind(R.id.preview_gallery) View previewGallery;
@@ -40,8 +40,9 @@ public class PokeLocationViewHolder {
     @BindString(R.string.miles_away) String milesTemplate;
     @BindString(R.string.kilometers_away) String kilometersTemplate;
 
-    @BindColor(R.color.dark_gray) int darkGray;
+    @BindColor(R.color.gray) int gray;
     @BindColor(R.color.app_red) int red;
+    @BindColor(R.color.green) int green;
 
     private PokeLocation place;
     private Context context;
@@ -111,29 +112,35 @@ public class PokeLocationViewHolder {
         int currentVote = DatabaseManager.get().getVote(place);
         switch (currentVote) {
             case 1:
-                upvote.setTextColor(red);
-                downvote.setTextColor(darkGray);
+                like.setText(R.string.liked_icon);
+                like.setTextColor(green);
+                dislike.setText(R.string.dislike_icon);
+                dislike.setTextColor(gray);
                 break;
             case 0:
-                upvote.setTextColor(darkGray);
-                downvote.setTextColor(darkGray);
+                like.setText(R.string.like_icon);
+                like.setTextColor(gray);
+                dislike.setText(R.string.dislike_icon);
+                dislike.setTextColor(gray);
                 break;
             case -1:
-                upvote.setTextColor(darkGray);
-                downvote.setTextColor(red);
+                like.setText(R.string.like_icon);
+                like.setTextColor(gray);
+                dislike.setText(R.string.disliked_icon);
+                dislike.setTextColor(red);
                 break;
         }
     }
 
-    @OnClick(R.id.upvote)
-    public void upvote() {
-        DatabaseManager.get().processUpvote(place);
+    @OnClick(R.id.like)
+    public void like() {
+        DatabaseManager.get().processLike(place);
         loadScoreModule();
     }
 
-    @OnClick(R.id.downvote)
-    public void downvote() {
-        DatabaseManager.get().processDownvote(place);
+    @OnClick(R.id.dislike)
+    public void dislike() {
+        DatabaseManager.get().processDislike(place);
         loadScoreModule();
     }
 }

@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.os.Handler;
 
 import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.joanzapata.iconify.fonts.IoniconsModule;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.StatusCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.StatusRequest;
@@ -27,7 +28,8 @@ public final class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Iconify.with(new IoniconsModule());
+        Iconify.with(new IoniconsModule())
+                .with(new FontAwesomeModule());
         context = getApplicationContext();
 
         poller = new Handler();

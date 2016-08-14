@@ -56,4 +56,10 @@
     <string name="common_prefix">Common Pokemon:&#160;</string>
     <string name="uncommon_prefix">Uncommon Pokemon:&#160;</string>
     <string name="rare_prefix">Rare Pokemon:&#160;</string>
+
+    <!-- Like/dislike -->
+    <string name="like_icon">{fa-thumbs-o-up}</string>
+    <string name="liked_icon">{fa-thumbs-up}</string>
+    <string name="dislike_icon">{fa-thumbs-o-down}</string>
+    <string name="disliked_icon">{fa-thumbs-down}</string>
 </resources>

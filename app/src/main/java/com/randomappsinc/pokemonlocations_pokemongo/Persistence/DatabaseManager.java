@@ -71,24 +71,24 @@ public class DatabaseManager {
     };
 
     // Upvote/downvote
-    public void processUpvote(PokeLocation place) {
+    public void processLike(PokeLocation place) {
         int oldScore = getVote(place);
         int movement = 0;
         final VoteDO voteDO = new VoteDO();
         voteDO.setPlaceId(place.getPlaceId());
 
         switch (oldScore) {
-            // Upvote to neutral
+            // Liked to neutral
             case 1:
                 movement = -1;
                 voteDO.setVote(0);
                 break;
-            // Neutral to upvote
+            // Neutral to liked
             case 0:
                 movement = 1;
                 voteDO.setVote(1);
                 break;
-            // Downvote to upvote
+            // Disliked to liked
             case -1:
                 movement = 2;
                 voteDO.setVote(1);
@@ -110,24 +110,24 @@ public class DatabaseManager {
                 .enqueue(new VoteCallback(oldScore, place));
     }
 
-    public void processDownvote(PokeLocation place) {
+    public void processDislike(PokeLocation place) {
         int oldScore = getVote(place);
         int movement = 0;
         final VoteDO voteDO = new VoteDO();
         voteDO.setPlaceId(place.getPlaceId());
 
         switch (oldScore) {
-            // Upvote to downvote
+            // Liked to disliked
             case 1:
                 movement = -2;
                 voteDO.setVote(-1);
                 break;
-            // Neutral to downvote
+            // Neutral to disliked
             case 0:
                 movement = -1;
                 voteDO.setVote(-1);
                 break;
-            // Downvote to neutral
+            // Disliked to neutral
             case -1:
                 movement = 1;
                 voteDO.setVote(0);

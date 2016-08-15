@@ -47,7 +47,7 @@
     <style name="filter_divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/gray</item>
+        <item name="android:background">@color/gray_200</item>
         <item name="android:layout_marginBottom">5dp</item>
     </style>
 
@@ -57,5 +57,9 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="pokemon_name_filter">
+        <item name="backgroundTint">@color/app_red</item>
     </style>
 </resources>

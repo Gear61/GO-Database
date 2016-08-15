@@ -177,13 +177,13 @@ public class PokeLocation implements Parcelable {
 
         shareText.append(context.getString(R.string.name_prefix));
         shareText.append(displayName);
-        shareText.append("\n");
+        shareText.append("\n\n");
 
         shareText.append(context.getString(R.string.address_prefix));
         shareText.append(address);
-        shareText.append("\n");
 
         if (!commonPokemon.isEmpty()) {
+            shareText.append("\n\n");
             shareText.append(context.getString(R.string.common_prefix));
             for (int i = 0; i < commonPokemon.size(); i++) {
                 if (i != 0) {
@@ -191,10 +191,10 @@ public class PokeLocation implements Parcelable {
                 }
                 shareText.append(PokemonServer.get().getPokemonName(commonPokemon.get(i)));
             }
-            shareText.append("\n");
         }
 
         if (!uncommonPokemon.isEmpty()) {
+            shareText.append("\n\n");
             shareText.append(context.getString(R.string.uncommon_prefix));
             for (int i = 0; i < uncommonPokemon.size(); i++) {
                 if (i != 0) {
@@ -202,10 +202,10 @@ public class PokeLocation implements Parcelable {
                 }
                 shareText.append(PokemonServer.get().getPokemonName(uncommonPokemon.get(i)));
             }
-            shareText.append("\n");
         }
 
         if (!rarePokemon.isEmpty()) {
+            shareText.append("\n\n");
             shareText.append(context.getString(R.string.rare_prefix));
             for (int i = 0; i < rarePokemon.size(); i++) {
                 if (i != 0) {
@@ -213,7 +213,6 @@ public class PokeLocation implements Parcelable {
                 }
                 shareText.append(PokemonServer.get().getPokemonName(rarePokemon.get(i)));
             }
-            shareText.append("\n");
         }
 
         return shareText.toString();

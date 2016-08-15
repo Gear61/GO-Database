@@ -16,27 +16,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="10dp">
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="16dp">
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:text="@string/search_icon"
+                android:textSize="28dp"
+                android:layout_marginTop="0dp"
+                style="@style/input_icon"/>
 
             <AutoCompleteTextView
                 android:id="@+id/pokemon_name"
                 android:completionThreshold="1"
                 android:hint="@string/pokemon_name"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:layout_marginTop="0dp"
-                style="@style/text_input"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:paddingRight="30dp"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                android:textSize="18dp"
+                android:textColor="@color/dark_gray"
+                style="@style/pokemon_name_filter"/>
 
             <com.joanzapata.iconify.widget.IconTextView
-                android:text="@string/search_icon"
-                android:layout_marginTop="0dp"
-                style="@style/input_icon"/>
-
-            <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/clear_search"
+                android:id="@+id/clear_pokemon"
                 android:text="@string/clear_icon"
                 android:layout_marginTop="0dp"
+                android:layout_marginRight="-6dp"
                 android:layout_gravity="center_vertical|right"
+                android:visibility="gone"
                 style="@style/input_icon"/>
         </FrameLayout>
 
@@ -44,7 +54,7 @@
             android:id="@+id/search_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_200"
+            android:background="@color/light_gray"
             android:layout_below="@+id/search_term_container"/>
 
         <ScrollView
@@ -62,7 +72,7 @@
 
                 <android.support.v7.widget.CardView
                     style="@style/filter_card"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -76,18 +86,21 @@
 
                             <TextView
                                 style="@style/filter_header"
-                                android:text="@string/current_location"/>
+                                android:text="@string/location"/>
                         </LinearLayout>
 
                         <View style="@style/filter_divider"/>
 
                         <EditText
                             android:id="@+id/current_location"
-                            android:layout_margin="5dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_margin="4dp"
+                            android:textSize="18dp"
+                            android:textColor="@color/dark_gray"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:singleLine="false"
-                            style="@style/text_input"/>
+                            android:background="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 

@@ -16,6 +16,8 @@ public class PokeLocationDO extends RealmObject {
     private double latitude;
     private double longitude;
     private int score;
+    private int numLikes;
+    private int numDislikes;
 
     private RealmList<PokemonDO> commonPokemon;
     private RealmList<PokemonDO> uncommonPokemon;
@@ -67,6 +69,22 @@ public class PokeLocationDO extends RealmObject {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getNumLikes() {
+        return numLikes;
+    }
+
+    public void setNumLikes(int numLikes) {
+        this.numLikes = numLikes;
+    }
+
+    public int getNumDislikes() {
+        return numDislikes;
+    }
+
+    public void setNumDislikes(int numDislikes) {
+        this.numDislikes = numDislikes;
     }
 
     public RealmList<PokemonDO> getCommonPokemon() {

@@ -34,6 +34,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.BindColor;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
@@ -45,11 +46,12 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
  */
 public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
-    @Bind(R.id.score) TextView score;
-    @Bind(R.id.like) TextView like;
-    @Bind(R.id.dislike) TextView dislike;
     @Bind(R.id.display_name) TextView displayName;
     @Bind(R.id.address) TextView address;
+    @Bind(R.id.likes_icon) TextView likesIcon;
+    @Bind(R.id.likes_count) TextView likesCount;
+    @Bind(R.id.dislikes_icon) TextView dislikesIcon;
+    @Bind(R.id.dislikes_count) TextView dislikesCount;
     @Bind(R.id.common_pokemon) RecyclerView commonPokemon;
     @Bind(R.id.uncommon_pokemon) RecyclerView uncommonPokemon;
     @Bind(R.id.rare_pokemon) RecyclerView rarePokemon;
@@ -57,10 +59,14 @@ public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.no_uncommon_pokemon) View noUncommonPokemon;
     @Bind(R.id.no_rare_pokemon) View noRarePokemon;
 
+    @BindString(R.string.like_count) String likesTemplate;
+    @BindString(R.string.dislike_count) String dislikesTemplate;
+
     @BindColor(R.color.app_red) int red;
     @BindColor(R.color.gray) int gray;
     @BindColor(R.color.green) int green;
     @BindColor(R.color.transparent_red) int transparentRed;
+    @BindColor(R.color.dark_gray) int darkGray;
 
     private PokeLocation place;
     private MaterialDialog progressDialog;
@@ -106,7 +112,7 @@ public class PokeLocationActivity extends StandardActivity {
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this);
         MaterialShowcaseView likeExplanation = new MaterialShowcaseView.Builder(this)
                 .setMaskColour(transparentRed)
-                .setTarget(like)
+                .setTarget(likesIcon)
                 .setDismissText(R.string.got_it)
                 .setContentText(R.string.like_explanation)
                 .withCircleShape()
@@ -114,7 +120,7 @@ public class PokeLocationActivity extends StandardActivity {
 
         MaterialShowcaseView dislikeExplanation = new MaterialShowcaseView.Builder(this)
                 .setMaskColour(transparentRed)
-                .setTarget(dislike)
+                .setTarget(dislikesIcon)
                 .setDismissText(R.string.got_it)
                 .setContentText(R.string.dislike_explanation)
                 .withCircleShape()
@@ -144,37 +150,39 @@ public class PokeLocationActivity extends StandardActivity {
     }
 
     private void loadScoreModule() {
-        score.setText(String.valueOf(place.getScore()));
+        likesCount.setText(String.format(likesTemplate, place.getNumLikes()));
+        dislikesCount.setText(String.format(dislikesTemplate, place.getNumDislikes()));
+
         int currentVote = DatabaseManager.get().getVote(place);
         switch (currentVote) {
             case 1:
-                like.setText(R.string.liked_icon);
-                like.setTextColor(green);
-                dislike.setText(R.string.dislike_icon);
-                dislike.setTextColor(gray);
+                likesCount.setTextColor(green);
+                likesIcon.setTextColor(green);
+                dislikesIcon.setTextColor(darkGray);
+                dislikesCount.setTextColor(darkGray);
                 break;
             case 0:
-                like.setText(R.string.like_icon);
-                like.setTextColor(gray);
-                dislike.setText(R.string.dislike_icon);
-                dislike.setTextColor(gray);
+                likesCount.setTextColor(darkGray);
+                likesIcon.setTextColor(darkGray);
+                dislikesIcon.setTextColor(darkGray);
+                dislikesCount.setTextColor(darkGray);
                 break;
             case -1:
-                like.setText(R.string.like_icon);
-                like.setTextColor(gray);
-                dislike.setText(R.string.disliked_icon);
-                dislike.setTextColor(red);
+                likesCount.setTextColor(darkGray);
+                likesIcon.setTextColor(darkGray);
+                dislikesIcon.setTextColor(red);
+                dislikesCount.setTextColor(red);
                 break;
         }
     }
 
-    @OnClick(R.id.like)
+    @OnClick(R.id.likes_button)
     public void like() {
         DatabaseManager.get().processLike(place);
         loadScoreModule();
     }
 
-    @OnClick(R.id.dislike)
+    @OnClick(R.id.dislikes_button)
     public void dislike() {
         DatabaseManager.get().processDislike(place);
         loadScoreModule();

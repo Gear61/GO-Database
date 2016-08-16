@@ -23,12 +23,12 @@
         Please try again or reset location services.
     </string>
 
-    <string name="common_title"><u>Common</u></string>
-    <string name="uncommon_title"><u>Uncommon</u></string>
-    <string name="rare_title"><u>Rare</u></string>
+    <string name="common_title">Common</string>
+    <string name="uncommon_title">Uncommon</string>
+    <string name="rare_title">Rare</string>
     <string name="no_pokemon_frequency">
         No Pokemon at this frequency. {ion-sad-outline}\n
-        Click the {ion-ios-bookmarks} button above to change that!
+        Click the \"+ Add\" button above to change that!
     </string>
 
     <string name="start_heading_here">Start heading here</string>
@@ -77,4 +77,9 @@
         Pokemon frequencies are calculated by averaging out what the entire Poke Spotter community thinks.
         Click on any Pokemon to let us know how often YOU think it shows up.
     </string>
+
+    <string name="like_count">%1d likes</string>
+    <string name="dislike_count">%1d dislikes</string>
+
+    <string name="add_with_plus">+ Add</string>
 </resources>

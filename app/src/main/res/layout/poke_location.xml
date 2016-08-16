@@ -29,79 +29,106 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/display_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="24dp"/>
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+
+                <View style="@style/divider"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal">
+                        android:id="@+id/likes_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@color/gray_800"
+                        android:background="@color/gray_200"
+                        android:orientation="horizontal"
+                        android:gravity="center">
 
                         <com.joanzapata.iconify.widget.IconTextView
-                            android:id="@+id/like"
-                            style="@style/vote_icon"/>
-
-                        <TextView
-                            android:id="@+id/score"
+                            android:id="@+id/likes_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24dp"
-                            android:textColor="@color/dark_gray"/>
+                            android:gravity="center"
+                            android:text="@string/like_icon"
+                            android:textSize="18dp"/>
 
-                        <com.joanzapata.iconify.widget.IconTextView
-                            android:id="@+id/dislike"
-                            style="@style/vote_icon"/>
+                        <TextView
+                            android:id="@+id/likes_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:textSize="18dp"
+                            android:textColor="@color/dark_gray"/>
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray_400"/>
+
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:id="@+id/dislikes_button"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/gray_800"
+                        android:background="@color/gray_200"
+                        android:orientation="horizontal"
+                        android:gravity="center">
 
-                        <TextView
-                            android:id="@+id/display_name"
+                        <com.joanzapata.iconify.widget.IconTextView
+                            android:id="@+id/dislikes_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="24sp"/>
+                            android:text="@string/dislike_icon"
+                            android:textSize="18dp"/>
 
                         <TextView
-                            android:id="@+id/address"
+                            android:id="@+id/dislikes_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="16sp"/>
+                            android:layout_marginLeft="8dp"
+                            android:textSize="18dp"
+                            android:textColor="@color/dark_gray"/>
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_marginTop="0dp"
+                <View style="@style/divider"/>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
                     style="@style/gallery_title_container">
 
                     <TextView
                         android:text="@string/common_title"
                         style="@style/frequency_title"/>
 
-                    <LinearLayout
+                    <TextView
                         android:id="@+id/add_common_pokemon"
-                        android:layout_marginTop="3dp"
-                        style="@style/add_button_container">
-
-                        <com.joanzapata.iconify.widget.IconTextView
-                            style="@style/add_journal_icon"/>
-
-                        <TextView
-                            style="@style/add_text"/>
-                    </LinearLayout>
-                </LinearLayout>
+                        style="@style/location_add_text"/>
+                </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/common_pokemon"
@@ -112,23 +139,20 @@
                     android:id="@+id/no_common_pokemon"
                     style="@style/no_pokemon_frequency"/>
 
-                <LinearLayout style="@style/gallery_title_container">
+                <View style="@style/location_divider"/>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    style="@style/gallery_title_container">
+
                     <TextView
                         android:text="@string/uncommon_title"
                         style="@style/frequency_title"/>
 
-                    <LinearLayout
+                    <TextView
                         android:id="@+id/add_uncommon_pokemon"
-                        android:layout_marginTop="3dp"
-                        style="@style/add_button_container">
-
-                        <com.joanzapata.iconify.widget.IconTextView
-                            style="@style/add_journal_icon"/>
-
-                        <TextView
-                            style="@style/add_text"/>
-                    </LinearLayout>
-                </LinearLayout>
+                        style="@style/location_add_text"/>
+                </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/uncommon_pokemon"
@@ -139,23 +163,21 @@
                     android:id="@+id/no_uncommon_pokemon"
                     style="@style/no_pokemon_frequency"/>
 
-                <LinearLayout style="@style/gallery_title_container">
+                <View
+                    style="@style/location_divider"/>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    style="@style/gallery_title_container">
+
                     <TextView
                         android:text="@string/rare_title"
                         style="@style/frequency_title"/>
 
-                    <LinearLayout
+                    <TextView
                         android:id="@+id/add_rare_pokemon"
-                        android:layout_marginTop="3dp"
-                        style="@style/add_button_container">
-
-                        <com.joanzapata.iconify.widget.IconTextView
-                            style="@style/add_journal_icon"/>
-
-                        <TextView
-                            style="@style/add_text"/>
-                    </LinearLayout>
-                </LinearLayout>
+                        style="@style/location_add_text"/>
+                </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rare_pokemon"

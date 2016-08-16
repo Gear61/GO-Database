@@ -22,7 +22,7 @@ import io.realm.RealmList;
  */
 public class PokeLocation implements Parcelable {
     public static final String KEY = "pokeLocation";
-    public static final int NUM_PREVIEWS = 7;
+    public static final int NUM_PREVIEWS = 8;
 
     @SerializedName("place_id")
     @Expose
@@ -36,9 +36,17 @@ public class PokeLocation implements Parcelable {
     @Expose
     private String address;
 
-    @SerializedName("up_votes")
+    @SerializedName("net_votes")
     @Expose
     private int score;
+
+    @SerializedName("total_up_votes")
+    @Expose
+    private int numLikes;
+
+    @SerializedName("total_down_votes")
+    @Expose
+    private int numDislikes;
 
     @SerializedName("lat")
     @Expose
@@ -76,6 +84,22 @@ public class PokeLocation implements Parcelable {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getNumLikes() {
+        return numLikes;
+    }
+
+    public void setNumLikes(int upVotes) {
+        this.numLikes = upVotes;
+    }
+
+    public int getNumDislikes() {
+        return numDislikes;
+    }
+
+    public void setNumDislikes(int numDislikes) {
+        this.numDislikes = numDislikes;
     }
 
     public String getDisplayName() {
@@ -260,6 +284,8 @@ public class PokeLocation implements Parcelable {
         displayName = in.readString();
         address = in.readString();
         score = in.readInt();
+        numLikes = in.readInt();
+        numDislikes = in.readInt();
         latitude = in.readDouble();
         longitude = in.readDouble();
         if (in.readByte() == 0x01) {
@@ -293,6 +319,8 @@ public class PokeLocation implements Parcelable {
         dest.writeString(displayName);
         dest.writeString(address);
         dest.writeInt(score);
+        dest.writeInt(numLikes);
+        dest.writeInt(numDislikes);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
         if (commonPokemon == null) {

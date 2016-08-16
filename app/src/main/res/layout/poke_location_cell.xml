@@ -1,102 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_gray"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray"
+        android:textSize="16sp"/>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="60dp"
+        android:id="@+id/preview_gallery"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:orientation="horizontal">
 
-        <com.joanzapata.iconify.widget.IconTextView
-            android:id="@+id/like"
-            style="@style/vote_icon"/>
+        <ImageView
+            android:id="@+id/pokemon1"
+            style="@style/pokemon_preview_icon"/>
+
+        <ImageView
+            android:id="@+id/pokemon2"
+            style="@style/pokemon_preview_icon"/>
+
+        <ImageView
+            android:id="@+id/pokemon3"
+            style="@style/pokemon_preview_icon"/>
+
+        <ImageView
+            android:id="@+id/pokemon4"
+            style="@style/pokemon_preview_icon"/>
+
+        <ImageView
+            android:id="@+id/pokemon5"
+            style="@style/pokemon_preview_icon"/>
+
+        <ImageView
+            android:id="@+id/pokemon6"
+            style="@style/pokemon_preview_icon"/>
+
+        <ImageView
+            android:id="@+id/pokemon7"
+            style="@style/pokemon_preview_icon"/>
+
+        <ImageView
+            android:id="@+id/pokemon8"
+            style="@style/pokemon_preview_icon"/>
 
         <TextView
-            android:id="@+id/score"
+            android:id="@+id/overflow_number"
+            android:background="@drawable/pokemon_cell_background"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
+            android:layout_height="30dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
             android:textColor="@color/dark_gray"/>
-
-        <com.joanzapata.iconify.widget.IconTextView
-            android:id="@+id/dislike"
-            style="@style/vote_icon"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            android:id="@+id/display_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/dark_gray"
-            android:textSize="24sp"/>
-
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:textSize="16sp"/>
-
-        <LinearLayout
-            android:id="@+id/preview_gallery"
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/pokemon1"
-                style="@style/pokemon_preview_icon"/>
-
-            <ImageView
-                android:id="@+id/pokemon2"
-                style="@style/pokemon_preview_icon"/>
-
-            <ImageView
-                android:id="@+id/pokemon3"
-                style="@style/pokemon_preview_icon"/>
-
-            <ImageView
-                android:id="@+id/pokemon4"
-                style="@style/pokemon_preview_icon"/>
-
-            <ImageView
-                android:id="@+id/pokemon5"
-                style="@style/pokemon_preview_icon"/>
-
-            <ImageView
-                android:id="@+id/pokemon6"
-                style="@style/pokemon_preview_icon"/>
-
-            <ImageView
-                android:id="@+id/pokemon7"
-                style="@style/pokemon_preview_icon"/>
-            
-            <TextView
-                android:id="@+id/overflow_number"
-                android:background="@drawable/pokemon_cell_background"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:gravity="center_vertical"
-                android:textSize="14dp"
-                android:textColor="@color/dark_gray"/>
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

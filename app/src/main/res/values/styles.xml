@@ -68,11 +68,11 @@
     </style>
 
     <style name="add_button_container">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:background">@drawable/add_button_background</item>
         <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/add_button_background</item>
     </style>
 
     <style name="add_journal_icon">
@@ -88,8 +88,19 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">@string/add</item>
-        <item name="android:textSize">10dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="location_add_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:text">@string/add_with_plus</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@color/app_red</item>
     </style>
 
     <style name="pokemon_preview_icon">
@@ -117,6 +128,16 @@
         <item name="android:textSize">22sp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/gray_300</item>
+    </style>
+
+    <style name="location_divider" parent="divider">
+        <item name="android:layout_marginTop">10dp</item>
     </style>
 
     <style name="vote_icon">

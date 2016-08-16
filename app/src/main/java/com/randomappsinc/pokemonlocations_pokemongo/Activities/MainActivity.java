@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        PreferencesManager.get().enableImages();
+
         givenFirstLocation = "";
         filter = new Filter();
         addListing.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_ios_bookmarks).colorRes(R.color.white));

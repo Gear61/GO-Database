@@ -27,7 +27,7 @@ import io.realm.RealmSchema;
  * Created by alexanderchiou on 7/17/16.
  */
 public class DatabaseManager {
-    private static final int CURRENT_REALM_VERSION = 1;
+    private static final int CURRENT_REALM_VERSION = 2;
     private static DatabaseManager instance;
 
     public static DatabaseManager get() {
@@ -66,6 +66,13 @@ public class DatabaseManager {
                         .addField("displayName", String.class)
                         .addField("latitude", double.class)
                         .addField("longitude", double.class);
+            }
+            oldVersion++;
+
+            if (oldVersion == 1) {
+                schema.get("PokeLocationDO")
+                        .addField("numLikes", int.class)
+                        .addField("numDislikes", int.class);
             }
         }
     };

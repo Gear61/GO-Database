@@ -73,4 +73,9 @@ public class PokemonServer {
     public String getPokemonName(int id) {
         return idToNameMappings.get(id);
     }
+
+    public boolean isLegendary(String pokemonName) {
+        int pokemonId = getPokemonId(pokemonName);
+        return pokemonId == 144 || pokemonId == 145 || pokemonId == 146 || pokemonId == 150 || pokemonId == 151;
+    }
 }

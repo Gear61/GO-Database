@@ -73,6 +73,7 @@ public class PokeLocationActivity extends StandardActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         place = getIntent().getParcelableExtra(PokeLocation.KEY);
+
         progressDialog = new MaterialDialog.Builder(this)
                 .content(R.string.submitting_finding)
                 .progress(true, 0)
@@ -275,6 +276,7 @@ public class PokeLocationActivity extends StandardActivity {
                     DatabaseManager.get().unfavoriteLocation(place);
                 } else {
                     DatabaseManager.get().addOrUpdateLocation(place);
+                    loadScoreModule();
                 }
                 invalidateOptionsMenu();
                 return true;

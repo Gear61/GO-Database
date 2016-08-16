@@ -21,6 +21,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
@@ -35,6 +36,9 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by alexanderchiou on 7/17/16.
@@ -56,6 +60,7 @@ public class PokeLocationActivity extends StandardActivity {
     @BindColor(R.color.app_red) int red;
     @BindColor(R.color.gray) int gray;
     @BindColor(R.color.green) int green;
+    @BindColor(R.color.transparent_red) int transparentRed;
 
     private PokeLocation place;
     private MaterialDialog progressDialog;
@@ -91,6 +96,51 @@ public class PokeLocationActivity extends StandardActivity {
         uncommonPokemon.setAdapter(uncommonAdapter);
         rarePokemon.setAdapter(rareAdapter);
         setGalleries();
+
+        if (PreferencesManager.get().shouldShowLocationTut()) {
+            showTutorial();
+        }
+    }
+
+    private void showTutorial() {
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this);
+        MaterialShowcaseView likeExplanation = new MaterialShowcaseView.Builder(this)
+                .setMaskColour(transparentRed)
+                .setTarget(like)
+                .setDismissText(R.string.got_it)
+                .setContentText(R.string.like_explanation)
+                .withCircleShape()
+                .build();
+
+        MaterialShowcaseView dislikeExplanation = new MaterialShowcaseView.Builder(this)
+                .setMaskColour(transparentRed)
+                .setTarget(dislike)
+                .setDismissText(R.string.got_it)
+                .setContentText(R.string.dislike_explanation)
+                .withCircleShape()
+                .setListener(new IShowcaseListener() {
+                    @Override
+                    public void onShowcaseDisplayed(MaterialShowcaseView materialShowcaseView) {}
+
+                    @Override
+                    public void onShowcaseDismissed(MaterialShowcaseView materialShowcaseView) {
+                        explainEasyVote();
+                    }
+                })
+                .build();
+
+        sequence.addSequenceItem(likeExplanation);
+        sequence.addSequenceItem(dislikeExplanation);
+        sequence.start();
+    }
+
+    private void explainEasyVote() {
+        new MaterialDialog.Builder(this)
+                .cancelable(false)
+                .title(R.string.fighting_fraud)
+                .content(R.string.easy_vote_explanation)
+                .positiveText(R.string.got_it)
+                .show();
     }
 
     private void loadScoreModule() {

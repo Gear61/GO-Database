@@ -60,7 +60,7 @@
     <string name="close">Close</string>
 
     <!-- First-time location setting -->
-    <string name="looking_where">Where are you looking for Pokemon?</string>
+    <string name="looking_where">Where are you looking for Pokemon? (city, state/country)</string>
     <string name="bad_first_location">
         We were unable to process the location you gave us.
         Before trying again:\n\n1. Check your spelling\n2.

@@ -15,6 +15,7 @@ public class PreferencesManager {
     private static final String FIRST_TIME_KEY = "firstTime";
     private static final String FIRST_TIME_SEARCH = "firstTimeSearch";
     private static final String FIRST_TIME_DISTANCE = "firstTimeDistance";
+    private static final String FIRST_TIME_LOCATION = "firstTimeLocation";
     private static final String SHOULD_SHOW_LOCATION_RATIONALE_KEY = "shouldShowLocationRationale";
     private static final String CURRENT_LOCATION_KEY = "currentLocation";
     private static final String IMAGES_ENABLED_KEY = "imagesEnabled";
@@ -64,6 +65,12 @@ public class PreferencesManager {
         boolean shouldSet = prefs.getBoolean(FIRST_TIME_DISTANCE, true);
         prefs.edit().putBoolean(FIRST_TIME_DISTANCE, false).apply();
         return shouldSet;
+    }
+
+    public boolean shouldShowLocationTut() {
+        boolean shouldShow = prefs.getBoolean(FIRST_TIME_LOCATION, true);
+        prefs.edit().putBoolean(FIRST_TIME_LOCATION, false).apply();
+        return shouldShow;
     }
 
     public void setIsAmerican(boolean isAmerican) {

@@ -157,19 +157,25 @@ public class PokeLocationActivity extends StandardActivity {
         switch (currentVote) {
             case 1:
                 likesCount.setTextColor(green);
+                likesIcon.setText(R.string.liked_icon);
                 likesIcon.setTextColor(green);
+                dislikesIcon.setText(R.string.dislike_icon);
                 dislikesIcon.setTextColor(darkGray);
                 dislikesCount.setTextColor(darkGray);
                 break;
             case 0:
                 likesCount.setTextColor(darkGray);
+                likesIcon.setText(R.string.like_icon);
                 likesIcon.setTextColor(darkGray);
+                dislikesIcon.setText(R.string.dislike_icon);
                 dislikesIcon.setTextColor(darkGray);
                 dislikesCount.setTextColor(darkGray);
                 break;
             case -1:
                 likesCount.setTextColor(darkGray);
+                likesIcon.setText(R.string.like_icon);
                 likesIcon.setTextColor(darkGray);
+                dislikesIcon.setText(R.string.disliked_icon);
                 dislikesIcon.setTextColor(red);
                 dislikesCount.setTextColor(red);
                 break;

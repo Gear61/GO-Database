@@ -32,4 +32,26 @@
         <item name="android:paddingRight">15dp</item>
         <item name="android:visibility">gone</item>
     </style>
+
+    <style name="like_container">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@color/gray_200</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="like_icon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="num_likes">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18dp</item>
+    </style>
 </resources>

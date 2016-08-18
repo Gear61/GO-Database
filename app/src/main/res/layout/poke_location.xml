@@ -58,29 +58,15 @@
 
                     <LinearLayout
                         android:id="@+id/likes_button"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textColor="@color/gray_800"
-                        android:background="@color/gray_200"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        style="@style/like_container">
 
                         <com.joanzapata.iconify.widget.IconTextView
                             android:id="@+id/likes_icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/like_icon"
-                            android:textSize="18dp"/>
+                            style="@style/like_icon"/>
 
                         <TextView
                             android:id="@+id/likes_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="18dp"
-                            android:textColor="@color/dark_gray"/>
+                            style="@style/num_likes"/>
                     </LinearLayout>
 
                     <View
@@ -90,28 +76,15 @@
 
                     <LinearLayout
                         android:id="@+id/dislikes_button"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/gray_800"
-                        android:background="@color/gray_200"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        style="@style/like_container">
 
                         <com.joanzapata.iconify.widget.IconTextView
                             android:id="@+id/dislikes_icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/dislike_icon"
-                            android:textSize="18dp"/>
+                            style="@style/like_icon"/>
 
                         <TextView
                             android:id="@+id/dislikes_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="18dp"
-                            android:textColor="@color/dark_gray"/>
+                            style="@style/num_likes"/>
                     </LinearLayout>
                 </LinearLayout>
 

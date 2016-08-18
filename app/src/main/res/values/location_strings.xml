@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="location">Location</string>
-    <string name="location_view">Location View</string>
+    <string name="poke_location_view">Poke Location View</string>
     <string name="getting_your_location">Getting your location&#8230;</string>
     <string name="automatic">Automatic</string>
     <string name="set_current_location">Set current location</string>
@@ -62,4 +62,19 @@
     <string name="liked_icon">{fa-thumbs-up}</string>
     <string name="dislike_icon">{fa-thumbs-o-down}</string>
     <string name="disliked_icon">{fa-thumbs-down}</string>
+
+    <!-- Tutorial -->
+    <string name="like_explanation">
+        If a Poke location is clean, safe, and is just good overall,
+        let the community know by giving it a like.
+    </string>
+    <string name="dislike_explanation">
+        If a Poke location is something ridiculous like an entire city, a duplicate of another location in our system,
+        or just sucks overall, give it a dislike.
+    </string>
+    <string name="fighting_fraud">Fighting Fraud</string>
+    <string name="easy_vote_explanation">
+        Pokemon frequencies are calculated by averaging out what the entire Poke Spotter community thinks.
+        Click on any Pokemon to let us know how often YOU think it shows up.
+    </string>
 </resources>

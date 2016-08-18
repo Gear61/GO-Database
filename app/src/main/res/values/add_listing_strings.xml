@@ -34,6 +34,7 @@
     <string name="no_place">Please tell us where these Pokemon appear.</string>
     <string name="already_attached">You have already attached %1$s to this report.</string>
     <string name="add_pokemon_fail">We failed to process your Pokemon Finding. Please try again later.</string>
+    <string name="no_legendaries">Legendary Pokemon have not been released yet.</string>
 
     <string name="add_finding_question">How rare do you think %1$s is at %2$s?</string>
 

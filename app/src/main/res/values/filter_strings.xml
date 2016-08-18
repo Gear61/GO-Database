@@ -6,6 +6,10 @@
     <string name="distance">Distance</string>
 
     <string name="invalid_pokemon">Please enter in a valid Pokemon name.</string>
+    <string name="legendary_search_warning">
+        Legendary Pokemon have not been released yet.
+        Any results you may find are fraudulent.
+    </string>
 
     <!-- Range -->
     <string name="nearby">Nearby (&lt; 1 mi.)</string>

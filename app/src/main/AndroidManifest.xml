@@ -62,7 +62,7 @@
 
         <activity
             android:name=".Activities.PokeLocationActivity"
-            android:label="@string/location_view"
+            android:label="@string/poke_location_view"
             android:screenOrientation="portrait">
         </activity>
 

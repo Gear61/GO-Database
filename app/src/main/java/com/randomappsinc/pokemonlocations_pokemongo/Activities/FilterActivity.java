@@ -105,12 +105,20 @@ public class FilterActivity extends StandardActivity {
 
     @OnTextChanged(value = R.id.pokemon_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
-        if (input.length() == 0) {
+        String pokemonName = input.toString();
+        if (pokemonName.isEmpty()) {
             clearPokemon.setVisibility(View.GONE);
         } else {
             clearPokemon.setVisibility(View.VISIBLE);
-            if (PokemonServer.get().isValidPokemon(input.toString())) {
+            if (PokemonServer.get().isValidPokemon(pokemonName)) {
                 UIUtils.hideKeyboard(this);
+                if (PokemonServer.get().isLegendary(pokemonName)) {
+                    new MaterialDialog.Builder(this)
+                            .cancelable(false)
+                            .content(R.string.legendary_search_warning)
+                            .positiveText(R.string.got_it)
+                            .show();
+                }
             }
         }
     }

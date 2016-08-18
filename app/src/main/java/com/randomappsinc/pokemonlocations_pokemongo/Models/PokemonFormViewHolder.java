@@ -84,6 +84,10 @@ public class PokemonFormViewHolder {
                 error.setText(String.format(dupeTemplate, cleanName));
                 error.setVisibility(View.VISIBLE);
                 return;
+            } else if (PokemonServer.get().isLegendary(pokemonName)) {
+                error.setText(R.string.no_legendaries);
+                error.setVisibility(View.VISIBLE);
+                return;
             } else {
                 addButton.setEnabled(true);
                 return;

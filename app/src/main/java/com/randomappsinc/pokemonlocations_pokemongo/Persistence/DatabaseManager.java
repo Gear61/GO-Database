@@ -204,6 +204,11 @@ public class DatabaseManager {
                 realm.copyToRealmOrUpdate(pokeLocation.toPokeLocationDO());
             }
         });
+
+        // Auto-like location if they haven't already and are neutral
+        if (getVote(pokeLocation) == 0) {
+            processLike(pokeLocation);
+        }
     }
 
     public List<String> getFavoriteIds() {

@@ -82,7 +82,7 @@ public class DatabaseManager {
     public void processLike(PokeLocation place) {
         int oldScore = getVote(place);
         int newScore = 0;
-        final VoteDO voteDO = new VoteDO();
+        VoteDO voteDO = new VoteDO();
         voteDO.setPlaceId(place.getPlaceId());
 
         switch (oldScore) {
@@ -125,7 +125,7 @@ public class DatabaseManager {
     public void processDislike(PokeLocation place) {
         int oldScore = getVote(place);
         int newScore = 0;
-        final VoteDO voteDO = new VoteDO();
+        VoteDO voteDO = new VoteDO();
         voteDO.setPlaceId(place.getPlaceId());
 
         switch (oldScore) {

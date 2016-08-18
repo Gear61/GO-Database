@@ -154,27 +154,28 @@ public class PokeLocationActivity extends StandardActivity {
         dislikesCount.setText(String.format(dislikesTemplate, place.getNumDislikes()));
 
         int currentVote = DatabaseManager.get().getVote(place);
+
         switch (currentVote) {
             case 1:
-                likesCount.setTextColor(green);
                 likesIcon.setText(R.string.liked_icon);
                 likesIcon.setTextColor(green);
+                likesCount.setTextColor(green);
                 dislikesIcon.setText(R.string.dislike_icon);
                 dislikesIcon.setTextColor(darkGray);
                 dislikesCount.setTextColor(darkGray);
                 break;
             case 0:
-                likesCount.setTextColor(darkGray);
                 likesIcon.setText(R.string.like_icon);
                 likesIcon.setTextColor(darkGray);
+                likesCount.setTextColor(darkGray);
                 dislikesIcon.setText(R.string.dislike_icon);
                 dislikesIcon.setTextColor(darkGray);
                 dislikesCount.setTextColor(darkGray);
                 break;
             case -1:
-                likesCount.setTextColor(darkGray);
                 likesIcon.setText(R.string.like_icon);
                 likesIcon.setTextColor(darkGray);
+                likesCount.setTextColor(darkGray);
                 dislikesIcon.setText(R.string.disliked_icon);
                 dislikesIcon.setTextColor(red);
                 dislikesCount.setTextColor(red);
@@ -225,6 +226,7 @@ public class PokeLocationActivity extends StandardActivity {
     protected void onResume() {
         super.onResume();
         if (notInitialLoad) {
+            loadScoreModule();
             invalidateOptionsMenu();
             List<String> placeId = new ArrayList<>();
             placeId.add(place.getPlaceId());

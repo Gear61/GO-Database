@@ -96,7 +96,8 @@ public class PokemonUtils {
         location.setAddress(locationDO.getAddress());
         location.setLatitude(locationDO.getLatitude());
         location.setLongitude(locationDO.getLongitude());
-        location.setScore(locationDO.getScore());
+        location.setNumLikes(locationDO.getNumLikes());
+        location.setNumDislikes(locationDO.getNumDislikes());
 
         List<Integer> commonPokemon = new ArrayList<>();
         for (PokemonDO pokemonDO : locationDO.getCommonPokemon()) {

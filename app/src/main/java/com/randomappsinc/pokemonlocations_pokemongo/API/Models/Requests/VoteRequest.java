@@ -11,15 +11,23 @@ public class VoteRequest {
     @Expose
     private String placeId;
 
-    @SerializedName("amount")
+    @SerializedName("old_value")
     @Expose
-    private int amount;
+    private int oldAmount;
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
+    @SerializedName("new_value")
+    @Expose
+    private int newAmount;
 
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
+    }
+
+    public void setOldAmount(int oldAmount) {
+        this.oldAmount = oldAmount;
+    }
+
+    public void setNewAmount(int newAmount) {
+        this.newAmount = newAmount;
     }
 }

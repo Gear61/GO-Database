@@ -71,6 +71,7 @@ public class DatabaseManager {
 
             if (oldVersion == 1) {
                 schema.get("PokeLocationDO")
+                        .removeField("score")
                         .addField("numLikes", int.class)
                         .addField("numDislikes", int.class);
             }
@@ -80,29 +81,32 @@ public class DatabaseManager {
     // Upvote/downvote
     public void processLike(PokeLocation place) {
         int oldScore = getVote(place);
-        int movement = 0;
+        int newScore = 0;
         final VoteDO voteDO = new VoteDO();
         voteDO.setPlaceId(place.getPlaceId());
 
         switch (oldScore) {
             // Liked to neutral
             case 1:
-                movement = -1;
+                newScore = 0;
                 voteDO.setVote(0);
+                place.setNumLikes(place.getNumLikes() - 1);
                 break;
             // Neutral to liked
             case 0:
-                movement = 1;
+                newScore = 1;
                 voteDO.setVote(1);
+                place.setNumLikes(place.getNumLikes() + 1);
                 break;
             // Disliked to liked
             case -1:
-                movement = 2;
+                newScore = 1;
                 voteDO.setVote(1);
+                place.setNumLikes(place.getNumLikes() + 1);
+                place.setNumDislikes(place.getNumDislikes() - 1);
                 break;
         }
 
-        place.setScore(place.getScore() + movement);
         updateVote(voteDO);
 
         if (isLocationFavorited(place)) {
@@ -111,7 +115,8 @@ public class DatabaseManager {
 
         VoteRequest voteRequest = new VoteRequest();
         voteRequest.setPlaceId(place.getPlaceId());
-        voteRequest.setAmount(movement);
+        voteRequest.setOldAmount(oldScore);
+        voteRequest.setNewAmount(newScore);
         RestClient.get().getPokemonService()
                 .voteLocation(voteRequest)
                 .enqueue(new VoteCallback(oldScore, place));
@@ -119,29 +124,32 @@ public class DatabaseManager {
 
     public void processDislike(PokeLocation place) {
         int oldScore = getVote(place);
-        int movement = 0;
+        int newScore = 0;
         final VoteDO voteDO = new VoteDO();
         voteDO.setPlaceId(place.getPlaceId());
 
         switch (oldScore) {
             // Liked to disliked
             case 1:
-                movement = -2;
+                newScore = -1;
                 voteDO.setVote(-1);
+                place.setNumLikes(place.getNumLikes() - 1);
+                place.setNumDislikes(place.getNumDislikes() + 1);
                 break;
             // Neutral to disliked
             case 0:
-                movement = -1;
+                newScore = -1;
                 voteDO.setVote(-1);
+                place.setNumDislikes(place.getNumDislikes() + 1);
                 break;
             // Disliked to neutral
             case -1:
-                movement = 1;
+                newScore = 0;
                 voteDO.setVote(0);
+                place.setNumDislikes(place.getNumDislikes() - 1);
                 break;
         }
 
-        place.setScore(place.getScore() + movement);
         updateVote(voteDO);
 
         if (isLocationFavorited(place)) {
@@ -150,7 +158,8 @@ public class DatabaseManager {
 
         VoteRequest voteRequest = new VoteRequest();
         voteRequest.setPlaceId(place.getPlaceId());
-        voteRequest.setAmount(movement);
+        voteRequest.setOldAmount(oldScore);
+        voteRequest.setNewAmount(newScore);
         RestClient.get().getPokemonService()
                 .voteLocation(voteRequest)
                 .enqueue(new VoteCallback(oldScore, place));

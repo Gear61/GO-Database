@@ -15,7 +15,6 @@ public class PokeLocationDO extends RealmObject {
     private String address;
     private double latitude;
     private double longitude;
-    private int score;
     private int numLikes;
     private int numDislikes;
 
@@ -61,14 +60,6 @@ public class PokeLocationDO extends RealmObject {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public int getNumLikes() {

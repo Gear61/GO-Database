@@ -36,10 +36,6 @@ public class PokeLocation implements Parcelable {
     @Expose
     private String address;
 
-    @SerializedName("net_votes")
-    @Expose
-    private int score;
-
     @SerializedName("total_up_votes")
     @Expose
     private int numLikes;
@@ -79,11 +75,7 @@ public class PokeLocation implements Parcelable {
     }
 
     public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+        return numLikes - numDislikes;
     }
 
     public int getNumLikes() {
@@ -248,9 +240,10 @@ public class PokeLocation implements Parcelable {
         placeDO.setPlaceId(placeId);
         placeDO.setDisplayName(displayName);
         placeDO.setAddress(address);
-        placeDO.setScore(score);
         placeDO.setLatitude(latitude);
         placeDO.setLongitude(longitude);
+        placeDO.setNumLikes(numLikes);
+        placeDO.setNumDislikes(numDislikes);
 
         RealmList<PokemonDO> commonPokemonDOs = new RealmList<>();
         for (Integer pokemonId : commonPokemon) {
@@ -283,7 +276,6 @@ public class PokeLocation implements Parcelable {
         placeId = in.readString();
         displayName = in.readString();
         address = in.readString();
-        score = in.readInt();
         numLikes = in.readInt();
         numDislikes = in.readInt();
         latitude = in.readDouble();
@@ -318,7 +310,6 @@ public class PokeLocation implements Parcelable {
         dest.writeString(placeId);
         dest.writeString(displayName);
         dest.writeString(address);
-        dest.writeInt(score);
         dest.writeInt(numLikes);
         dest.writeInt(numDislikes);
         dest.writeDouble(latitude);

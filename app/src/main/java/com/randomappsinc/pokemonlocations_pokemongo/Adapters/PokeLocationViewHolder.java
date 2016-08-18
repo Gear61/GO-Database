@@ -63,6 +63,8 @@ public class PokeLocationViewHolder {
         if (PreferencesManager.get().areImagesEnabled()) {
             previewGallery.setVisibility(View.VISIBLE);
             List<Integer> previewIds = pokeLocation.getPokemonPreviews(pokemonId);
+
+            // Load as many Pokemon as possible into previews
             for (int i = 0; i < PokeLocation.NUM_PREVIEWS - 1; i++) {
                 if (i >= previewIds.size()) {
                     pokemonPreviews.get(i).setVisibility(View.GONE);
@@ -74,15 +76,17 @@ public class PokeLocationViewHolder {
                 }
             }
 
+            // If there's not enough Pokemon to load the final item, hide it
             if (previewIds.size() < PokeLocation.NUM_PREVIEWS) {
                 finalPreview.setVisibility(View.GONE);
                 overflow.setVisibility(View.GONE);
             } else {
                 int extraPokemon = pokeLocation.getExtraPokemon();
+                // If there is only 1 "extra" Pokemon, just show it
                 if (extraPokemon == 1) {
                     overflow.setVisibility(View.GONE);
                     Picasso.with(context)
-                            .load(PokemonUtils.getPokemonIcon(previewIds.get(6)))
+                            .load(PokemonUtils.getPokemonIcon(previewIds.get(PokeLocation.NUM_PREVIEWS - 1)))
                             .into(finalPreview);
                     finalPreview.setVisibility(View.VISIBLE);
                 } else {

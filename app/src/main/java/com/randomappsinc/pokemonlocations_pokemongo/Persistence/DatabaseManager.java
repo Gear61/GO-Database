@@ -214,17 +214,17 @@ public class DatabaseManager {
     }
 
     public void addOrUpdateLocation(final PokeLocation pokeLocation) {
+        // If we're favoriting the location and not merely updating it, auto-like it
+        if (!isLocationFavorited(pokeLocation) && getVote(pokeLocation) == 0) {
+            processLike(pokeLocation);
+        }
+
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(pokeLocation.toPokeLocationDO());
             }
         });
-
-        // Auto-like location if they haven't already and are neutral
-        if (getVote(pokeLocation) == 0) {
-            processLike(pokeLocation);
-        }
     }
 
     public List<String> getFavoriteIds() {

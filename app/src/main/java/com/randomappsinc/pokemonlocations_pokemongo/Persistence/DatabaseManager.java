@@ -66,8 +66,8 @@ public class DatabaseManager {
                         .addField("displayName", String.class)
                         .addField("latitude", double.class)
                         .addField("longitude", double.class);
+                oldVersion++;
             }
-            oldVersion++;
 
             if (oldVersion == 1) {
                 schema.get("PokeLocationDO")

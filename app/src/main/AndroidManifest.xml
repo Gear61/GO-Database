@@ -83,5 +83,11 @@
             android:theme="@style/no_action_bar"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".Activities.UpdateNeededActivity"
+            android:theme="@style/no_action_bar"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

@@ -96,10 +96,10 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:text">@string/add_with_plus</item>
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">18dp</item>
         <item name="android:textColor">@color/app_red</item>
     </style>
 

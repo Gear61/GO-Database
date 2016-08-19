@@ -11,7 +11,15 @@ public class StatusInfo {
     @Expose
     private int maxVersion;
 
+    @SerializedName("min_version")
+    @Expose
+    private int minVersion;
+
     public int getMaxVersion() {
         return maxVersion;
+    }
+
+    public int getMinVersion() {
+        return minVersion;
     }
 }

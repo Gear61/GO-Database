@@ -17,6 +17,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.StatusCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.StatusRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
@@ -24,7 +27,11 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -66,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        PreferencesManager.get().enableImages();
+        EventBus.getDefault().register(this);
 
         givenFirstLocation = "";
         filter = new Filter();
@@ -244,6 +250,25 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         if (resultCode == RESULT_OK) {
             filter = data.getParcelableExtra(Filter.KEY);
             searchFragment.fullSearch();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatusRequest request = new StatusRequest();
+        request.setCurrentVersion(MyApplication.getVersionCode());
+        RestClient.get().getPokemonService()
+                .getStatus(request)
+                .enqueue(new StatusCallback());
+    }
+
+    @Subscribe
+    public void onEvent(String event) {
+        if (event.equals(StatusCallback.UPDATE_NEEDED)) {
+            Intent intent = new Intent(this, UpdateNeededActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
         }
     }
 

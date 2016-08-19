@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="please_update">
+        It looks like your version of Poke Spotter is too old.
+        Please visit the app listing in the Play Store and update to the latest version.
+        Thank you!
+    </string>
+    <string name="take_to_play">Visit Play Store</string>
+    <string name="play_store_icon">{ion-android-playstore}</string>
+</resources>

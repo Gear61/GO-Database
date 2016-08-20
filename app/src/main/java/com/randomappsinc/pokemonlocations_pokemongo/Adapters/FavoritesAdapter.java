@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import java.util.List;
@@ -63,7 +66,15 @@ public class FavoritesAdapter extends BaseAdapter {
         } else {
             holder = (PokeLocationViewHolder) view.getTag();
         }
-        holder.loadItem(getItem(position), -1, null);
+
+        LatLong currentLatLong = null;
+        String currentLocation = PreferencesManager.get().getCurrentLocation();
+        if (!currentLocation.equals(context.getString(R.string.automatic))) {
+            SavedLocationDO savedLocation = DatabaseManager.get().getLocation(currentLocation);
+            currentLatLong = new LatLong(savedLocation.getLatitude(), savedLocation.getLongitude());
+        }
+
+        holder.loadItem(getItem(position), -1, currentLatLong);
         return view;
     }
 }

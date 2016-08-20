@@ -92,17 +92,6 @@
         <item name="android:textColor">@color/gray</item>
     </style>
 
-    <style name="location_add_text">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:layout_alignParentRight">true</item>
-        <item name="android:text">@string/add_with_plus</item>
-        <item name="android:textSize">18dp</item>
-        <item name="android:textColor">@color/app_red</item>
-    </style>
-
     <style name="pokemon_preview_icon">
         <item name="android:background">@drawable/pokemon_cell_background</item>
         <item name="android:layout_width">30dp</item>
@@ -133,7 +122,7 @@
     <style name="divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/gray_300</item>
+        <item name="android:background">@color/light_gray</item>
     </style>
 
     <style name="location_divider" parent="divider">

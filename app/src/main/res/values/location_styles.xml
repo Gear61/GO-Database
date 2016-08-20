@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="gallery_title_container">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginTop">20dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="frequency_title">
@@ -27,9 +27,9 @@
         <item name="android:text">@string/no_pokemon_frequency</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/dark_gray</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingRight">15dp</item>
         <item name="android:visibility">gone</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
     </style>
 
     <style name="like_container">
@@ -54,5 +54,15 @@
         <item name="android:layout_marginLeft">-4dp</item>
         <item name="android:layout_marginRight">14dp</item>
         <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="location_add_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:text">@string/add_with_plus</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/app_red</item>
     </style>
 </resources>

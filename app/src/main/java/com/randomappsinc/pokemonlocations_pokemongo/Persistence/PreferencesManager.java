@@ -17,7 +17,7 @@ public class PreferencesManager {
     private static final String FIRST_TIME_DISTANCE = "firstTimeDistance";
     private static final String FIRST_TIME_LOCATION = "firstTimeLocation";
     private static final String SHOULD_SHOW_LOCATION_RATIONALE_KEY = "shouldShowLocationRationale";
-    private static final String CURRENT_LOCATION_KEY = "currentLocation";
+    public static final String CURRENT_LOCATION_KEY = "currentLocation";
     private static final String IMAGES_ENABLED_KEY = "imagesEnabled";
     private static final String IS_AMERICAN_KEY = "isAmerican";
     private static PreferencesManager instance;

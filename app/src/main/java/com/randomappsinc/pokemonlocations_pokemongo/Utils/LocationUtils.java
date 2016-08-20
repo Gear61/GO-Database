@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
@@ -27,11 +28,10 @@ public class LocationUtils {
         return options.toArray(new String[options.size()]);
     }
 
-    public static double getDistance(double latitude1, double longitude1,
-                                     double latitude2, double longitude2) {
-        double theta = longitude1 - longitude2;
-        double dist = Math.sin(degreeToRadians(latitude1)) * Math.sin(degreeToRadians(latitude2))
-                + Math.cos(degreeToRadians(latitude1)) * Math.cos(degreeToRadians(latitude2))
+    public static double getDistance(LatLong place1, LatLong place2) {
+        double theta = place1.getLongitude() - place2.getLongitude();
+        double dist = Math.sin(degreeToRadians(place1.getLatitude())) * Math.sin(degreeToRadians(place2.getLatitude()))
+                + Math.cos(degreeToRadians(place1.getLatitude())) * Math.cos(degreeToRadians(place2.getLatitude()))
                 * Math.cos(degreeToRadians(theta));
         dist = Math.acos(dist);
         dist = radianToDegree(dist);

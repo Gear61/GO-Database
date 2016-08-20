@@ -28,7 +28,7 @@
     <string name="rare_title">Rare</string>
     <string name="no_pokemon_frequency">
         No Pokemon at this frequency. {ion-sad-outline}\n
-        Click the \"+ Add\" button above to change that!
+        Click the \"+ Add\" button to change that!
     </string>
 
     <string name="start_heading_here">Start heading here</string>

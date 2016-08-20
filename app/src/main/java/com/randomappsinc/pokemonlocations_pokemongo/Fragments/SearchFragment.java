@@ -234,6 +234,7 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
         PokeLocation place = adapter.getItem(position);
         Intent intent = new Intent(getActivity(), PokeLocationActivity.class);
         intent.putExtra(PokeLocation.KEY, place);
+        intent.putExtra(PreferencesManager.CURRENT_LOCATION_KEY, searchedLocation);
         startActivityForResult(intent, 1);
     }
 

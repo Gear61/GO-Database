@@ -46,13 +46,13 @@ public class PokeLocationViewHolder {
         ButterKnife.bind(this, view);
     }
 
-    public void loadItem(PokeLocation pokeLocation, int pokemonId, LatLong location) {
+    public void loadItem(PokeLocation pokeLocation, int pokemonId, LatLong currentLocation) {
         displayName.setText(pokeLocation.getDisplayName());
-        if (location == null) {
+        if (currentLocation == null) {
             distance.setVisibility(View.GONE);
         } else {
-            double distanceValue = LocationUtils.getDistance(pokeLocation.getLatitude(), pokeLocation.getLongitude(),
-                    location.getLatitude(), location.getLongitude());
+            LatLong pokeCoords = new LatLong(pokeLocation.getLatitude(), pokeLocation.getLongitude());
+            double distanceValue = LocationUtils.getDistance(pokeCoords, currentLocation);
             if (PreferencesManager.get().getIsAmerican()) {
                 distance.setText(String.format(milesTemplate, distanceValue));
             } else {

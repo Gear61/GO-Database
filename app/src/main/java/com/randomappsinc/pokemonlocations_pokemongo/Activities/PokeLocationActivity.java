@@ -13,6 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SingleLocationCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.AddPokemonRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.SyncLocationsRequest;
@@ -21,8 +22,10 @@ import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
@@ -48,6 +51,7 @@ public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.display_name) TextView displayName;
     @Bind(R.id.address) TextView address;
+    @Bind(R.id.distance_away) TextView distanceAway;
     @Bind(R.id.likes_icon) TextView likesIcon;
     @Bind(R.id.likes_count) TextView likesCount;
     @Bind(R.id.dislikes_icon) TextView dislikesIcon;
@@ -93,6 +97,28 @@ public class PokeLocationActivity extends StandardActivity {
 
         displayName.setText(place.getDisplayName());
         address.setText(place.getAddress());
+
+        LatLong currentLatLong;
+        String currentLocation = PreferencesManager.get().getCurrentLocation();
+        if (!currentLocation.equals(getString(R.string.automatic))) {
+            SavedLocationDO savedLocation = DatabaseManager.get().getLocation(currentLocation);
+            currentLatLong = new LatLong(savedLocation.getLatitude(), savedLocation.getLongitude());
+        } else {
+            currentLatLong = getIntent().getParcelableExtra(PreferencesManager.CURRENT_LOCATION_KEY);
+        }
+
+        if (currentLatLong != null) {
+            LatLong placeCoords = new LatLong(place.getLatitude(), place.getLongitude());
+            double distanceValue = LocationUtils.getDistance(placeCoords, currentLatLong);
+            if (PreferencesManager.get().getIsAmerican()) {
+                distanceAway.setText(String.format(getString(R.string.miles_away), distanceValue));
+            } else {
+                distanceAway.setText(String.format(getString(R.string.kilometers_away), distanceValue));
+            }
+        } else {
+            distanceAway.setVisibility(View.GONE);
+        }
+
         loadScoreModule();
 
         commonAdapter = new PokemonAdapter(this);

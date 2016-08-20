@@ -28,6 +28,7 @@ import butterknife.OnTextChanged;
  * Created by alexanderchiou on 7/22/16.
  */
 public class PokemonFormViewHolder {
+    @Bind(R.id.parent) View parent;
     @Bind(R.id.pokemon_input) AutoCompleteTextView pokemonInput;
     @Bind(R.id.frequency_input) Spinner frequencyChoice;
     @Bind(R.id.error) TextView error;
@@ -36,6 +37,7 @@ public class PokemonFormViewHolder {
     private Context context;
     private View addButton;
     private Set<String> alreadyChosen;
+    private boolean prefillMode;
 
     public PokemonFormViewHolder(Context context, View rootView, View addButton) {
         ButterKnife.bind(this, rootView);
@@ -66,10 +68,18 @@ public class PokemonFormViewHolder {
         this.alreadyChosen = alreadyChosen;
     }
 
+    public void setPrefillMode(boolean prefillMode) {
+        this.prefillMode = prefillMode;
+    }
+
     public void clearForm() {
         pokemonInput.setText("");
         frequencyChoice.setSelection(0);
         error.setVisibility(View.GONE);
+    }
+
+    public void requestFocus() {
+        pokemonInput.requestFocus();
     }
 
     @OnClick(R.id.clear_pokemon)
@@ -84,8 +94,13 @@ public class PokemonFormViewHolder {
             InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             im.hideSoftInputFromWindow(pokemonInput.getWindowToken(), 0);
 
-            frequencyChoice.requestFocus();
-            frequencyChoice.performClick();
+            if (!prefillMode) {
+                frequencyChoice.requestFocus();
+                frequencyChoice.performClick();
+            } else {
+                prefillMode = false;
+                parent.requestFocus();
+            }
         }
         verifyInputs();
     }

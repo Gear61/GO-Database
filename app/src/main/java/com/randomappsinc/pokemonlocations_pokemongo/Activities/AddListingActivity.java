@@ -99,8 +99,10 @@ public class AddListingActivity extends StandardActivity {
             locationInput.setText(locationDisplay);
             int frequencyIndex = getIntent().getIntExtra(FREQUENCY_INDEX_KEY, 0);
             pokemonFormHolder.setFrequency(frequencyIndex);
+            pokemonFormHolder.setPrefillMode(true);
             pokemonFormHolder.setAlreadyChosen(new HashSet<String>());
             pokeFormDialog.show();
+            pokemonFormHolder.requestFocus();
         }
     }
 
@@ -109,6 +111,7 @@ public class AddListingActivity extends StandardActivity {
         pokemonFormHolder.setAlreadyChosen(addPokemonAdapter.getAlreadyAdded());
         pokemonFormHolder.clearForm();
         pokeFormDialog.show();
+        pokemonFormHolder.requestFocus();
     }
 
     @OnClick(R.id.location_input)

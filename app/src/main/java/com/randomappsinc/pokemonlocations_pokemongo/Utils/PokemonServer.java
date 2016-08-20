@@ -78,4 +78,12 @@ public class PokemonServer {
         int pokemonId = getPokemonId(pokemonName);
         return pokemonId == 144 || pokemonId == 145 || pokemonId == 146 || pokemonId == 150 || pokemonId == 151;
     }
+
+    public boolean cantBeCommon(String pokemonName) {
+        int pokemonId = getPokemonId(pokemonName);
+        return pokemonId == 3 || pokemonId == 6 || pokemonId == 9 || pokemonId == 31 || pokemonId == 34
+                || pokemonId == 45 || pokemonId == 62 || pokemonId == 65 || pokemonId == 68 || pokemonId == 71
+                || pokemonId == 76 || pokemonId == 94 || pokemonId == 103 || pokemonId == 130 || pokemonId == 131
+                || pokemonId == 134 || pokemonId == 135 || pokemonId == 136 || pokemonId == 143 || pokemonId == 149;
+    }
 }

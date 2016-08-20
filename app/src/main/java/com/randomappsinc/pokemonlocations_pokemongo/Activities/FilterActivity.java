@@ -112,6 +112,7 @@ public class FilterActivity extends StandardActivity {
             clearPokemon.setVisibility(View.VISIBLE);
             if (PokemonServer.get().isValidPokemon(pokemonName)) {
                 UIUtils.hideKeyboard(this);
+                parent.requestFocus();
                 if (PokemonServer.get().isLegendary(pokemonName)) {
                     new MaterialDialog.Builder(this)
                             .cancelable(false)

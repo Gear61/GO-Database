@@ -34,16 +34,15 @@
     <string name="no_place">Please tell us where these Pokemon appear.</string>
     <string name="already_attached">You have already attached %1$s to this report.</string>
     <string name="add_pokemon_fail">We failed to process your Pokemon Finding. Please try again later.</string>
-    <string name="no_legendaries">Legendary Pokemon have not been released yet.</string>
+    <string name="no_legendaries">Legendary Pokemon have not been released yet in Pokemon GO</string>
+    <string name="bogus_common">There is no way this Pokemon is common.</string>
 
     <string name="add_finding_question">How rare do you think %1$s is at %2$s?</string>
 
     <string name="share_pokemon_success">
         You have successfully shared your Pokemon Finding(s) with the community. Thank you!
     </string>
-    <string name="share_and_favorite">
-        Report shared! Add %1$s to favorites?
-    </string>
+    <string name="share_and_favorite">Report shared! Add %1$s to favorites?</string>
 
     <string name="delete_pokemon_title">Confirm Pokemon Deletion</string>
     <string name="delete_pokemon_confirmation">

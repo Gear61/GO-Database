@@ -1,5 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,19 +12,29 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.NearbySuggestionsCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SearchCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.AddPokemonRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.NearbyRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Results.LocationsResult;
+import com.randomappsinc.pokemonlocations_pokemongo.API.PokeLocationsEvent;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.AddPokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokemonFormViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PermissionUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -31,11 +42,13 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
 
 /**
  * Created by alexanderchiou on 7/15/16.
  */
 public class AddListingActivity extends StandardActivity {
+    public static final String SCREEN_NAME = "Add Listing";
     public static final String LOCATION_KEY = "location";
     public static final String FREQUENCY_INDEX_KEY = "frequencyIndex";
 
@@ -49,6 +62,7 @@ public class AddListingActivity extends StandardActivity {
     private MaterialDialog pokeFormDialog;
     private AddPokemonAdapter addPokemonAdapter;
     private PokemonFormViewHolder pokemonFormHolder;
+    private ArrayList<PokeLocation> nearbySuggestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +71,19 @@ public class AddListingActivity extends StandardActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (PreferencesManager.get().getCurrentLocation().equals(getString(R.string.automatic))) {
+
+        } else {
+            String currentLocation = PreferencesManager.get().getCurrentLocation();
+            SavedLocationDO locationDO = DatabaseManager.get().getLocation(currentLocation);
+
+            // Fetch nearby suggestions
+            NearbyRequest request = new NearbyRequest();
+            request.setLocation(locationDO.getLatitude(), locationDO.getLongitude());
+            request.setRange(0.0725);
+            RestClient.get().getPokemonService().searchNearby(request).enqueue(new NearbySuggestionsCallback());
+        }
 
         location = new PokeLocation();
 
@@ -116,7 +143,9 @@ public class AddListingActivity extends StandardActivity {
 
     @OnClick(R.id.location_input)
     public void chooseLocation() {
-        startActivityForResult(new Intent(this, SelectLocationActivity.class), 1);
+        Intent intent = new Intent(this, SelectLocationActivity.class);
+        intent.putParcelableArrayListExtra(PokeLocation.KEY, nearbySuggestions);
+        startActivityForResult(intent, 1);
         overridePendingTransition(0, 0);
     }
 
@@ -126,6 +155,13 @@ public class AddListingActivity extends StandardActivity {
             location = data.getParcelableExtra(PokeLocation.KEY);
             String locationDisplay = location.getDisplayName() + "\n" + location.getAddress();
             locationInput.setText(locationDisplay);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(PokeLocationsEvent event) {
+        if (event.getScreen().equals(SCREEN_NAME)) {
+            nearbySuggestions = (ArrayList<PokeLocation>) event.getLocations();
         }
     }
 

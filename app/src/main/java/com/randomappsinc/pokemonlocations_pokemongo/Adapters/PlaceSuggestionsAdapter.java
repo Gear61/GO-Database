@@ -23,16 +23,30 @@ import butterknife.ButterKnife;
 public class PlaceSuggestionsAdapter extends BaseAdapter {
     private Context context;
     private List<PokeLocation> suggestions;
+    private List<PokeLocation> nearbySuggestions;
     private View googlePowered;
 
     public PlaceSuggestionsAdapter(Context context, View googlePowered) {
         this.context = context;
         this.suggestions = new ArrayList<>();
+        this.nearbySuggestions = new ArrayList<>();
         this.googlePowered = googlePowered;
     }
 
+    public void setNearbySuggestions(List<PokeLocation> nearbySuggestions, boolean showNow) {
+        this.nearbySuggestions = nearbySuggestions;
+        if (showNow) {
+            showNearbySuggestions();
+        }
+    }
+
+    public void showNearbySuggestions() {
+        setSuggestions(nearbySuggestions);
+    }
+
     public void setSuggestions(List<PokeLocation> suggestions) {
-        this.suggestions = suggestions;
+        this.suggestions.clear();
+        this.suggestions.addAll(suggestions);
         if (suggestions.isEmpty()) {
             googlePowered.setVisibility(View.VISIBLE);
         } else {

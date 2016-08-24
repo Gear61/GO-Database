@@ -2,6 +2,8 @@ package com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.ApiConstants;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Results.LocationsResult;
+import com.randomappsinc.pokemonlocations_pokemongo.API.PokeLocationsEvent;
+import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -18,7 +20,7 @@ public class SearchCallback implements Callback<LocationsResult> {
     @Override
     public void onResponse(Call<LocationsResult> call, Response<LocationsResult> response) {
         if (response.code() == ApiConstants.HTTP_STATUS_OK) {
-            EventBus.getDefault().post(response.body().getLocations());
+            EventBus.getDefault().post(new PokeLocationsEvent(SearchFragment.SCREEN_NAME, response.body().getLocations()));
         } else {
             EventBus.getDefault().post(SEARCH_FAIL);
         }

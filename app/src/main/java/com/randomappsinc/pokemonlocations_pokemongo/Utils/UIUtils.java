@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -49,6 +50,10 @@ public class UIUtils {
             view = new View(activity);
         }
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void showKeyboard(Activity activity) {
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     public static void addFavoriteSnackbar(final View parent, String message, final PokeLocation location) {
@@ -89,10 +94,5 @@ public class UIUtils {
             }
         });
         snackbar.show();
-    }
-
-    public static int getDpInPixels(int numDp) {
-        Resources resources = MyApplication.getAppContext().getResources();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, numDp, resources.getDisplayMetrics());
     }
 }

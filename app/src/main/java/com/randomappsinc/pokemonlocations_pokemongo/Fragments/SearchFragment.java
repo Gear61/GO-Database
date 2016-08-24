@@ -24,6 +24,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.NearbyRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.SearchRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Results.LocationsResult;
+import com.randomappsinc.pokemonlocations_pokemongo.API.PokeLocationsEvent;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.API.SingleCallClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.MainActivity;
@@ -42,8 +43,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
@@ -56,6 +55,8 @@ import retrofit2.Call;
  * Created by alexanderchiou on 7/14/16.
  */
 public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    public static final String SCREEN_NAME = "Search";
+
     @Bind(R.id.search_results) ListView searchResults;
     @Bind(R.id.no_results) TextView noResults;
     @Bind(R.id.loading_search) SwipeRefreshLayout loadingSearch;
@@ -255,10 +256,12 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     @Subscribe
-    public void onEvent(List<PokeLocation> results) {
-        loadingSearch.setRefreshing(false);
-        adapter.processResults(results, pokemonId, searchedLocation);
-        searchResults.smoothScrollToPosition(0);
+    public void onEvent(PokeLocationsEvent event) {
+        if (event.getScreen().equals(SCREEN_NAME)) {
+            loadingSearch.setRefreshing(false);
+            adapter.processResults(event.getLocations(), pokemonId, searchedLocation);
+            searchResults.smoothScrollToPosition(0);
+        }
     }
 
     @Subscribe

@@ -120,8 +120,8 @@ public class PokemonFormViewHolder {
                 error.setText(String.format(dupeTemplate, cleanName));
                 error.setVisibility(View.VISIBLE);
                 addButton.setEnabled(false);
-            } else if (PokemonServer.get().isLegendary(pokemonName)) {
-                error.setText(R.string.no_legendaries);
+            } else if (PokemonServer.get().isUnreleased(pokemonName)) {
+                error.setText(R.string.unreleased_error);
                 error.setVisibility(View.VISIBLE);
                 addButton.setEnabled(false);
             } else if (isCommon && PokemonServer.get().cantBeCommon(pokemonName)) {

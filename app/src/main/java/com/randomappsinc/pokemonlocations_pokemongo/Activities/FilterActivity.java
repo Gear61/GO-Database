@@ -113,7 +113,7 @@ public class FilterActivity extends StandardActivity {
             if (PokemonServer.get().isValidPokemon(pokemonName)) {
                 UIUtils.hideKeyboard(this);
                 parent.requestFocus();
-                if (PokemonServer.get().isLegendary(pokemonName)) {
+                if (PokemonServer.get().isUnreleased(pokemonName)) {
                     new MaterialDialog.Builder(this)
                             .cancelable(false)
                             .content(R.string.legendary_search_warning)

@@ -74,9 +74,10 @@ public class PokemonServer {
         return idToNameMappings.get(id);
     }
 
-    public boolean isLegendary(String pokemonName) {
+    public boolean isUnreleased(String pokemonName) {
         int pokemonId = getPokemonId(pokemonName);
-        return pokemonId == 144 || pokemonId == 145 || pokemonId == 146 || pokemonId == 150 || pokemonId == 151;
+        return pokemonId == 132 || pokemonId == 144 || pokemonId == 145 ||
+                pokemonId == 146 || pokemonId == 150 || pokemonId == 151;
     }
 
     public boolean cantBeCommon(String pokemonName) {

@@ -29,6 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -72,14 +73,25 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
 
         adapter = new PlaceSuggestionsAdapter(this, googlePowered);
         results.setAdapter(adapter);
+
+        List<PokeLocation> nearbySuggestions = getIntent().getParcelableArrayListExtra(PokeLocation.KEY);
+        if (nearbySuggestions != null) {
+            adapter.setNearbySuggestions(nearbySuggestions, true);
+        } else {
+            UIUtils.showKeyboard(this);
+        }
     }
 
     @OnTextChanged(value = R.id.location_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
-        if (googleApiClient.isConnected() && input.length() > 0) {
-            locationClient.doSearch(input.toString());
+        if (input.length() == 0) {
+            adapter.showNearbySuggestions();
         } else {
-            adapter.setSuggestions(new ArrayList<PokeLocation>());
+            if (googleApiClient.isConnected()) {
+                locationClient.doSearch(input.toString());
+            } else {
+                adapter.setSuggestions(new ArrayList<PokeLocation>());
+            }
         }
     }
 
@@ -92,9 +104,14 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
     public void chooseResult(int position) {
         UIUtils.hideKeyboard(this);
         PokeLocation location = adapter.getItem(position);
-        chosenLocation.setPlaceId(location.getPlaceId());
-        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(googleApiClient, location.getPlaceId());
-        placeResult.setResultCallback(getLocationInfoCallback);
+        // Make a Google API call to fetch the lat/long if it's not a nearby suggestion
+        if (location.getLatitude() == 0 && location.getLongitude() == 0) {
+            chosenLocation.setPlaceId(location.getPlaceId());
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(googleApiClient, location.getPlaceId());
+            placeResult.setResultCallback(getLocationInfoCallback);
+        } else {
+            returnLocation(location);
+        }
     }
 
     @Subscribe

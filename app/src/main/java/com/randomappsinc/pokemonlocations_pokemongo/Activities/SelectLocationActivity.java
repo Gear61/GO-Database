@@ -20,6 +20,7 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.randomappsinc.pokemonlocations_pokemongo.API.LocationsEvent;
 import com.randomappsinc.pokemonlocations_pokemongo.API.PlaceSuggestionsClient;
+import com.randomappsinc.pokemonlocations_pokemongo.API.PokeLocationsEvent;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PlaceSuggestionsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
@@ -123,6 +124,14 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
                     adapter.setSuggestions(event.getResults());
                 }
             });
+        }
+    }
+
+    @Subscribe
+    public void onEvent(PokeLocationsEvent event) {
+        if (event.getScreen().equals(AddListingActivity.SCREEN_NAME)) {
+            boolean shouldShow = locationInput.length() == 0;
+            adapter.setNearbySuggestions(event.getLocations(), shouldShow);
         }
     }
 

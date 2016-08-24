@@ -6,10 +6,8 @@ package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;

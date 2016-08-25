@@ -54,12 +54,7 @@ public class PokemonServer {
     }
 
     public boolean isValidPokemon(String input) {
-        if (input.isEmpty()) {
-            return false;
-        } else {
-            String cleanName = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
-            return pokemonList.contains(cleanName);
-        }
+        return nameToIdMappings.keySet().contains(input.toLowerCase());
     }
 
     public List<String> getMatchingPokemon(String prefix) {

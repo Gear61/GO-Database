@@ -1,6 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Models;
 
 import android.content.Context;
+import android.text.Editable;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -30,6 +31,7 @@ import butterknife.OnTextChanged;
 public class PokemonFormViewHolder {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.pokemon_input) AutoCompleteTextView pokemonInput;
+    @Bind(R.id.clear_pokemon) View clearPokemon;
     @Bind(R.id.frequency_input) Spinner frequencyChoice;
     @Bind(R.id.error) TextView error;
     @BindString(R.string.already_attached) String dupeTemplate;
@@ -88,18 +90,23 @@ public class PokemonFormViewHolder {
     }
 
     @OnTextChanged(value = R.id.pokemon_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterTextChanged() {
-        if (PokemonServer.get().isValidPokemon(pokemonInput.getText().toString())) {
-            // Hide keyboard
-            InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            im.hideSoftInputFromWindow(pokemonInput.getWindowToken(), 0);
+    public void afterTextChanged(Editable input) {
+        if (input.length() == 0) {
+            clearPokemon.setVisibility(View.GONE);
+        } else {
+            clearPokemon.setVisibility(View.VISIBLE);
+            if (PokemonServer.get().isValidPokemon(input.toString())) {
+                // Hide keyboard
+                InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                im.hideSoftInputFromWindow(pokemonInput.getWindowToken(), 0);
 
-            if (!prefillMode) {
-                frequencyChoice.requestFocus();
-                frequencyChoice.performClick();
-            } else {
-                prefillMode = false;
-                parent.requestFocus();
+                if (!prefillMode) {
+                    frequencyChoice.requestFocus();
+                    frequencyChoice.performClick();
+                } else {
+                    prefillMode = false;
+                    parent.requestFocus();
+                }
             }
         }
         verifyInputs();

@@ -1,5 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PermissionUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,18 +72,20 @@ public class AddListingActivity extends StandardActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (PreferencesManager.get().getCurrentLocation().equals(getString(R.string.automatic))) {
-            if (SmartLocation.with(this).location().state().locationServicesEnabled()) {
-                SmartLocation.with(this).location()
-                        .oneFix()
-                        .start(new OnLocationUpdatedListener() {
-                            @Override
-                            public void onLocationUpdated(Location location) {
-                                NearbyRequest request = new NearbyRequest();
-                                request.setLocation(location.getLatitude(), location.getLongitude());
-                                request.setRange(0.0725);
-                                RestClient.get().getPokemonService().searchNearby(request).enqueue(new NearbySuggestionsCallback());
-                            }
-                        });
+            if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                if (SmartLocation.with(this).location().state().locationServicesEnabled()) {
+                    SmartLocation.with(this).location()
+                            .oneFix()
+                            .start(new OnLocationUpdatedListener() {
+                                @Override
+                                public void onLocationUpdated(Location location) {
+                                    NearbyRequest request = new NearbyRequest();
+                                    request.setLocation(location.getLatitude(), location.getLongitude());
+                                    request.setRange(0.0725);
+                                    RestClient.get().getPokemonService().searchNearby(request).enqueue(new NearbySuggestionsCallback());
+                                }
+                            });
+                }
             }
         } else {
             // Easy-mode case - They haven't seen their location to automatic

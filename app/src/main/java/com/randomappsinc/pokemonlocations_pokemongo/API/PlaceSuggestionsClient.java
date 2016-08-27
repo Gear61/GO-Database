@@ -4,11 +4,13 @@ import android.os.AsyncTask;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.LocationUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -70,25 +72,15 @@ public class PlaceSuggestionsClient {
                 List<PokeLocation> results = new ArrayList<>();
 
                 for (int i = 0; i < autocompletePredictions.getCount(); i++) {
-                    String result = autocompletePredictions.get(i).getFullText(null).toString();
-                    PokeLocation location = new PokeLocation();
-                    location.setPlaceId(autocompletePredictions.get(i).getPlaceId());
+                    AutocompletePrediction result = autocompletePredictions.get(i);
 
-                    // Get display name and address (if possible)
-                    int indexOfComma = result.indexOf(",");
-                    if (indexOfComma != -1) {
-                        location.setDisplayName(result.substring(0, indexOfComma));
-                        if (result.length() > indexOfComma + 1) {
-                            location.setAddress(result.substring(indexOfComma + 1).trim());
-                        } else {
-                            location.setAddress("");
-                        }
-                    } else {
-                        location.setDisplayName(result);
-                        location.setAddress("");
+                    if (LocationUtils.isValidLocation(result)) {
+                        PokeLocation location = new PokeLocation();
+                        location.setPlaceId(result.getPlaceId());
+                        location.setDisplayName(result.getPrimaryText(null).toString());
+                        location.setAddress(result.getSecondaryText(null).toString());
+                        results.add(location);
                     }
-
-                    results.add(location);
                 }
 
                 LocationsEvent locationsEvent = new LocationsEvent(input, results);

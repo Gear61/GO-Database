@@ -5,6 +5,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.Place;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
@@ -118,5 +120,14 @@ public class LocationUtils {
             default:
                 return R.id.far_toggle;
         }
+    }
+
+    public static boolean isValidLocation(AutocompletePrediction place) {
+        List<Integer> placeTypes = place.getPlaceTypes();
+        return placeTypes != null &&
+                !(placeTypes.contains(Place.TYPE_COUNTRY) || placeTypes.contains(Place.TYPE_ADMINISTRATIVE_AREA_LEVEL_1)
+                        || placeTypes.contains(Place.TYPE_ADMINISTRATIVE_AREA_LEVEL_2)
+                        || placeTypes.contains(Place.TYPE_ADMINISTRATIVE_AREA_LEVEL_3)
+                        || placeTypes.contains(Place.TYPE_LOCALITY) || placeTypes.contains(Place.TYPE_SUBLOCALITY));
     }
 }

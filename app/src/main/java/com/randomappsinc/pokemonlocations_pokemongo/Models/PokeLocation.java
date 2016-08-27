@@ -22,7 +22,7 @@ import io.realm.RealmList;
  */
 public class PokeLocation implements Parcelable {
     public static final String KEY = "pokeLocation";
-    public static final int NUM_PREVIEWS = 8;
+    public static final int NUM_PREVIEWS = 7;
 
     @SerializedName("place_id")
     @Expose

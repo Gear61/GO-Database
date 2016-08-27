@@ -28,14 +28,20 @@ public class PokeLocationViewHolder {
     @Bind(R.id.distance) TextView distance;
     @Bind(R.id.preview_gallery) View previewGallery;
     @Bind({R.id.pokemon1, R.id.pokemon2, R.id.pokemon3, R.id.pokemon4,
-           R.id.pokemon5, R.id.pokemon6, R.id.pokemon7}) List<ImageView> pokemonPreviews;
-    @Bind(R.id.pokemon8) ImageView finalPreview;
+           R.id.pokemon5, R.id.pokemon6}) List<ImageView> pokemonPreviews;
+    @Bind(R.id.pokemon7) ImageView finalPreview;
     @Bind(R.id.overflow_number) TextView overflow;
+    @Bind(R.id.like_icon) TextView likeIcon;
+    @Bind(R.id.score) TextView score;
 
     @BindString(R.string.miles_away) String milesTemplate;
     @BindString(R.string.kilometers_away) String kilometersTemplate;
+    @BindString(R.string.zero) String zero;
+    @BindString(R.string.positive_score) String positiveScore;
+    @BindString(R.string.negative_score) String negativeScore;
 
     @BindColor(R.color.gray) int gray;
+    @BindColor(R.color.dark_gray) int darkGray;
     @BindColor(R.color.app_red) int red;
     @BindColor(R.color.green) int green;
 
@@ -98,6 +104,22 @@ public class PokeLocationViewHolder {
             }
         } else {
             previewGallery.setVisibility(View.GONE);
+        }
+
+        // Load score
+        int locationScore = pokeLocation.getScore();
+        if (locationScore == 0) {
+            likeIcon.setText(R.string.like_icon);
+            likeIcon.setTextColor(darkGray);
+            score.setText(zero);
+        } else if (locationScore > 0) {
+            likeIcon.setText(R.string.liked_icon);
+            likeIcon.setTextColor(green);
+            score.setText(String.format(positiveScore, locationScore));
+        } else {
+            likeIcon.setText(R.string.disliked_icon);
+            likeIcon.setTextColor(red);
+            score.setText(String.format(negativeScore, locationScore));
         }
     }
 }

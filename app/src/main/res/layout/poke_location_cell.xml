@@ -1,73 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
-
-    <TextView
-        android:id="@+id/display_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dark_gray"
-        android:textSize="24sp"/>
-
-    <TextView
-        android:id="@+id/distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/gray"
-        android:textSize="16sp"/>
+    android:gravity="center_vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="16dp">
 
     <LinearLayout
-        android:id="@+id/preview_gallery"
-        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/pokemon1"
-            style="@style/pokemon_preview_icon"/>
-
-        <ImageView
-            android:id="@+id/pokemon2"
-            style="@style/pokemon_preview_icon"/>
-
-        <ImageView
-            android:id="@+id/pokemon3"
-            style="@style/pokemon_preview_icon"/>
-
-        <ImageView
-            android:id="@+id/pokemon4"
-            style="@style/pokemon_preview_icon"/>
-
-        <ImageView
-            android:id="@+id/pokemon5"
-            style="@style/pokemon_preview_icon"/>
-
-        <ImageView
-            android:id="@+id/pokemon6"
-            style="@style/pokemon_preview_icon"/>
-
-        <ImageView
-            android:id="@+id/pokemon7"
-            style="@style/pokemon_preview_icon"/>
-
-        <ImageView
-            android:id="@+id/pokemon8"
-            style="@style/pokemon_preview_icon"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/like_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textSize="32dp"
+            android:gravity="center"/>
 
         <TextView
-            android:id="@+id/overflow_number"
-            android:background="@drawable/pokemon_cell_background"
+            android:id="@+id/score"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:gravity="center_vertical"
-            android:textSize="14dp"
-            android:textColor="@color/dark_gray"/>
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_gray"
+            android:textSize="24dp"/>
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:textSize="16dp"/>
+
+        <LinearLayout
+            android:id="@+id/preview_gallery"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/pokemon1"
+                style="@style/pokemon_preview_icon"/>
+
+            <ImageView
+                android:id="@+id/pokemon2"
+                style="@style/pokemon_preview_icon"/>
+
+            <ImageView
+                android:id="@+id/pokemon3"
+                style="@style/pokemon_preview_icon"/>
+
+            <ImageView
+                android:id="@+id/pokemon4"
+                style="@style/pokemon_preview_icon"/>
+
+            <ImageView
+                android:id="@+id/pokemon5"
+                style="@style/pokemon_preview_icon"/>
+
+            <ImageView
+                android:id="@+id/pokemon6"
+                style="@style/pokemon_preview_icon"/>
+
+            <ImageView
+                android:id="@+id/pokemon7"
+                style="@style/pokemon_preview_icon"/>
+
+            <TextView
+                android:id="@+id/overflow_number"
+                android:background="@drawable/pokemon_cell_background"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:gravity="center_vertical"
+                android:textSize="14dp"
+                android:textColor="@color/dark_gray"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

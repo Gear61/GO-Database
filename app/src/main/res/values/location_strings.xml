@@ -82,4 +82,9 @@
     <string name="dislike_count">%1d dislikes</string>
 
     <string name="add_with_plus">+ Add</string>
+
+    <!-- Score -->
+    <string name="positive_score">+%d</string>
+    <string name="negative_score">-%d</string>
+    <string name="zero">0</string>
 </resources>

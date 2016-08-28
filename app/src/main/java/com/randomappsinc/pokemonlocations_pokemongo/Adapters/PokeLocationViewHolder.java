@@ -24,6 +24,8 @@ import butterknife.ButterKnife;
  * Created by alexanderchiou on 7/17/16.
  */
 public class PokeLocationViewHolder {
+    @Bind(R.id.like_icon) TextView likeIcon;
+    @Bind(R.id.score) TextView score;
     @Bind(R.id.display_name) TextView displayName;
     @Bind(R.id.distance) TextView distance;
     @Bind(R.id.preview_gallery) View previewGallery;
@@ -31,14 +33,10 @@ public class PokeLocationViewHolder {
            R.id.pokemon5, R.id.pokemon6}) List<ImageView> pokemonPreviews;
     @Bind(R.id.pokemon7) ImageView finalPreview;
     @Bind(R.id.overflow_number) TextView overflow;
-    @Bind(R.id.like_icon) TextView likeIcon;
-    @Bind(R.id.score) TextView score;
 
     @BindString(R.string.miles_away) String milesTemplate;
     @BindString(R.string.kilometers_away) String kilometersTemplate;
-    @BindString(R.string.zero) String zero;
     @BindString(R.string.positive_score) String positiveScore;
-    @BindString(R.string.negative_score) String negativeScore;
 
     @BindColor(R.color.gray) int gray;
     @BindColor(R.color.dark_gray) int darkGray;
@@ -111,7 +109,7 @@ public class PokeLocationViewHolder {
         if (locationScore == 0) {
             likeIcon.setText(R.string.like_icon);
             likeIcon.setTextColor(darkGray);
-            score.setText(zero);
+            score.setText(String.valueOf(locationScore));
         } else if (locationScore > 0) {
             likeIcon.setText(R.string.liked_icon);
             likeIcon.setTextColor(green);
@@ -119,7 +117,7 @@ public class PokeLocationViewHolder {
         } else {
             likeIcon.setText(R.string.disliked_icon);
             likeIcon.setTextColor(red);
-            score.setText(String.format(negativeScore, locationScore));
+            score.setText(String.valueOf(locationScore));
         }
     }
 }

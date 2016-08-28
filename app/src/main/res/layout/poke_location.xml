@@ -31,29 +31,58 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
 
-                    <TextView
-                        android:id="@+id/display_name"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="24sp"/>
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
 
-                    <TextView
-                        android:id="@+id/address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="18sp"/>
+                        <com.joanzapata.iconify.widget.IconTextView
+                            android:id="@+id/like_icon"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:textSize="32dp"
+                            android:gravity="center"/>
 
-                    <TextView
-                        android:id="@+id/distance_away"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18dp"
+                            android:textColor="@color/dark_gray"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray"
-                        android:textSize="16sp"/>
+                        android:layout_marginLeft="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/display_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="24dp"/>
+
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="18dp"/>
+
+                        <TextView
+                            android:id="@+id/distance_away"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray"
+                            android:textSize="16dp"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <View style="@style/divider"/>

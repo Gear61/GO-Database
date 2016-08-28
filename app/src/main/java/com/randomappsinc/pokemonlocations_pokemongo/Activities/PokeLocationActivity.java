@@ -49,6 +49,8 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
  */
 public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
+    @Bind(R.id.like_icon) TextView likeIcon;
+    @Bind(R.id.score) TextView score;
     @Bind(R.id.display_name) TextView displayName;
     @Bind(R.id.address) TextView address;
     @Bind(R.id.distance_away) TextView distanceAway;
@@ -65,6 +67,7 @@ public class PokeLocationActivity extends StandardActivity {
 
     @BindString(R.string.like_count) String likesTemplate;
     @BindString(R.string.dislike_count) String dislikesTemplate;
+    @BindString(R.string.positive_score) String positiveScore;
 
     @BindColor(R.color.app_red) int red;
     @BindColor(R.color.gray) int gray;
@@ -176,6 +179,22 @@ public class PokeLocationActivity extends StandardActivity {
     }
 
     private void loadScoreModule() {
+        // Load score
+        int locationScore = place.getScore();
+        if (locationScore == 0) {
+            likeIcon.setText(R.string.like_icon);
+            likeIcon.setTextColor(darkGray);
+            score.setText(String.valueOf(locationScore));
+        } else if (locationScore > 0) {
+            likeIcon.setText(R.string.liked_icon);
+            likeIcon.setTextColor(green);
+            score.setText(String.format(positiveScore, locationScore));
+        } else {
+            likeIcon.setText(R.string.disliked_icon);
+            likeIcon.setTextColor(red);
+            score.setText(String.valueOf(locationScore));
+        }
+
         likesCount.setText(String.format(likesTemplate, place.getNumLikes()));
         dislikesCount.setText(String.format(dislikesTemplate, place.getNumDislikes()));
 

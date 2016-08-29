@@ -98,12 +98,6 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         searchedLocation = new LatLong();
 
-        if (PreferencesManager.get().shouldShowWelcome()) {
-            noResults.setText(R.string.welcome);
-        } else {
-            fullSearch();
-        }
-
         return rootView;
     }
 
@@ -253,6 +247,24 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
     public void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+
+        // Go through onboarding flow if it's their first time opening the app
+        if (PreferencesManager.get().shouldShowWelcome()) {
+            noResults.setText(R.string.welcome);
+        }
+        else if (searchedLocation.getLatitude() == 0 && searchedLocation.getLongitude() == 0) {
+            // If they're opening the app, do a search automatically
+            fullSearch();
+        } else if (!PreferencesManager.get().getCurrentLocation().equals(getString(R.string.automatic))){
+            // Refresh the search if their location has changed
+            String currentLocation = PreferencesManager.get().getCurrentLocation();
+            SavedLocationDO locationDO = DatabaseManager.get().getLocation(currentLocation);
+
+            if (locationDO.getLatitude() != searchedLocation.getLatitude() ||
+                    locationDO.getLongitude() != searchedLocation.getLongitude()) {
+                doSearch(locationDO.getLatitude(), locationDO.getLongitude());
+            }
+        }
     }
 
     @Subscribe

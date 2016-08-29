@@ -23,12 +23,12 @@
         <item>@string/settings</item>
     </string-array>
 
-    <string name="star_icon">{ion-android-star}</string>
+    <string name="heart_icon">{fa-heart}</string>
     <string name="journal_icon">{ion-ios-bookmarks}</string>
     <string name="map_icon">{ion-android-map}</string>
     <string name="settings_icon">{ion-android-settings}</string>
     <string-array name="nav_drawer_icons">
-        <item>@string/star_icon</item>
+        <item>@string/heart_icon</item>
         <item>@string/journal_icon</item>
         <item>@string/map_icon</item>
         <item>@string/settings_icon</item>

@@ -6,10 +6,7 @@
         on the homepage or the location view page.
     </string>
 
-    <string name="pokemon_prefix">Pokemon:&#160;</string>
-    <string name="location_prefix">Location:&#160;</string>
-    <string name="frequency_prefix">Frequency:&#160;</string>
-
     <string name="pokemon_finding">Pokemon Finding</string>
     <string name="my_finding_template">I reported %1$s as %2$s at %3$s.</string>
+    <string name="journal_entry_template">Reported %1$s as %2$s at %3$s.</string>
 </resources>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SingleLocationCallback;
@@ -371,9 +372,9 @@ public class PokeLocationActivity extends StandardActivity {
         getMenuInflater().inflate(R.menu.location_menu, menu);
         if (DatabaseManager.get().isLocationFavorited(place)) {
             menu.findItem(R.id.favorite_location).setTitle(R.string.unfavorite_location);
-            UIUtils.loadMenuIcon(menu, R.id.favorite_location, IoniconsIcons.ion_android_star);
+            UIUtils.loadMenuIcon(menu, R.id.favorite_location, FontAwesomeIcons.fa_heart);
         } else {
-            UIUtils.loadMenuIcon(menu, R.id.favorite_location, IoniconsIcons.ion_android_star_outline);
+            UIUtils.loadMenuIcon(menu, R.id.favorite_location, FontAwesomeIcons.fa_heart_o);
         }
         UIUtils.loadMenuIcon(menu, R.id.share_location, IoniconsIcons.ion_android_share_alt);
         return true;

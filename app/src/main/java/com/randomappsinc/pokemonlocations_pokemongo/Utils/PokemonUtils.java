@@ -1,8 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
 import android.content.Context;
-import android.text.Html;
-import android.text.Spanned;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
@@ -120,16 +118,11 @@ public class PokemonUtils {
         return location;
     }
 
-    @SuppressWarnings("deprecation")
-    public static Spanned getFindingInfo(PokeFindingDO pokeFindingDO) {
-        Context context = MyApplication.getAppContext();
+    public static String getFindingInfo(PokeFindingDO pokeFindingDO) {
+        String journalTemplate = MyApplication.getAppContext().getString(R.string.journal_entry_template);
         String pokemonName = PokemonServer.get().getPokemonName(pokeFindingDO.getPokemonId());
-        String pokemonPrefix = context.getString(R.string.pokemon_prefix);
-        String locationPrefix = context.getString(R.string.location_prefix);
-        String frequencyPrefix = context.getString(R.string.frequency_prefix);
-        String info = "<b>" + pokemonPrefix + "</b>" + pokemonName + "<br><b>"
-                + locationPrefix + "</b>" + pokeFindingDO.getLocationName() + "<br><b>"
-                + frequencyPrefix + "</b>" + pokeFindingDO.getFrequency();
-        return Html.fromHtml(info);
+        String frequency = pokeFindingDO.getFrequency().toLowerCase();
+        String locationName = pokeFindingDO.getLocationName();
+        return String.format(journalTemplate, pokemonName, frequency, locationName);
     }
 }

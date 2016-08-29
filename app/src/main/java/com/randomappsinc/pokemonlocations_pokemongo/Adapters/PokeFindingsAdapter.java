@@ -1,6 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Adapters;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 
 /**
@@ -62,16 +64,18 @@ public class PokeFindingsAdapter extends BaseAdapter {
     public class PokeFindingViewHolder {
         @Bind(R.id.pokemon_icon) ImageView pokemonPicture;
         @Bind(R.id.finding_info) TextView findingInfo;
+        @BindString(R.string.journal_entry_template) String journalEntry;
 
         public PokeFindingViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
 
+        @SuppressWarnings("deprecation")
         public void loadItem(PokeFindingDO pokeFindingDO) {
             Picasso.with(context)
                     .load(PokemonUtils.getPokemonIcon(pokeFindingDO.getPokemonId()))
                     .into(pokemonPicture);
-            findingInfo.setText(PokemonUtils.getFindingInfo(pokeFindingDO));
+            findingInfo.setText(Html.fromHtml(PokemonUtils.getFindingInfo(pokeFindingDO)));
         }
     }
 

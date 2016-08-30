@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 intent = new Intent(this, FavoritesActivity.class);
                 break;
             case 1:
-                intent = new Intent(this, PokeFindingsActivity.class);
+                intent = new Intent(this, JournalActivity.class);
                 break;
             case 2:
                 intent = new Intent(this, MyLocationsActivity.class);

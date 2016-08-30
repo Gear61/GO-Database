@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokeFindingsAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.JournalAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import butterknife.Bind;
@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 /**
  * Created by alexanderchiou on 7/15/16.
  */
-public class PokeFindingsActivity extends StandardActivity {
+public class JournalActivity extends StandardActivity {
     @Bind(R.id.content) ListView content;
     @Bind(R.id.no_content) TextView noContent;
 
@@ -25,6 +25,6 @@ public class PokeFindingsActivity extends StandardActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         noContent.setText(R.string.no_findings);
-        content.setAdapter(new PokeFindingsAdapter(this, noContent));
+        content.setAdapter(new JournalAdapter(this, noContent));
     }
 }

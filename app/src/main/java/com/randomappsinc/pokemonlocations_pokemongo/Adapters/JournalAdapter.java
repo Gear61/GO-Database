@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.FeedUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.squareup.picasso.Picasso;
 
@@ -24,12 +25,12 @@ import butterknife.ButterKnife;
 /**
  * Created by alexanderchiou on 7/18/16.
  */
-public class PokeFindingsAdapter extends BaseAdapter {
+public class JournalAdapter extends BaseAdapter {
     private Context context;
     private List<PokeFindingDO> findings;
     private View noFindings;
 
-    public PokeFindingsAdapter(Context context, View noFindings) {
+    public JournalAdapter(Context context, View noFindings) {
         this.context = context;
         this.noFindings = noFindings;
         syncWithDb();
@@ -64,6 +65,8 @@ public class PokeFindingsAdapter extends BaseAdapter {
     public class PokeFindingViewHolder {
         @Bind(R.id.pokemon_icon) ImageView pokemonPicture;
         @Bind(R.id.finding_info) TextView findingInfo;
+        @Bind(R.id.timestamp) TextView timestamp;
+
         @BindString(R.string.journal_entry_template) String journalEntry;
 
         public PokeFindingViewHolder(View view) {
@@ -76,6 +79,13 @@ public class PokeFindingsAdapter extends BaseAdapter {
                     .load(PokemonUtils.getPokemonIcon(pokeFindingDO.getPokemonId()))
                     .into(pokemonPicture);
             findingInfo.setText(Html.fromHtml(PokemonUtils.getFindingInfo(pokeFindingDO)));
+
+            if (pokeFindingDO.getReportTime() == 0) {
+                // If the finding DO has a report time of 0, set it to current time
+                DatabaseManager.get().updatePokeFinding(pokeFindingDO);
+            }
+
+            timestamp.setText(FeedUtils.humanizeUnixTime(pokeFindingDO.getReportTime()));
         }
     }
 

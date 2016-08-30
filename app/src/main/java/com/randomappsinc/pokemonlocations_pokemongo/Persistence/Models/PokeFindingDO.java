@@ -10,6 +10,7 @@ public class PokeFindingDO extends RealmObject {
     private String placeId;
     private String locationName;
     private String frequency;
+    private long reportTime;
 
     public int getPokemonId() {
         return pokemonId;
@@ -41,5 +42,13 @@ public class PokeFindingDO extends RealmObject {
 
     public void setFrequency(String frequency) {
         this.frequency = frequency;
+    }
+
+    public long getReportTime() {
+        return reportTime;
+    }
+
+    public void setReportTime(long reportTime) {
+        this.reportTime = reportTime;
     }
 }

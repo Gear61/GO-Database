@@ -22,12 +22,13 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmResults;
 import io.realm.RealmSchema;
+import io.realm.Sort;
 
 /**
  * Created by alexanderchiou on 7/17/16.
  */
 public class DatabaseManager {
-    private static final int CURRENT_REALM_VERSION = 2;
+    private static final int CURRENT_REALM_VERSION = 3;
     private static DatabaseManager instance;
 
     public static DatabaseManager get() {
@@ -74,6 +75,12 @@ public class DatabaseManager {
                         .removeField("score")
                         .addField("numLikes", int.class)
                         .addField("numDislikes", int.class);
+                oldVersion++;
+            }
+
+            if (oldVersion == 2) {
+                schema.get("PokeFindingDO")
+                        .addField("reportTime", long.class);
             }
         }
     };
@@ -238,7 +245,8 @@ public class DatabaseManager {
 
     // Pokemon Findings
     public List<PokeFindingDO> getFindings () {
-        return realm.where(PokeFindingDO.class).findAll();
+        return realm.where(PokeFindingDO.class).findAll()
+                .sort("reportTime", Sort.DESCENDING);
     }
 
     public void addPokeFinding(final PokeFindingDO pokeFindingDO) {
@@ -250,10 +258,21 @@ public class DatabaseManager {
         });
     }
 
-    public PokeFindingDO getFinding(int pokemonId, PokeLocation place) {
+    public void updatePokeFinding(final PokeFindingDO pokeFindingDO) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                PokeFindingDO finding = getFinding(pokeFindingDO.getPokemonId(), pokeFindingDO.getPlaceId());
+                finding.setReportTime(System.currentTimeMillis() / 1000L);
+                finding.setFrequency(pokeFindingDO.getFrequency());
+            }
+        });
+    }
+
+    public PokeFindingDO getFinding(int pokemonId, String placeId) {
         return realm.where(PokeFindingDO.class)
                 .equalTo("pokemonId", pokemonId)
-                .equalTo("placeId", place.getPlaceId())
+                .equalTo("placeId", placeId)
                 .findFirst();
     }
 

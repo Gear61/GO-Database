@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:name=".Activities.PokeFindingsActivity"
+            android:name=".Activities.JournalActivity"
             android:label="@string/journal"
             android:screenOrientation="portrait">
         </activity>

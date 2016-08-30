@@ -94,7 +94,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
         @OnClick(R.id.pokemon_parent)
         public void addPokeFinding() {
             PokeLocation place = context.getPlace();
-            PokeFindingDO findingDO = DatabaseManager.get().getFinding(pokemon.getId(), place);
+            PokeFindingDO findingDO = DatabaseManager.get().getFinding(pokemon.getId(), place.getPlaceId());
             if (findingDO == null) {
                 new MaterialDialog.Builder(context)
                         .content(String.format(addFindingQuestion, pokemon.getName(), place.getDisplayName()))

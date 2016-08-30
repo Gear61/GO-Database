@@ -34,6 +34,7 @@ public class AddPokemonCallback implements Callback<BlankResponse> {
             findingDO.setFrequency(PokemonUtils.getFrequency(posting.getRarity()));
             findingDO.setPlaceId(location.getPlaceId());
             findingDO.setLocationName(location.getDisplayName());
+            findingDO.setReportTime(System.currentTimeMillis() / 1000L);
             findings.add(findingDO);
         }
     }

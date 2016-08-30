@@ -61,7 +61,7 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
         List<PokemonPosting> purePostings = new ArrayList<>();
         // Strip away postings the user has already submitted
         for (PokemonPosting posting : postings) {
-            if (DatabaseManager.get().getFinding(posting.getPokemonId(), location) == null) {
+            if (DatabaseManager.get().getFinding(posting.getPokemonId(), location.getPlaceId()) == null) {
                 purePostings.add(posting);
             }
         }

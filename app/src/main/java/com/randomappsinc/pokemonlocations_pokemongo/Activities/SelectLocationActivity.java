@@ -45,6 +45,7 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
     @Bind(R.id.parent) View parent;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.location_input) EditText locationInput;
+    @Bind(R.id.clear_location) View clearLocation;
     @Bind(R.id.place_suggestions) ListView results;
     @Bind(R.id.powered_by_google) View googlePowered;
 
@@ -87,12 +88,14 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
     public void afterTextChanged(Editable input) {
         if (input.length() == 0) {
             adapter.showNearbySuggestions();
+            clearLocation.setVisibility(View.GONE);
         } else {
             if (googleApiClient.isConnected()) {
                 locationClient.doSearch(input.toString());
             } else {
                 adapter.setSuggestions(new ArrayList<PokeLocation>());
             }
+            clearLocation.setVisibility(View.VISIBLE);
         }
     }
 

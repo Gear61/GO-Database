@@ -11,6 +11,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,6 +233,11 @@ public class PokeLocation implements Parcelable {
         }
 
         return shareText.toString();
+    }
+
+    public String getSearchBlurb() {
+        return (displayName + address + PokemonUtils.getPokemonString(commonPokemon)
+                + PokemonUtils.getPokemonString(uncommonPokemon) + PokemonUtils.getPokemonString(rarePokemon)).toLowerCase();
     }
 
     public PokeLocationDO toPokeLocationDO() {

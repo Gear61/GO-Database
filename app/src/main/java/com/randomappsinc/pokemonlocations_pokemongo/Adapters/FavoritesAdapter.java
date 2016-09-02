@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
@@ -13,6 +14,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLoca
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,34 +22,65 @@ import java.util.List;
  */
 public class FavoritesAdapter extends BaseAdapter {
     private Context context;
-    private List<PokeLocation> favorites;
-    private View noFavorites;
+    private List<PokeLocation> allFavorites;
+    private List<PokeLocation> matchingPlaces;
+    private TextView noFavorites;
+    private View searchBar;
+    private String searchTerm;
 
-    public FavoritesAdapter(Context context, View noFavorites) {
+    public FavoritesAdapter(Context context, TextView noFavorites, View searchBar) {
         this.context = context;
         this.noFavorites = noFavorites;
+        this.matchingPlaces = new ArrayList<>();
+        this.searchBar = searchBar;
+        this.searchTerm = "";
         syncWithDb();
     }
 
     public void syncWithDb() {
-        this.favorites = DatabaseManager.get().getFavorites();
+        this.allFavorites = DatabaseManager.get().getFavorites();
+        applySearch();
+    }
+
+    public void setNoContent() {
+        int noContentVisibility = matchingPlaces.isEmpty() ? View.VISIBLE : View.GONE;
+        noFavorites.setVisibility(noContentVisibility);
+        int noContentId = allFavorites.isEmpty() ? R.string.no_favorites : R.string.no_favorite_matches;
+        noFavorites.setText(noContentId);
+
+        int searchVisibility = allFavorites.isEmpty() ? View.GONE : View.VISIBLE;
+        searchBar.setVisibility(searchVisibility);
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+        applySearch();
+    }
+
+    private void applySearch() {
+        matchingPlaces.clear();
+        if (searchTerm.isEmpty()) {
+            matchingPlaces.addAll(allFavorites);
+        } else {
+            for (PokeLocation favorite : allFavorites) {
+                if (favorite.getSearchBlurb().contains(searchTerm)) {
+                    matchingPlaces.add(favorite);
+                }
+            }
+        }
+
         notifyDataSetChanged();
         setNoContent();
     }
 
-    public void setNoContent() {
-        int viewVisibility = favorites.isEmpty() ? View.VISIBLE : View.GONE;
-        noFavorites.setVisibility(viewVisibility);
-    }
-
     @Override
     public int getCount() {
-        return favorites.size();
+        return matchingPlaces.size();
     }
 
     @Override
     public PokeLocation getItem(int position) {
-        return favorites.get(position);
+        return matchingPlaces.get(position);
     }
 
     @Override

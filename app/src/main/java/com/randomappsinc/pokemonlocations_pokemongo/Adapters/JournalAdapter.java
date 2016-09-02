@@ -1,7 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Adapters;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +77,7 @@ public class JournalAdapter extends BaseAdapter {
             Picasso.with(context)
                     .load(PokemonUtils.getPokemonIcon(pokeFindingDO.getPokemonId()))
                     .into(pokemonPicture);
-            findingInfo.setText(Html.fromHtml(PokemonUtils.getFindingInfo(pokeFindingDO)));
+            findingInfo.setText(PokemonUtils.getFindingInfo(pokeFindingDO));
 
             if (pokeFindingDO.getReportTime() == 0) {
                 // If the finding DO has a report time of 0, set it to current time

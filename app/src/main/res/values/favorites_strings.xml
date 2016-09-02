@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_favorites">
-        You do not have any favorited locations.
-        If you find a place you like, click the {ion-android-star-outline} in the toolbar,
-        and we will save it here for you.
+        Found a Poke Location you like? Click the {fa-heart} in the toolbar,
+        and we\'ll save it here for you.
     </string>
+    <string name="no_favorite_matches">None of your favorited locations match your search criteria.</string>
     <string name="favorite_location">Favorite location</string>
     <string name="unfavorite_location">Unfavorite location</string>
     <string name="location_favorited">Location favorited.</string>

@@ -125,4 +125,12 @@ public class PokemonUtils {
         String locationName = pokeFindingDO.getLocationName();
         return String.format(journalTemplate, pokemonName, frequency, locationName);
     }
+
+    public static String getPokemonString(List<Integer> pokemonIds) {
+        StringBuilder pokemonString = new StringBuilder();
+        for (Integer pokemonId : pokemonIds) {
+            pokemonString.append(PokemonServer.get().getPokemonName(pokemonId));
+        }
+        return pokemonString.toString();
+    }
 }

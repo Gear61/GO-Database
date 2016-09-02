@@ -25,6 +25,7 @@
     <style name="clear_icon" parent="input_icon">
         <item name="android:text">@string/clear_icon</item>
         <item name="android:layout_gravity">center_vertical|end</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="ripple_button_style">
@@ -129,10 +130,14 @@
         <item name="android:layout_marginTop">10dp</item>
     </style>
 
-    <style name="vote_icon">
-        <item name="android:layout_width">56dp</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">32dp</item>
+    <style name="no_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">50dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_marginRight">25dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textSize">18sp</item>
     </style>
 </resources>

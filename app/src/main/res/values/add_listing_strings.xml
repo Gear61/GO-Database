@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="report_pokemon_finding">Report Pokemon Finding</string>
-    <string name="location_hint">Where do these Pokemon appear?</string>
+    <string name="location_hint">
+        Where do these Pokemon appear?
+        (Please be as specific as possible)
+    </string>
     <string name="frequency_hint">How rare is it here?</string>
     <string name="pokemon_form">Pokemon Form</string>
 

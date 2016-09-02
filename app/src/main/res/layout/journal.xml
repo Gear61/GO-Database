@@ -8,15 +8,7 @@
 
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/no_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:textColor="@color/dark_gray"
-        android:textSize="18sp"/>
+        style="@style/no_content"/>
 
     <ListView
         android:id="@+id/content"

@@ -2,6 +2,9 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,7 +19,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
+import butterknife.OnTextChanged;
 
 /**
  * Created by alexanderchiou on 7/15/16.
@@ -24,19 +29,21 @@ import butterknife.OnItemClick;
 public class FavoritesActivity extends StandardActivity {
     @Bind(R.id.content) ListView content;
     @Bind(R.id.no_content) TextView noContent;
+    @Bind(R.id.search_bar) View searchBar;
+    @Bind(R.id.search_input) EditText searchInput;
+    @Bind(R.id.clear_search) View clearSearch;
 
     private FavoritesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.regular_listview);
+        setContentView(R.layout.favorites);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         EventBus.getDefault().register(this);
 
-        noContent.setText(R.string.no_favorites);
-        adapter = new FavoritesAdapter(this, noContent);
+        adapter = new FavoritesAdapter(this, noContent, searchBar);
         content.setAdapter(adapter);
     }
 
@@ -46,6 +53,21 @@ public class FavoritesActivity extends StandardActivity {
         Intent intent = new Intent(this, PokeLocationActivity.class);
         intent.putExtra(PokeLocation.KEY, place);
         startActivity(intent);
+    }
+
+    @OnTextChanged(value = R.id.search_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterTextChanged(Editable input) {
+        adapter.setSearchTerm(input.toString().trim().toLowerCase());
+        if (input.length() == 0) {
+            clearSearch.setVisibility(View.GONE);
+        } else {
+            clearSearch.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @OnClick(R.id.clear_search)
+    public void clearSearch() {
+        searchInput.setText("");
     }
 
     @Override

@@ -40,23 +40,51 @@
             </FrameLayout>
         </android.support.v7.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/powered_by_google"
-            android:text="@string/powered_by_google"
-            android:textSize="16sp"
-            android:textColor="@color/dark_gray"
-            android:layout_margin="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
-
-        <ListView
-            android:id="@+id/place_suggestions"
+        <android.support.percent.PercentRelativeLayout
             android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:clipToPadding="false"/>
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/no_results"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <TextView
+                    android:text="@string/no_places_results"
+                    style="@style/no_content"/>
+
+                <TextView
+                    android:id="@+id/powered_by_google"
+                    android:text="@string/powered_by_google"
+                    android:textSize="16sp"
+                    android:textColor="@color/dark_gray"
+                    android:layout_margin="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"/>
+            </FrameLayout>
+
+            <ListView
+                android:id="@+id/place_suggestions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:clipToPadding="false"/>
+
+            <com.rey.material.widget.ProgressView
+                android:id="@+id/loading"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                app:layout_marginTopPercent="15%"
+                app:pv_autostart="true"
+                app:pv_circular="true"
+                app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+                app:pv_progressMode="indeterminate"/>
+        </android.support.percent.PercentRelativeLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

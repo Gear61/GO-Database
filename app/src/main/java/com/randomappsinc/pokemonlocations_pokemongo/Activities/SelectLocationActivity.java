@@ -47,7 +47,8 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
     @Bind(R.id.location_input) EditText locationInput;
     @Bind(R.id.clear_location) View clearLocation;
     @Bind(R.id.place_suggestions) ListView results;
-    @Bind(R.id.powered_by_google) View googlePowered;
+    @Bind(R.id.loading) View loading;
+    @Bind(R.id.no_results) View noResults;
 
     private GoogleApiClient googleApiClient;
     private PlaceSuggestionsClient locationClient;
@@ -73,7 +74,7 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
 
         locationClient = new PlaceSuggestionsClient(googleApiClient);
 
-        adapter = new PlaceSuggestionsAdapter(this, googlePowered);
+        adapter = new PlaceSuggestionsAdapter(this, noResults);
         results.setAdapter(adapter);
 
         List<PokeLocation> nearbySuggestions = getIntent().getParcelableArrayListExtra(PokeLocation.KEY);
@@ -91,6 +92,11 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
             clearLocation.setVisibility(View.GONE);
         } else {
             if (googleApiClient.isConnected()) {
+                if (loading.getVisibility() == View.GONE) {
+                    noResults.setVisibility(View.GONE);
+                    results.setVisibility(View.GONE);
+                    loading.setVisibility(View.VISIBLE);
+                }
                 locationClient.doSearch(input.toString());
             } else {
                 adapter.setSuggestions(new ArrayList<PokeLocation>());
@@ -124,6 +130,8 @@ public class SelectLocationActivity extends AppCompatActivity implements GoogleA
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    loading.setVisibility(View.GONE);
+                    results.setVisibility(View.VISIBLE);
                     adapter.setSuggestions(event.getResults());
                 }
             });

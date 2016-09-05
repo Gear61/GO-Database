@@ -40,4 +40,5 @@ dependencies {
     compile 'com.android.support:support-v13:24.0.0'
     compile 'com.github.deano2390:MaterialShowcaseView:1.1.0'
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    compile 'com.android.support:percent:24.0.0'
 }

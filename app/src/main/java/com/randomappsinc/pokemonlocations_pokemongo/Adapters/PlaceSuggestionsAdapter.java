@@ -24,13 +24,13 @@ public class PlaceSuggestionsAdapter extends BaseAdapter {
     private Context context;
     private List<PokeLocation> suggestions;
     private List<PokeLocation> nearbySuggestions;
-    private View googlePowered;
+    private View noResults;
 
-    public PlaceSuggestionsAdapter(Context context, View googlePowered) {
+    public PlaceSuggestionsAdapter(Context context, View noResults) {
         this.context = context;
         this.suggestions = new ArrayList<>();
         this.nearbySuggestions = new ArrayList<>();
-        this.googlePowered = googlePowered;
+        this.noResults = noResults;
     }
 
     public void setNearbySuggestions(List<PokeLocation> nearbySuggestions, boolean showNow) {
@@ -48,9 +48,9 @@ public class PlaceSuggestionsAdapter extends BaseAdapter {
         this.suggestions.clear();
         this.suggestions.addAll(suggestions);
         if (suggestions.isEmpty()) {
-            googlePowered.setVisibility(View.VISIBLE);
+            noResults.setVisibility(View.VISIBLE);
         } else {
-            googlePowered.setVisibility(View.GONE);
+            noResults.setVisibility(View.GONE);
         }
         notifyDataSetChanged();
     }

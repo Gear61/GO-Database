@@ -53,6 +53,7 @@
     <!-- Icons -->
     <string name="time_icon">{ion-android-time}</string>
 
+    <!-- Select location -->
     <string name="google_locations_down">
         Google location services are down.
         Please try to submit your location later.
@@ -63,4 +64,5 @@
         We failed to process your location choice.
         Please try again later.
     </string>
+    <string name="no_places_results">No locations match your input.</string>
 </resources>

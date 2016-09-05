@@ -7,4 +7,5 @@ public class ApiConstants {
     public static final String BASE_URL = "http://go.gitserv.io/";
 
     public static final int HTTP_STATUS_OK = 200;
+    public static final String ID_KEY = "id";
 }

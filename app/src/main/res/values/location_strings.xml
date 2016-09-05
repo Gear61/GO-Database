@@ -65,11 +65,11 @@
 
     <!-- Tutorial -->
     <string name="like_explanation">
-        If a Poke location is clean, safe, and is just good overall,
+        If a Poke Location is clean, safe, and is just good overall,
         let the community know by giving it a like.
     </string>
     <string name="dislike_explanation">
-        If a Poke location is something ridiculous like an entire city, a duplicate of another location in our system,
+        If a Poke Location is something ridiculous like an entire city, a duplicate of another location in our system,
         or just sucks overall, give it a dislike.
     </string>
     <string name="fighting_fraud">Fighting Fraud</string>
@@ -78,11 +78,11 @@
         Click on any Pokemon to let us know how often YOU think it shows up.
     </string>
 
+    <!-- Score -->
+    <string name="positive_score">+%d</string>
     <string name="like_count">%1d likes</string>
     <string name="dislike_count">%1d dislikes</string>
 
     <string name="add_with_plus">+ Add</string>
-
-    <!-- Score -->
-    <string name="positive_score">+%d</string>
+    <string name="fetching_poke_location">Fetching Poke Location&#8230;</string>
 </resources>

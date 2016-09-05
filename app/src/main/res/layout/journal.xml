@@ -8,10 +8,11 @@
 
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/no_content"
+        android:text="@string/no_findings"
         style="@style/no_content"/>
 
     <ListView
-        android:id="@+id/content"
+        android:id="@+id/journal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

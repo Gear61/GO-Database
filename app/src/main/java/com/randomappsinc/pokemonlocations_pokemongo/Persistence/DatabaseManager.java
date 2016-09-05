@@ -193,7 +193,7 @@ public class DatabaseManager {
     }
 
     // Favorites
-    public List<PokeLocation> getFavorites () {
+    public List<PokeLocation> getFavorites() {
         List<PokeLocation> favorites = new ArrayList<>();
         List<PokeLocationDO> pokeLocationDOs = realm.where(PokeLocationDO.class).findAll();
         for (PokeLocationDO pokeLocationDO : pokeLocationDOs) {
@@ -203,7 +203,7 @@ public class DatabaseManager {
     }
 
     public boolean isLocationFavorited(PokeLocation pokeLocation) {
-        return realm.where(PokeLocationDO.class)
+        return pokeLocation != null && realm.where(PokeLocationDO.class)
                 .equalTo("placeId", pokeLocation.getPlaceId())
                 .findFirst() != null;
     }
@@ -241,6 +241,13 @@ public class DatabaseManager {
             placeIds.add(locationDO.getPlaceId());
         }
         return placeIds;
+    }
+
+    public PokeLocation getFavorite(String placeId) {
+        PokeLocationDO pokeLocationDO = realm.where(PokeLocationDO.class)
+                .equalTo("placeId", placeId)
+                .findFirst();
+        return pokeLocationDO == null ? null : PokemonUtils.getLocationFromDO(pokeLocationDO);
     }
 
     // Pokemon Findings

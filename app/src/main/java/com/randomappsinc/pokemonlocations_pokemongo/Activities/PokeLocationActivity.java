@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
+import com.randomappsinc.pokemonlocations_pokemongo.API.ApiConstants;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SingleLocationCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
@@ -76,6 +77,7 @@ public class PokeLocationActivity extends StandardActivity {
     @BindColor(R.color.transparent_red) int transparentRed;
     @BindColor(R.color.dark_gray) int darkGray;
 
+    private String placeId;
     private PokeLocation place;
     private MaterialDialog progressDialog;
     private boolean notInitialLoad;
@@ -91,14 +93,40 @@ public class PokeLocationActivity extends StandardActivity {
         EventBus.getDefault().register(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        place = getIntent().getParcelableExtra(PokeLocation.KEY);
-
         progressDialog = new MaterialDialog.Builder(this)
-                .content(R.string.submitting_finding)
                 .progress(true, 0)
                 .cancelable(false)
                 .build();
 
+        place = getIntent().getParcelableExtra(PokeLocation.KEY);
+        if (place != null) {
+            placeId = place.getPlaceId();
+            loadLocationInfo(false);
+        } else {
+            parent.setVisibility(View.INVISIBLE);
+            progressDialog.setContent(R.string.fetching_poke_location);
+            progressDialog.show();
+            placeId = getIntent().getStringExtra(ApiConstants.ID_KEY);
+            fetchLocationInfo();
+        }
+
+        if (PreferencesManager.get().shouldShowLocationTut()) {
+            showTutorial();
+        }
+    }
+
+    // Makes an API call to fetch the info corresponding to the location the page needs to show
+    private void fetchLocationInfo() {
+        List<String> placeIds = new ArrayList<>();
+        placeIds.add(placeId);
+        SyncLocationsRequest request = new SyncLocationsRequest();
+        request.setPlaceIds(placeIds);
+        RestClient.get().getPokemonService()
+                .syncLocations(request)
+                .enqueue(new SingleLocationCallback());
+    }
+
+    private void loadLocationInfo(boolean revealPage) {
         displayName.setText(place.getDisplayName());
         address.setText(place.getAddress());
 
@@ -133,8 +161,8 @@ public class PokeLocationActivity extends StandardActivity {
         rarePokemon.setAdapter(rareAdapter);
         setGalleries();
 
-        if (PreferencesManager.get().shouldShowLocationTut()) {
-            showTutorial();
+        if (revealPage) {
+            parent.setVisibility(View.VISIBLE);
         }
     }
 
@@ -274,13 +302,9 @@ public class PokeLocationActivity extends StandardActivity {
         if (notInitialLoad) {
             loadScoreModule();
             invalidateOptionsMenu();
-            List<String> placeId = new ArrayList<>();
-            placeId.add(place.getPlaceId());
-            SyncLocationsRequest request = new SyncLocationsRequest();
-            request.setPlaceIds(placeId);
-            RestClient.get().getPokemonService()
-                    .syncLocations(request)
-                    .enqueue(new SingleLocationCallback());
+
+            // Refresh location info if they're coming back from adding data
+            fetchLocationInfo();
         }
     }
 
@@ -310,6 +334,7 @@ public class PokeLocationActivity extends StandardActivity {
     }
 
     public void submitPokefinding(Pokemon pokemon, int frequencyIndex) {
+        progressDialog.setContent(R.string.submitting_finding);
         progressDialog.show();
         float frequencyScore = PokemonUtils.getFrequency(frequencyIndex);
         AddPokemonRequest addPokemonRequest = new AddPokemonRequest();
@@ -352,9 +377,12 @@ public class PokeLocationActivity extends StandardActivity {
 
     @Subscribe
     public void onEvent(PokeLocation updatedLocation) {
-        if (place.getPlaceId().equals(updatedLocation.getPlaceId())) {
+        if (placeId.equals(updatedLocation.getPlaceId())) {
             place = updatedLocation;
-            setGalleries();
+            loadLocationInfo(progressDialog.isShowing());
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         }
     }
 

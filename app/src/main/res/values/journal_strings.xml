@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_findings">
+        You have not shared any Pokemon Findings with the community.
+        To start doing that, click the {ion-ios-bookmarks} button
+        on the homepage or the \"+ Add\" buttons on any Poke Location page.
+    </string>
+
+    <string name="pokemon_finding">Pokemon Finding</string>
+    <string name="my_finding_template">I reported %1$s as %2$s at %3$s.</string>
+    <string name="journal_entry_template">Reported %1$s as %2$s at %3$s.</string>
+    <string name="entry_options_title">%1$s at %2$s</string>
+
+    <string name="edit_journal_entry">Edit journal entry</string>
+    <string name="view_entry_location">View entry location</string>
+    <string-array name="journal_options">
+        <item>@string/edit_journal_entry</item>
+        <item>@string/view_entry_location</item>
+    </string-array>
+
+    <string name="editing_entry">Editing journal entry&#8230;</string>
+    <string name="edit_entry_success">We successfully edited your journal entry.</string>
+    <string name="edit_entry_failure">
+        We failed to edit your journal entry.
+        Please try again later.
+    </string>
+</resources>

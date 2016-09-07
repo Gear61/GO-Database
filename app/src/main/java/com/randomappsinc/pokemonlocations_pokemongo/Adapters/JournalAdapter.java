@@ -72,7 +72,6 @@ public class JournalAdapter extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
 
-        @SuppressWarnings("deprecation")
         public void loadItem(PokeFindingDO pokeFindingDO) {
             Picasso.with(context)
                     .load(PokemonUtils.getPokemonIcon(pokeFindingDO.getPokemonId()))
@@ -81,7 +80,7 @@ public class JournalAdapter extends BaseAdapter {
 
             if (pokeFindingDO.getReportTime() == 0) {
                 // If the finding DO has a report time of 0, set it to current time
-                DatabaseManager.get().updatePokeFinding(pokeFindingDO);
+                DatabaseManager.get().updatePokeFinding(pokeFindingDO, null);
             }
 
             timestamp.setText(FeedUtils.humanizeUnixTime(pokeFindingDO.getReportTime()));

@@ -86,6 +86,21 @@ public class PokemonUtils {
         }
     }
 
+    public static float getFrequencyScore(String option) {
+        Context context = MyApplication.getAppContext();
+        if (option.equals(context.getString(R.string.common))) {
+            return 3F;
+        } else if (option.equals(context.getString(R.string.uncommon))) {
+            return 2F;
+        } else if (option.equals(context.getString(R.string.rare))) {
+            return 1F;
+        } else if (option.equals(context.getString(R.string.non_existent))) {
+            return -0.5F;
+        } else {
+            return 3F;
+        }
+    }
+
     public static PokeLocation getLocationFromDO(PokeLocationDO locationDO) {
         PokeLocation location = new PokeLocation();
 

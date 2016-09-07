@@ -1,6 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.API;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.AddPokemonRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.EditRarityRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.NearbyRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.SearchRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.StatusRequest;
@@ -34,4 +35,7 @@ public interface PokemonService {
 
     @POST("status/")
     Call<StatusInfo> getStatus(@Body StatusRequest request);
+
+    @POST("editRarity/")
+    Call<BlankResponse> editRarity(@Body EditRarityRequest request);
 }

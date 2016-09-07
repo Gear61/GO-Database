@@ -265,13 +265,15 @@ public class DatabaseManager {
         });
     }
 
-    public void updatePokeFinding(final PokeFindingDO pokeFindingDO) {
+    public void updatePokeFinding(final PokeFindingDO pokeFindingDO, final String newFrequency) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 PokeFindingDO finding = getFinding(pokeFindingDO.getPokemonId(), pokeFindingDO.getPlaceId());
                 finding.setReportTime(System.currentTimeMillis() / 1000L);
-                finding.setFrequency(pokeFindingDO.getFrequency());
+                if (newFrequency != null) {
+                    finding.setFrequency(newFrequency);
+                }
             }
         });
     }

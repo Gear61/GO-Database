@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/parent"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/no_content"
-        android:text="@string/no_findings"
-        style="@style/no_content"/>
-
-    <ListView
-        android:id="@+id/journal"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/no_content"
+            android:text="@string/no_findings"
+            style="@style/no_content"/>
+
+        <ListView
+            android:id="@+id/journal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

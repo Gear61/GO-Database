@@ -2,7 +2,6 @@ package com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks;
 
 import com.randomappsinc.pokemonlocations_pokemongo.API.ApiConstants;
 import com.randomappsinc.pokemonlocations_pokemongo.API.BlankResponse;
-import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.EditRarityRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
@@ -31,7 +30,7 @@ public class EditRarityCallback implements Callback<BlankResponse> {
     @Override
     public void onResponse(Call<BlankResponse> call, Response<BlankResponse> response) {
         if (response.code() == ApiConstants.HTTP_STATUS_OK) {
-            String newFrequency = PokemonUtils.getFrequency(newRarityScore);
+            String newFrequency = PokemonUtils.getFrequencyTextFromScore(newRarityScore);
             DatabaseManager.get().updatePokeFinding(findingDO, newFrequency);
             EventBus.getDefault().post(EDIT_RARITY_SUCCESS);
         } else {

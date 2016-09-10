@@ -62,7 +62,7 @@ public class PokemonFormViewHolder {
         PokemonPosting posting = new PokemonPosting();
         posting.setPokemonId(PokemonServer.get().getPokemonId(pokemonInput.getText().toString()));
         String choice = frequencyChoice.getSelectedItem().toString();
-        posting.setRarity(PokemonUtils.getFrequency(choice));
+        posting.setRarity(PokemonUtils.getFrequencyFromHeader(choice));
         return posting;
     }
 

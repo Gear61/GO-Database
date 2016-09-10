@@ -74,4 +74,6 @@
     <string name="share_app_message">Join me at Poke Spotter, the easiest way to find Pokemon hotspots near
         you!\n\nDownload it at: https://play.google.com/store/apps/details?id=com.randomappsinc.pokelocator
     </string>
+
+    <string name="edit">Edit</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.Activities.PokeLocationActivity;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
@@ -31,11 +33,11 @@ import butterknife.OnClick;
  * Created by alexanderchiou on 7/17/16.
  */
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
-    private PokeLocationActivity context;
+    private PokeLocationActivity activity;
     private List<Integer> pokemonList;
 
-    public PokemonAdapter(PokeLocationActivity context) {
-        this.context = context;
+    public PokemonAdapter(PokeLocationActivity activity) {
+        this.activity = activity;
         this.pokemonList = new ArrayList<>();
     }
 
@@ -81,7 +83,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             if (PreferencesManager.get().areImagesEnabled()) {
                 pokemonName.setVisibility(View.GONE);
                 pokemonPicture.setVisibility(View.VISIBLE);
-                Picasso.with(context)
+                Picasso.with(activity)
                         .load(PokemonUtils.getPokemonIcon(pokemon.getId()))
                         .into(pokemonPicture);
             } else {
@@ -93,30 +95,46 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
         @OnClick(R.id.pokemon_parent)
         public void addPokeFinding() {
-            PokeLocation place = context.getPlace();
-            PokeFindingDO findingDO = DatabaseManager.get().getFinding(pokemon.getId(), place.getPlaceId());
+            PokeLocation place = activity.getPlace();
+            final PokeFindingDO findingDO = DatabaseManager.get().getFinding(pokemon.getId(), place.getPlaceId());
             if (findingDO == null) {
-                new MaterialDialog.Builder(context)
-                        .content(String.format(addFindingQuestion, pokemon.getName(), place.getDisplayName()))
-                        .items(R.array.flag_frequency_options)
-                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                showRarityDialog(false, null);
+            } else {
+                new MaterialDialog.Builder(activity)
+                        .title(R.string.journal_entry)
+                        .content(String.format(myFindingTemplate, pokemon.getName(),
+                                findingDO.getFrequency().toLowerCase(), place.getDisplayName()))
+                        .positiveText(android.R.string.yes)
+                        .negativeText(R.string.edit)
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
                             @Override
-                            public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                context.submitPokefinding(pokemon, which);
-                                return true;
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                showRarityDialog(true, findingDO);
                             }
                         })
-                        .positiveText(R.string.choose)
-                        .negativeText(android.R.string.no)
-                        .show();
-            } else {
-                new MaterialDialog.Builder(context)
-                        .title(R.string.pokemon_finding)
-                        .content(String.format(myFindingTemplate,
-                                pokemon.getName(), findingDO.getFrequency().toLowerCase(), place.getDisplayName()))
-                        .positiveText(android.R.string.yes)
                         .show();
             }
+        }
+
+        private void showRarityDialog(final boolean editMode, final PokeFindingDO findingDO) {
+            new MaterialDialog.Builder(activity)
+                    .content(String.format(addFindingQuestion, pokemon.getName(), activity.getPlace().getDisplayName()))
+                    .items(R.array.flag_frequency_options)
+                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                        @Override
+                        public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                            if (editMode) {
+                                float newScore = PokemonUtils.getFrequencyFromIndex(which);
+                                activity.editPokeFinding(findingDO, newScore);
+                            } else {
+                                activity.submitPokeFinding(pokemon, which);
+                            }
+                            return true;
+                        }
+                    })
+                    .positiveText(R.string.choose)
+                    .negativeText(android.R.string.no)
+                    .show();
         }
     }
 }

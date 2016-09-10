@@ -91,7 +91,7 @@ public class JournalActivity extends StandardActivity {
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        editRarity(position, PokemonUtils.getFrequency(which));
+                        editRarity(position, PokemonUtils.getFrequencyFromIndex(which));
                         return true;
                     }
                 })
@@ -104,7 +104,7 @@ public class JournalActivity extends StandardActivity {
         progressDialog.show();
 
         PokeFindingDO pokeFindingDO = adapter.getItem(position);
-        float oldScore = PokemonUtils.getFrequencyScore(pokeFindingDO.getFrequency());
+        float oldScore = PokemonUtils.getFrequencyScoreFromText(pokeFindingDO.getFrequency());
         float delta = newFrequency - oldScore;
         EditRarityRequest request = new EditRarityRequest();
         request.setPokemonId(pokeFindingDO.getPokemonId());

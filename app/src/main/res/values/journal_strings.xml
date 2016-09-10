@@ -6,7 +6,7 @@
         on the homepage or the \"+ Add\" buttons on any Poke Location page.
     </string>
 
-    <string name="pokemon_finding">Pokemon Finding</string>
+    <string name="journal_entry">Journal Entry</string>
     <string name="my_finding_template">I reported %1$s as %2$s at %3$s.</string>
     <string name="journal_entry_template">Reported %1$s as %2$s at %3$s.</string>
     <string name="entry_options_title">%1$s at %2$s</string>

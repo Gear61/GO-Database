@@ -14,16 +14,19 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.ApiConstants;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.AddPokemonCallback;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.EditRarityCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.SingleLocationCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.LatLong;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.PokemonPosting;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.AddPokemonRequest;
+import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.EditRarityRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.SyncLocationsRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
@@ -333,10 +336,10 @@ public class PokeLocationActivity extends StandardActivity {
         return place;
     }
 
-    public void submitPokefinding(Pokemon pokemon, int frequencyIndex) {
+    public void submitPokeFinding(Pokemon pokemon, int frequencyIndex) {
         progressDialog.setContent(R.string.submitting_finding);
         progressDialog.show();
-        float frequencyScore = PokemonUtils.getFrequency(frequencyIndex);
+        float frequencyScore = PokemonUtils.getFrequencyFromIndex(frequencyIndex);
         AddPokemonRequest addPokemonRequest = new AddPokemonRequest();
         addPokemonRequest.setLocation(place);
 
@@ -352,12 +355,24 @@ public class PokeLocationActivity extends StandardActivity {
                 .enqueue(new AddPokemonCallback(place, postings));
     }
 
+    public void editPokeFinding(PokeFindingDO findingDO, float newFrequency) {
+        progressDialog.setContent(R.string.editing_entry);
+        progressDialog.show();
+
+        float oldScore = PokemonUtils.getFrequencyScoreFromText(findingDO.getFrequency());
+        EditRarityRequest request = new EditRarityRequest();
+        request.setPokemonId(findingDO.getPokemonId());
+        request.setPlaceId(findingDO.getPlaceId());
+        request.setDelta(newFrequency - oldScore);
+        RestClient.get().getPokemonService()
+                .editRarity(request)
+                .enqueue(new EditRarityCallback(findingDO, newFrequency));
+    }
+
     @OnClick(R.id.start_navigation)
     public void startHeadingHere() {
-            String mapUri = "google.navigation:q=" + place.getDisplayName()
-                    + ", " + place.getAddress();
-            startActivity(Intent.createChooser(
-                    new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
+            String mapUri = "google.navigation:q=" + place.getDisplayName() + ", " + place.getAddress();
+            startActivity(Intent.createChooser(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapUri)),
                     getString(R.string.navigate_with)));
     }
 
@@ -372,6 +387,13 @@ public class PokeLocationActivity extends StandardActivity {
                 progressDialog.dismiss();
                 UIUtils.showSnackbar(parent, getString(R.string.add_pokemon_fail));
                 break;
+            case EditRarityCallback.EDIT_RARITY_SUCCESS:
+                progressDialog.dismiss();
+                UIUtils.showSnackbar(parent, getString(R.string.edit_entry_success));
+                break;
+            case EditRarityCallback.EDIT_RARITY_FAILURE:
+                progressDialog.dismiss();
+                UIUtils.showSnackbar(parent, getString(R.string.edit_entry_failure));
         }
     }
 

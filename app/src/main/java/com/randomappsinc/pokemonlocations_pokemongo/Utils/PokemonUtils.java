@@ -43,7 +43,7 @@ public class PokemonUtils {
         return file;
     }
 
-    public static float getFrequency(int index) {
+    public static float getFrequencyFromIndex(int index) {
         switch (index) {
             case 0:
                 return 3F;
@@ -58,7 +58,7 @@ public class PokemonUtils {
         }
     }
 
-    public static String getFrequency(float score) {
+    public static String getFrequencyTextFromScore(float score) {
         Context context = MyApplication.getAppContext();
         if (score == 3F) {
             return context.getString(R.string.common);
@@ -73,7 +73,7 @@ public class PokemonUtils {
         }
     }
 
-    public static float getFrequency(String option) {
+    public static float getFrequencyFromHeader(String option) {
         Context context = MyApplication.getAppContext();
         if (option.equals(context.getString(R.string.common_option))) {
             return 3F;
@@ -86,7 +86,7 @@ public class PokemonUtils {
         }
     }
 
-    public static float getFrequencyScore(String option) {
+    public static float getFrequencyScoreFromText(String option) {
         Context context = MyApplication.getAppContext();
         if (option.equals(context.getString(R.string.common))) {
             return 3F;

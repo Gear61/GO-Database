@@ -121,7 +121,7 @@ public class AddPokemonAdapter extends RecyclerView.Adapter<AddPokemonAdapter.Po
                 pokemonName.setVisibility(View.VISIBLE);
             }
 
-            String rarity = PokemonUtils.getFrequency(posting.getRarity());
+            String rarity = PokemonUtils.getFrequencyTextFromScore(posting.getRarity());
             rarityIcon.setText(rarity.subSequence(0, 1));
         }
 

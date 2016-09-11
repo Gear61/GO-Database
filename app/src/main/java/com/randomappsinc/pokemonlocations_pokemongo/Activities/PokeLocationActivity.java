@@ -114,6 +114,7 @@ public class PokeLocationActivity extends StandardActivity {
         }
 
         if (PreferencesManager.get().shouldShowLocationTut()) {
+            PreferencesManager.get().turnOffLocationTut();
             showTutorial();
         }
     }

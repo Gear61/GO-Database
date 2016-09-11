@@ -271,6 +271,13 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
     public void onEvent(PokeLocationsEvent event) {
         if (event.getScreen().equals(SCREEN_NAME)) {
             loadingSearch.setRefreshing(false);
+
+            if (event.getLocations().isEmpty()) {
+                if (PreferencesManager.get().shouldExplainNoResults() && PreferencesManager.get().shouldShowLocationTut()) {
+                    ((MainActivity) getActivity()).showNoResultsDialog();
+                }
+            }
+
             adapter.processResults(event.getLocations(), pokemonId, searchedLocation);
             searchResults.smoothScrollToPosition(0);
         }

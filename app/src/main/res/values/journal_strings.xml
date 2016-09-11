@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_findings">
-        You have not shared any Pokemon Findings with the community.
-        To start doing that, click the {ion-ios-bookmarks} button
+        Your journal is currently empty.
+        To start it, click the {ion-ios-bookmarks} button
         on the homepage or the \"+ Add\" buttons on any Poke Location page.
     </string>
 

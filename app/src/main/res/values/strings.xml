@@ -71,9 +71,27 @@
 
     <string name="share_via">Share via</string>
     <string name="share_app_title">Share Poke Spotter</string>
-    <string name="share_app_message">Join me at Poke Spotter, the easiest way to find Pokemon hotspots near
-        you!\n\nDownload it at: https://play.google.com/store/apps/details?id=com.randomappsinc.pokelocator
+    <string name="share_app_message">
+        I recently found an app named Poke Spotter, which maps out Pokemon hotspots and nests all over the world.
+        It\'s updated very regularly, and the developers behind it are super friendly, responsive, and care deeply
+        for the Pokemon GO community.\n\nIf you want to join me, you can download it at:
+        https://play.google.com/store/apps/details?id=com.randomappsinc.pokelocator
     </string>
 
     <string name="edit">Edit</string>
+
+    <!-- First time no results -->
+    <string name="building_poke_spotter">Building Poke Spotter, Together</string>
+    <string name="no_results_explanation">
+        So it looks like we don\'t have any data in your area, which sucks and we feel you.
+        We want to always be there for the Pokemon GO community, so we don\'t cheat.
+        Poke Spotter is powered entirely by users like YOU.
+        Here are some things you can do to start getting data in your area:
+    </string>
+    <string name="none_of_the_above">None of the above</string>
+    <string-array name="get_data_options">
+        <item>@string/share_pokespotter</item>
+        <item>@string/report_pokemon_finding</item>
+        <item>@string/none_of_the_above</item>
+    </string-array>
 </resources>

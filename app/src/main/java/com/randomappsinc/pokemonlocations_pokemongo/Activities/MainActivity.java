@@ -185,6 +185,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @OnClick(R.id.add_pokemon_listing)
     public void addPokemonListing() {
+        openReportPage();
+    }
+
+    private void openReportPage() {
         navDrawerFragment.closeDrawer();
         startActivity(new Intent(this, AddListingActivity.class));
     }
@@ -245,6 +249,35 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 .show();
     }
 
+    public void showNoResultsDialog() {
+        new MaterialDialog.Builder(this)
+                .cancelable(false)
+                .title(R.string.building_poke_spotter)
+                .content(R.string.no_results_explanation)
+                .items(R.array.get_data_options)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        switch (which) {
+                            case 0:
+                                shareApp();
+                                break;
+                            case 1:
+                                openReportPage();
+                                break;
+                        }
+                    }
+                })
+                .show();
+    }
+
+    private void shareApp() {
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_app_message));
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -299,10 +332,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.send_email)));
                 return true;
             case R.id.share_app:
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_app_message));
-                startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+                shareApp();
                 return true;
             case R.id.search:
                 drawerLayout.closeDrawers();

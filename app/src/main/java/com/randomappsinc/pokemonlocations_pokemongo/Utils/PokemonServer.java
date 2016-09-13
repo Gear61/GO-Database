@@ -1,5 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,14 +24,16 @@ public class PokemonServer {
         return instance;
     }
 
-    private List<String> pokemonList;
+    private List<String> pokemonNamesList;
     private Map<String, Integer> nameToIdMappings;
     private Map<Integer, String> idToNameMappings;
+    private List<Pokemon> pokemonList;
 
     private PokemonServer() {
-        pokemonList = new ArrayList<>();
+        pokemonNamesList = new ArrayList<>();
         nameToIdMappings = new HashMap<>();
         idToNameMappings = new HashMap<>();
+        pokemonList = new ArrayList<>();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(MyApplication.getAppContext()
@@ -37,9 +41,10 @@ public class PokemonServer {
             String pokemon;
             int currentIndex = 1;
             while ((pokemon = reader.readLine()) != null) {
-                pokemonList.add(pokemon);
+                pokemonNamesList.add(pokemon);
                 nameToIdMappings.put(pokemon.toLowerCase(), currentIndex);
                 idToNameMappings.put(currentIndex, pokemon);
+                pokemonList.add(new Pokemon(currentIndex, pokemon));
                 currentIndex++;
             }
         } catch (IOException ignored) {
@@ -50,7 +55,7 @@ public class PokemonServer {
                 } catch (Exception ignored) {}
             }
         }
-        Collections.sort(pokemonList);
+        Collections.sort(pokemonNamesList);
     }
 
     public boolean isValidPokemon(String input) {
@@ -58,7 +63,7 @@ public class PokemonServer {
     }
 
     public List<String> getMatchingPokemon(String prefix) {
-        return MatchingUtils.getMatchingItems(prefix, pokemonList);
+        return MatchingUtils.getMatchingItems(prefix, pokemonNamesList);
     }
 
     public int getPokemonId(String pokemonName) {
@@ -67,6 +72,10 @@ public class PokemonServer {
 
     public String getPokemonName(int id) {
         return idToNameMappings.get(id);
+    }
+
+    public List<Pokemon> getPokemonList() {
+        return pokemonList;
     }
 
     public boolean isUnreleased(String pokemonName) {

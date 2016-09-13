@@ -90,5 +90,11 @@
             android:theme="@style/no_action_bar"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".Activities.PokedexActivity"
+            android:label="@string/pokedex"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

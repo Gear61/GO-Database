@@ -47,6 +47,9 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    public static final int FILTER_KEY = 1;
+    public static final int POKEDEX_KEY = 2;
+
     @Bind(R.id.parent) View parent;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.add_pokemon_listing) FloatingActionButton addListing;
@@ -211,15 +214,19 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         Intent intent = null;
         switch (position) {
             case 0:
+                intent = new Intent(this, PokedexActivity.class);
+                startActivityForResult(intent, POKEDEX_KEY);
+                return;
+            case 1:
                 intent = new Intent(this, FavoritesActivity.class);
                 break;
-            case 1:
+            case 2:
                 intent = new Intent(this, JournalActivity.class);
                 break;
-            case 2:
+            case 3:
                 intent = new Intent(this, MyLocationsActivity.class);
                 break;
-            case 3:
+            case 4:
                 intent = new Intent(this, SettingsActivity.class);
                 break;
         }
@@ -281,8 +288,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            filter = data.getParcelableExtra(Filter.KEY);
-            searchFragment.fullSearch();
+            switch (requestCode) {
+                case FILTER_KEY:
+                    filter = data.getParcelableExtra(Filter.KEY);
+                    searchFragment.fullSearch();
+                    break;
+                case POKEDEX_KEY:
+                    break;
+            }
         }
     }
 
@@ -338,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 drawerLayout.closeDrawers();
                 Intent intent = new Intent(this, FilterActivity.class);
                 intent.putExtra(Filter.KEY, filter);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, FILTER_KEY);
                 return true;
         }
         return super.onOptionsItemSelected(item);

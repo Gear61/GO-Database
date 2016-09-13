@@ -141,4 +141,9 @@
         <item name="android:textColor">@color/dark_gray</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="monospace_text">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:typeface">monospace</item>
+    </style>
 </resources>

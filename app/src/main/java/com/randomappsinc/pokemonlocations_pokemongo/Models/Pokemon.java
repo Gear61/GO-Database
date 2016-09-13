@@ -8,6 +8,13 @@ public class Pokemon {
     private String name;
     private float frequency;
 
+    public Pokemon() {}
+
+    public Pokemon(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

@@ -111,4 +111,10 @@ public class MyLocationsActivity extends StandardActivity {
     public void showLocationOptions(int position) {
         locationsAdapter.showOptionsDialog(position);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SmartLocation.with(this).location().stop();
+    }
 }

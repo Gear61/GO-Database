@@ -61,14 +61,14 @@ public class JournalAdapter extends BaseAdapter {
         return position;
     }
 
-    public class PokeFindingViewHolder {
+    public class JournalEntryViewHolder {
         @Bind(R.id.pokemon_icon) ImageView pokemonPicture;
         @Bind(R.id.finding_info) TextView findingInfo;
         @Bind(R.id.timestamp) TextView timestamp;
 
         @BindString(R.string.journal_entry_template) String journalEntry;
 
-        public PokeFindingViewHolder(View view) {
+        public JournalEntryViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
 
@@ -89,14 +89,14 @@ public class JournalAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        PokeFindingViewHolder holder;
+        JournalEntryViewHolder holder;
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.poke_finding_cell, parent, false);
-            holder = new PokeFindingViewHolder(view);
+            view = vi.inflate(R.layout.journal_entry, parent, false);
+            holder = new JournalEntryViewHolder(view);
             view.setTag(holder);
         } else {
-            holder = (PokeFindingViewHolder) view.getTag();
+            holder = (JournalEntryViewHolder) view.getTag();
         }
         holder.loadItem(getItem(position));
         return view;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_from_dex">Search for this Pokemon</string>
+    <string name="report_from_dex">Report finding for this Pokemon</string>
+    <string-array name="pokedex_options">
+        <item>@string/search_from_dex</item>
+        <item>@string/report_from_dex</item>
+    </string-array>
+</resources>

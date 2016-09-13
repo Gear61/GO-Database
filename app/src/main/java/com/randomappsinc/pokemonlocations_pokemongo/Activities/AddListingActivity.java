@@ -21,6 +21,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.PokeLocationsEvent;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.AddPokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokemonFormViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
@@ -33,7 +34,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import butterknife.Bind;
@@ -118,12 +118,20 @@ public class AddListingActivity extends StandardActivity {
                         PokemonPosting posting = pokemonFormHolder.getPosting();
                         addPokemonAdapter.addPokemonPosting(posting);
                         pokemonToAdd.scrollToPosition(addPokemonAdapter.getItemCount() - 1);
+                        pokeFormDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     }
                 })
                 .build();
-        pokeFormDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
         View addButton = pokeFormDialog.getActionButton(DialogAction.POSITIVE);
-        pokemonFormHolder = new PokemonFormViewHolder(this, pokeFormDialog.getCustomView(), addButton);
+        int prefillId = getIntent().getIntExtra(Pokemon.ID_KEY, 0);
+        pokemonFormHolder = new PokemonFormViewHolder(this, pokeFormDialog.getCustomView(), addButton, prefillId);
+        // Only have the dialog immediately open the keyboard if the Pokemon name isn't prefilled
+        if (prefillId == 0) {
+            pokeFormDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        } else {
+            pokeFormDialog.show();
+        }
 
         addPokemonAdapter = new AddPokemonAdapter(this);
         pokemonToAdd.setAdapter(addPokemonAdapter);
@@ -140,7 +148,6 @@ public class AddListingActivity extends StandardActivity {
             int frequencyIndex = getIntent().getIntExtra(FREQUENCY_INDEX_KEY, 0);
             pokemonFormHolder.setFrequency(frequencyIndex);
             pokemonFormHolder.setPrefillMode(true);
-            pokemonFormHolder.setAlreadyChosen(new HashSet<String>());
             pokeFormDialog.show();
             pokemonFormHolder.requestFocus();
         }

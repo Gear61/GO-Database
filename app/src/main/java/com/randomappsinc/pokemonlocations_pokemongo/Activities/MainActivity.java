@@ -23,6 +23,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
@@ -294,6 +295,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                     searchFragment.fullSearch();
                     break;
                 case POKEDEX_KEY:
+                    int pokemonId = data.getIntExtra(Pokemon.ID_KEY, 0);
+                    filter.setPokemonId(pokemonId);
+                    searchFragment.fullSearch();
                     break;
             }
         }

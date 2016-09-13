@@ -16,6 +16,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import butterknife.Bind;
@@ -40,12 +41,19 @@ public class PokemonFormViewHolder {
     private View addButton;
     private Set<String> alreadyChosen;
     private boolean prefillMode;
+    private boolean doNothing;
 
-    public PokemonFormViewHolder(Context context, View rootView, View addButton) {
+    public PokemonFormViewHolder(Context context, View rootView, View addButton, int prefillId) {
         ButterKnife.bind(this, rootView);
         this.context = context;
+        this.alreadyChosen = new HashSet<>();
         this.addButton = addButton;
         addButton.setEnabled(false);
+
+        if (prefillId > 0) {
+            doNothing = true;
+            pokemonInput.setText(PokemonServer.get().getPokemonName(prefillId));
+        }
 
         pokemonInput.setAdapter(new PokemonACAdapter(context, R.layout.pokemon_ac_item, new ArrayList<String>()));
 
@@ -67,7 +75,8 @@ public class PokemonFormViewHolder {
     }
 
     public void setAlreadyChosen(Set<String> alreadyChosen) {
-        this.alreadyChosen = alreadyChosen;
+        this.alreadyChosen.clear();
+        this.alreadyChosen.addAll(alreadyChosen);
     }
 
     public void setPrefillMode(boolean prefillMode) {
@@ -84,6 +93,11 @@ public class PokemonFormViewHolder {
         pokemonInput.requestFocus();
     }
 
+    public void setPokemon(int pokemonId) {
+        pokemonInput.setText(PokemonServer.get().getPokemonName(pokemonId));
+        frequencyChoice.requestFocus();
+    }
+
     @OnClick(R.id.clear_pokemon)
     public void clearPokemon() {
         pokemonInput.setText("");
@@ -91,21 +105,24 @@ public class PokemonFormViewHolder {
 
     @OnTextChanged(value = R.id.pokemon_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
-        if (input.length() == 0) {
-            clearPokemon.setVisibility(View.GONE);
-        } else {
-            clearPokemon.setVisibility(View.VISIBLE);
-            if (PokemonServer.get().isValidPokemon(input.toString())) {
-                // Hide keyboard
-                InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                im.hideSoftInputFromWindow(pokemonInput.getWindowToken(), 0);
+        if (!doNothing) {
+            doNothing = false;
+            if (input.length() == 0) {
+                clearPokemon.setVisibility(View.GONE);
+            } else {
+                clearPokemon.setVisibility(View.VISIBLE);
+                if (PokemonServer.get().isValidPokemon(input.toString())) {
+                    // Hide keyboard
+                    InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(pokemonInput.getWindowToken(), 0);
 
-                if (!prefillMode) {
-                    frequencyChoice.requestFocus();
-                    frequencyChoice.performClick();
-                } else {
-                    prefillMode = false;
-                    parent.requestFocus();
+                    if (!prefillMode) {
+                        frequencyChoice.requestFocus();
+                        frequencyChoice.performClick();
+                    } else {
+                        prefillMode = false;
+                        parent.requestFocus();
+                    }
                 }
             }
         }

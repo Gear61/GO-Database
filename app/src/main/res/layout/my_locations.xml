@@ -10,13 +10,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
         android:focusableInTouchMode="true"
         android:focusable="true">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="66dp"
+            android:padding="8dp">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/add_location"

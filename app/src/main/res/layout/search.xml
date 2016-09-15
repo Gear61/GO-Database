@@ -14,7 +14,7 @@
             android:id="@+id/search_results"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="80dp"
+            android:paddingBottom="88dp"
             android:clipToPadding="false"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 

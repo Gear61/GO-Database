@@ -66,24 +66,27 @@ public class SettingsActivity extends StandardActivity {
         Intent intent = null;
         switch (position) {
             case 0:
+                intent = new Intent(this, MyLocationsActivity.class);
+                break;
+            case 1:
                 showDistanceUnitDialog();
                 return;
-            case 1:
+            case 2:
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_app_message));
                 startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
                 return;
-            case 2:
+            case 3:
                 String uriText = "mailto:" + SUPPORT_EMAIL + "?subject=" + Uri.encode(feedbackSubject);
                 Uri mailUri = Uri.parse(uriText);
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
                 startActivity(Intent.createChooser(sendIntent, sendEmail));
                 return;
-            case 3:
+            case 4:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(OTHER_APPS_URL));
                 break;
-            case 4:
+            case 5:
                 Uri uri =  Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
                 intent = new Intent(Intent.ACTION_VIEW, uri);
                 if (!(getPackageManager().queryIntentActivities(intent, 0).size() > 0)) {

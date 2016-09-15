@@ -225,9 +225,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 intent = new Intent(this, JournalActivity.class);
                 break;
             case 3:
-                intent = new Intent(this, MyLocationsActivity.class);
-                break;
-            case 4:
                 intent = new Intent(this, SettingsActivity.class);
                 break;
         }

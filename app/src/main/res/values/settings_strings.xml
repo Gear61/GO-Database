@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="my_locations">My Locations</string>
     <string name="set_distance_unit">Set distance unit</string>
     <string name="share_pokespotter">Share Poke Spotter</string>
     <string name="send_feedback">Send feedback</string>
     <string name="our_other_apps">Our other apps</string>
     <string name="rate_this_app">Rate this app</string>
     <array name="settings_options">
+        <item>@string/my_locations</item>
         <item>@string/set_distance_unit</item>
         <item>@string/share_pokespotter</item>
         <item>@string/send_feedback</item>
@@ -15,11 +17,13 @@
     <string name="feedback_subject">Poke Locator Feedback</string>
     <string name="send_email">Send email</string>
 
+    <string name="map_icon">{ion-android-map}</string>
     <string name="share_icon">{ion-android-share-alt}</string>
     <string name="email_icon">{ion-email}</string>
     <string name="android_icon">{ion-social-android}</string>
     <string name="rate_icon">{ion-thumbsup}</string>
     <array name="settings_icons">
+        <item>@string/map_icon</item>
         <item>@string/distance_icon</item>
         <item>@string/share_icon</item>
         <item>@string/email_icon</item>

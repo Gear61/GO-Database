@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/dark_gray"
-            android:textSize="24dp"/>
+            android:textSize="22dp"/>
 
         <TextView
             android:id="@+id/distance"
@@ -50,6 +50,15 @@
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
             android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/score_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:textColor="@color/dark_gray"
+            android:textSize="14dp"/>
 
         <LinearLayout
             android:id="@+id/preview_gallery"

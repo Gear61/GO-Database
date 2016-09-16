@@ -95,6 +95,15 @@ public class PokeLocation implements Parcelable {
         this.numDislikes = numDislikes;
     }
 
+    public float getLikePercentage() {
+        float totalVotes = numLikes + numDislikes;
+        if (totalVotes == 0F) {
+            return 0.5F;
+        } else {
+            return ((float) numLikes) / totalVotes;
+        }
+    }
+
     public String getDisplayName() {
         return displayName;
     }

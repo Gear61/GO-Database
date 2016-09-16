@@ -27,6 +27,7 @@ public class PokeLocationViewHolder {
     @Bind(R.id.like_icon) TextView likeIcon;
     @Bind(R.id.score) TextView score;
     @Bind(R.id.display_name) TextView displayName;
+    @Bind(R.id.score_report) TextView scoreReport;
     @Bind(R.id.distance) TextView distance;
     @Bind(R.id.preview_gallery) View previewGallery;
     @Bind({R.id.pokemon1, R.id.pokemon2, R.id.pokemon3, R.id.pokemon4,
@@ -37,11 +38,16 @@ public class PokeLocationViewHolder {
     @BindString(R.string.miles_away) String milesTemplate;
     @BindString(R.string.kilometers_away) String kilometersTemplate;
     @BindString(R.string.positive_score) String positiveScore;
+    @BindString(R.string.score_report) String scoreReportTemplate;
 
     @BindColor(R.color.gray) int gray;
     @BindColor(R.color.dark_gray) int darkGray;
-    @BindColor(R.color.app_red) int red;
+
     @BindColor(R.color.green) int green;
+    @BindColor(R.color.lime) int lime;
+    @BindColor(R.color.yellow) int yellow;
+    @BindColor(R.color.orange) int orange;
+    @BindColor(R.color.app_red) int red;
 
     private Context context;
 
@@ -107,9 +113,10 @@ public class PokeLocationViewHolder {
         // Load score
         int locationScore = pokeLocation.getScore();
         if (locationScore == 0) {
-            likeIcon.setText(R.string.like_icon);
-            likeIcon.setTextColor(darkGray);
+            likeIcon.setText(R.string.liked_icon);
+            likeIcon.setTextColor(yellow);
             score.setText(String.valueOf(locationScore));
+
         } else if (locationScore > 0) {
             likeIcon.setText(R.string.liked_icon);
             likeIcon.setTextColor(green);
@@ -118,6 +125,27 @@ public class PokeLocationViewHolder {
             likeIcon.setText(R.string.disliked_icon);
             likeIcon.setTextColor(red);
             score.setText(String.valueOf(locationScore));
+        }
+
+        float likePercentage = pokeLocation.getLikePercentage();
+        if (likePercentage <= 1F && likePercentage >= 0.85F) {
+            likeIcon.setTextColor(green);
+        } else if (likePercentage < 0.85F && likePercentage >= 0.7F) {
+            likeIcon.setTextColor(lime);
+        } else if (likePercentage < 0.7F && likePercentage >= 0.5F) {
+            likeIcon.setTextColor(yellow);
+        } else if (likePercentage < 0.5F && likePercentage >= 0.35F) {
+            likeIcon.setTextColor(orange);
+        } else {
+            likeIcon.setTextColor(red);
+        }
+
+        int totalVotes = pokeLocation.getNumLikes() + pokeLocation.getNumDislikes();
+        int likePercent = (int) (likePercentage * 100F);
+        if (totalVotes > 0) {
+            scoreReport.setText(String.format(scoreReportTemplate, pokeLocation.getNumLikes(), totalVotes, likePercent));
+        } else {
+            scoreReport.setText(R.string.no_ratings);
         }
     }
 }

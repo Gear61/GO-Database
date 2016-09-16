@@ -33,9 +33,11 @@
 
     <string name="start_heading_here">Start heading here</string>
 
+    <!-- Icons -->
     <string name="location_icon">{ion-location}</string>
     <string name="upvote_icon">{ion-arrow-up-b}</string>
     <string name="downvote_icon">{ion-arrow-down-b}</string>
+    <string name="navigate_icon">{ion-navigate}</string>
 
     <string name="navigate_with">Navigate with</string>
 
@@ -46,8 +48,8 @@
     <string name="current_instructions">Your current location is where Poke Locator searches for Pokemon.</string>
     <string name="add_location_title">Add Location</string>
 
-    <string name="miles_away">%.2f miles away</string>
-    <string name="kilometers_away">%.2f kilometers away</string>
+    <string name="miles_away">%.1f mi</string>
+    <string name="kilometers_away">%.1f km</string>
 
     <!-- Sharing -->
     <string name="share_location">Share location</string>
@@ -82,7 +84,7 @@
     <string name="positive_score">+%d</string>
     <string name="like_count">%1d likes</string>
     <string name="dislike_count">%1d dislikes</string>
-    <string name="score_report">%1$d of %2$d people (%3$d%%) like this location</string>
+    <string name="score_report">%1$d out of %2$d people (%3$d%%) like this location</string>
     <string name="no_ratings">There are no ratings for this location</string>
 
     <string name="add_with_plus">+ Add</string>

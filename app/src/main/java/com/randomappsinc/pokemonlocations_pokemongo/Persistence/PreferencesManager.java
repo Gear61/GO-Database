@@ -22,6 +22,7 @@ public class PreferencesManager {
     private static final String IMAGES_ENABLED_KEY = "imagesEnabled";
     private static final String IS_AMERICAN_KEY = "isAmerican";
     private static final String USERNAME_KEY = "username";
+    private static final String TEAM_KEY = "team";
     private static PreferencesManager instance;
 
     private Context context;
@@ -117,5 +118,13 @@ public class PreferencesManager {
 
     public void setUsername(String username) {
         prefs.edit().putString(USERNAME_KEY, username).apply();
+    }
+
+    public int getTeam() {
+        return prefs.getInt(TEAM_KEY, -1);
+    }
+
+    public void setTeam(int team) {
+        prefs.edit().putInt(TEAM_KEY, team).apply();
     }
 }

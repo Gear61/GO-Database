@@ -14,11 +14,28 @@
         android:gravity="center_vertical"
         android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/team_icon"
+        <FrameLayout
+            android:id="@+id/icon_container"
             android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/mystic"/>
+            android:layout_height="60dp">
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/no_team"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gray_circular_border"
+                android:gravity="center"
+                android:text="@string/question_mark_icon"
+                android:textSize="32dp"
+                android:textColor="@color/dark_gray"/>
+
+            <ImageView
+                android:id="@+id/team_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/mystic" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/username"

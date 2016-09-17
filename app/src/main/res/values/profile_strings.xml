@@ -4,4 +4,17 @@
     <string name="set_username">Set Username</string>
     <string name="username_prompt">What is your Pokemon GO username?</string>
     <string name="username">Username</string>
+
+    <string name="set_team">Set Team</string>
+
+    <string name="question_mark_icon">{ion-help}</string>
+
+    <string name="mystic">Mystic</string>
+    <string name="valor">Valor</string>
+    <string name="instinct">Instinct</string>
+    <string-array name="team_names">
+        <item>@string/mystic</item>
+        <item>@string/valor</item>
+        <item>@string/instinct</item>
+    </string-array>
 </resources>

@@ -112,7 +112,7 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
             if (PermissionUtils.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
                 doAutomaticSearch();
             } else {
-                askForLocation();
+                requestLocation();
             }
         } else {
             String currentLocation = PreferencesManager.get().getCurrentLocation();
@@ -121,29 +121,12 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
         }
     }
 
-    private void askForLocation() {
-        if (PreferencesManager.get().shouldShowLocationRationale()) {
-            new MaterialDialog.Builder(getActivity())
-                    .content(R.string.location_permission_reason)
-                    .positiveText(android.R.string.yes)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            requestLocation();
-                        }
-                    })
-                    .show();
-        } else {
-            requestLocation();
-        }
-    }
-
     private void requestLocation() {
         PermissionUtils.requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, 1);
     }
 
     public void doAutomaticSearch() {
-        // Cancel previous location fetches
+        // Cancel previous searches
         SmartLocation.with(getActivity()).location().stop();
         locationChecker.removeCallbacks(locationCheckTask);
 
@@ -155,6 +138,7 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
                     .start(new OnLocationUpdatedListener() {
                         @Override
                         public void onLocationUpdated(Location location) {
+                            SmartLocation.with(getActivity()).location().stop();
                             locationChecker.removeCallbacks(locationCheckTask);
                             locationFetched = true;
                             doSearch(location.getLatitude(), location.getLongitude());
@@ -248,8 +232,7 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
         // Go through onboarding flow if it's their first time opening the app
         if (PreferencesManager.get().shouldShowWelcome()) {
             noResults.setText(R.string.welcome);
-        }
-        else if (searchedLocation.getLatitude() == 0 && searchedLocation.getLongitude() == 0) {
+        } else if (searchedLocation.getLatitude() == 0 && searchedLocation.getLongitude() == 0) {
             // If they're opening the app, do a search automatically
             fullSearch();
         } else if (!PreferencesManager.get().getCurrentLocation().equals(getString(R.string.automatic))){

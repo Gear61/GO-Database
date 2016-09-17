@@ -28,6 +28,12 @@ public class SearchCallback implements Callback<LocationsResult> {
 
     @Override
     public void onFailure(Call<LocationsResult> call, Throwable t) {
-        EventBus.getDefault().post(SEARCH_FAIL);
+        // Make sure not to send out failure events if the call was canceled
+        String errorMessage = t.getMessage().toLowerCase();
+        if (!(errorMessage.equals(ApiConstants.CANCELED)
+                || errorMessage.equals(ApiConstants.SOCKET_CLOSED)
+                || errorMessage.equals(ApiConstants.UNEXPECTED_STREAM_END))) {
+            EventBus.getDefault().post(SEARCH_FAIL);
+        }
     }
 }

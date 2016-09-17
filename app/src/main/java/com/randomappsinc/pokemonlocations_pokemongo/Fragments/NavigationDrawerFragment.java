@@ -18,7 +18,6 @@ import android.widget.ListView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.IconItemsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +27,6 @@ import butterknife.OnItemClick;
  * Created by alexanderchiou on 7/14/16.
  */
 public class NavigationDrawerFragment extends Fragment {
-    private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private NavigationDrawerCallbacks mCallbacks;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -36,16 +34,6 @@ public class NavigationDrawerFragment extends Fragment {
     private View mFragmentContainerView;
 
     @Bind(R.id.nav_drawer_tabs) ListView mDrawerListView;
-
-    private int mCurrentSelectedPosition = 0;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
-        }
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -59,7 +47,6 @@ public class NavigationDrawerFragment extends Fragment {
         ButterKnife.bind(this, navDrawer);
         mDrawerListView.setAdapter(new IconItemsAdapter(getActivity(),
                 R.array.nav_drawer_tabs, R.array.nav_drawer_icons));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return navDrawer;
     }
 
@@ -86,32 +73,13 @@ public class NavigationDrawerFragment extends Fragment {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
-        mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(
+        mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
                 toolbar,             /* nav drawer image to replace 'Up' caret */
                 R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
-        ) {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                if (!isAdded()) {
-                    return;
-                }
-                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                UIUtils.hideKeyboard(getActivity());
-                if (!isAdded()) {
-                    return;
-                }
-                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
-            }
-        };
+        ) {};
 
         // Defer code dependent on restoration of previous instance state.
         mDrawerLayout.post(new Runnable() {
@@ -129,10 +97,6 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void selectItem(int position) {
-        mCurrentSelectedPosition = position;
-        if (mDrawerListView != null) {
-            mDrawerListView.setItemChecked(position, true);
-        }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
@@ -151,12 +115,6 @@ public class NavigationDrawerFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
     }
 
     @Override

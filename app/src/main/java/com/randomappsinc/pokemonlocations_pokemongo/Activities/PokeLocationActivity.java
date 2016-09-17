@@ -42,12 +42,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.BindColor;
-import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by alexanderchiou on 7/17/16.
@@ -62,21 +58,12 @@ public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.address) TextView address;
     @Bind(R.id.score_report) TextView scoreReport;
 
-    @Bind(R.id.likes_icon) TextView likesIcon;
-    @Bind(R.id.likes_count) TextView likesCount;
-    @Bind(R.id.dislikes_icon) TextView dislikesIcon;
-    @Bind(R.id.dislikes_count) TextView dislikesCount;
-
     @Bind(R.id.common_pokemon) RecyclerView commonPokemon;
     @Bind(R.id.uncommon_pokemon) RecyclerView uncommonPokemon;
     @Bind(R.id.rare_pokemon) RecyclerView rarePokemon;
     @Bind(R.id.no_common_pokemon) View noCommonPokemon;
     @Bind(R.id.no_uncommon_pokemon) View noUncommonPokemon;
     @Bind(R.id.no_rare_pokemon) View noRarePokemon;
-
-    @BindString(R.string.like_count) String likesTemplate;
-    @BindString(R.string.dislike_count) String dislikesTemplate;
-    @BindString(R.string.positive_score) String positiveScore;
 
     @BindColor(R.color.app_red) int red;
     @BindColor(R.color.gray) int gray;
@@ -169,38 +156,6 @@ public class PokeLocationActivity extends StandardActivity {
     }
 
     private void showTutorial() {
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this);
-        MaterialShowcaseView likeExplanation = new MaterialShowcaseView.Builder(this)
-                .setMaskColour(transparentRed)
-                .setTarget(likesIcon)
-                .setDismissText(R.string.got_it)
-                .setContentText(R.string.like_explanation)
-                .withCircleShape()
-                .build();
-
-        MaterialShowcaseView dislikeExplanation = new MaterialShowcaseView.Builder(this)
-                .setMaskColour(transparentRed)
-                .setTarget(dislikesIcon)
-                .setDismissText(R.string.got_it)
-                .setContentText(R.string.dislike_explanation)
-                .withCircleShape()
-                .setListener(new IShowcaseListener() {
-                    @Override
-                    public void onShowcaseDisplayed(MaterialShowcaseView materialShowcaseView) {}
-
-                    @Override
-                    public void onShowcaseDismissed(MaterialShowcaseView materialShowcaseView) {
-                        explainEasyVote();
-                    }
-                })
-                .build();
-
-        sequence.addSequenceItem(likeExplanation);
-        sequence.addSequenceItem(dislikeExplanation);
-        sequence.start();
-    }
-
-    private void explainEasyVote() {
         new MaterialDialog.Builder(this)
                 .cancelable(false)
                 .title(R.string.fighting_fraud)
@@ -212,51 +167,6 @@ public class PokeLocationActivity extends StandardActivity {
     private void loadScoreModule() {
         LocationUtils.loadNetScore(likeIcon, score, place);
         LocationUtils.loadScoreReport(place, scoreReport);
-
-        // Load voting module
-        likesCount.setText(String.format(likesTemplate, place.getNumLikes()));
-        dislikesCount.setText(String.format(dislikesTemplate, place.getNumDislikes()));
-
-        int currentVote = DatabaseManager.get().getVote(place);
-
-        switch (currentVote) {
-            case 1:
-                likesIcon.setText(R.string.liked_icon);
-                likesIcon.setTextColor(green);
-                likesCount.setTextColor(green);
-                dislikesIcon.setText(R.string.dislike_icon);
-                dislikesIcon.setTextColor(darkGray);
-                dislikesCount.setTextColor(darkGray);
-                break;
-            case 0:
-                likesIcon.setText(R.string.like_icon);
-                likesIcon.setTextColor(darkGray);
-                likesCount.setTextColor(darkGray);
-                dislikesIcon.setText(R.string.dislike_icon);
-                dislikesIcon.setTextColor(darkGray);
-                dislikesCount.setTextColor(darkGray);
-                break;
-            case -1:
-                likesIcon.setText(R.string.like_icon);
-                likesIcon.setTextColor(darkGray);
-                likesCount.setTextColor(darkGray);
-                dislikesIcon.setText(R.string.disliked_icon);
-                dislikesIcon.setTextColor(red);
-                dislikesCount.setTextColor(red);
-                break;
-        }
-    }
-
-    @OnClick(R.id.likes_button)
-    public void like() {
-        DatabaseManager.get().processLike(place);
-        loadScoreModule();
-    }
-
-    @OnClick(R.id.dislikes_button)
-    public void dislike() {
-        DatabaseManager.get().processDislike(place);
-        loadScoreModule();
     }
 
     private void setGalleries() {
@@ -407,6 +317,28 @@ public class PokeLocationActivity extends StandardActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.location_menu, menu);
+
+        // Load like/dislike buttons
+        MenuItem likeButton = menu.findItem(R.id.like_location);
+        MenuItem dislikeButton = menu.findItem(R.id.dislike_location);
+        int currentVote = DatabaseManager.get().getVote(place);
+        switch (currentVote) {
+            case 1:
+                likeButton.setTitle(R.string.unlike_location);
+                UIUtils.loadMenuIcon(menu, R.id.like_location, FontAwesomeIcons.fa_thumbs_up);
+                UIUtils.loadMenuIcon(menu, R.id.dislike_location, FontAwesomeIcons.fa_thumbs_o_down);
+                break;
+            case 0:
+                UIUtils.loadMenuIcon(menu, R.id.like_location, FontAwesomeIcons.fa_thumbs_o_up);
+                UIUtils.loadMenuIcon(menu, R.id.dislike_location, FontAwesomeIcons.fa_thumbs_o_down);
+                break;
+            case -1:
+                dislikeButton.setTitle(R.string.undislike_location);
+                UIUtils.loadMenuIcon(menu, R.id.like_location, FontAwesomeIcons.fa_thumbs_o_up);
+                UIUtils.loadMenuIcon(menu, R.id.dislike_location, FontAwesomeIcons.fa_thumbs_down);
+                break;
+        }
+
         if (DatabaseManager.get().isLocationFavorited(place)) {
             menu.findItem(R.id.favorite_location).setTitle(R.string.unfavorite_location);
             UIUtils.loadMenuIcon(menu, R.id.favorite_location, FontAwesomeIcons.fa_heart);
@@ -420,6 +352,16 @@ public class PokeLocationActivity extends StandardActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.like_location:
+                DatabaseManager.get().processLike(place);
+                loadScoreModule();
+                invalidateOptionsMenu();
+                break;
+            case R.id.dislike_location:
+                DatabaseManager.get().processDislike(place);
+                loadScoreModule();
+                invalidateOptionsMenu();
+                break;
             case R.id.favorite_location:
                 if (DatabaseManager.get().isLocationFavorited(place)) {
                     DatabaseManager.get().unfavoriteLocation(place);

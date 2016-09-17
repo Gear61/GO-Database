@@ -65,6 +65,11 @@
     <string name="dislike_icon">{fa-thumbs-o-down}</string>
     <string name="disliked_icon">{fa-thumbs-down}</string>
 
+    <string name="like_location">Like location</string>
+    <string name="dislike_location">Dislike location</string>
+    <string name="unlike_location">Unlike location</string>
+    <string name="undislike_location">Undislike location</string>
+
     <!-- Tutorial -->
     <string name="like_explanation">
         If a Poke Location is clean, safe, and is just good overall,
@@ -82,8 +87,6 @@
 
     <!-- Score -->
     <string name="positive_score">+%d</string>
-    <string name="like_count">%1d likes</string>
-    <string name="dislike_count">%1d dislikes</string>
     <string name="score_report">%1$d out of %2$d people (%3$d%%) like this location</string>
     <string name="no_ratings">There are no ratings for this location</string>
 

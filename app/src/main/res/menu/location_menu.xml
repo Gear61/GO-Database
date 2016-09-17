@@ -4,6 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/like_location"
+        android:title="@string/like_location"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/dislike_location"
+        android:title="@string/dislike_location"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/favorite_location"
         android:title="@string/favorite_location"
         app:showAsAction="ifRoom"/>

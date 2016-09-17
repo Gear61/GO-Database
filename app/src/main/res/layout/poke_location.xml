@@ -120,45 +120,6 @@
 
                 <View style="@style/divider"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/likes_button"
-                        style="@style/like_container">
-
-                        <com.joanzapata.iconify.widget.IconTextView
-                            android:id="@+id/likes_icon"
-                            style="@style/like_icon"/>
-
-                        <TextView
-                            android:id="@+id/likes_count"
-                            style="@style/num_likes"/>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray_400"/>
-
-                    <LinearLayout
-                        android:id="@+id/dislikes_button"
-                        style="@style/like_container">
-
-                        <com.joanzapata.iconify.widget.IconTextView
-                            android:id="@+id/dislikes_icon"
-                            style="@style/like_icon"/>
-
-                        <TextView
-                            android:id="@+id/dislikes_count"
-                            style="@style/num_likes"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <View style="@style/divider"/>
-
                 <RelativeLayout style="@style/gallery_title_container">
                     <TextView
                         android:text="@string/common_title"

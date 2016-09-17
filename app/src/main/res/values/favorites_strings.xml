@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_favorites">
-        Found a Poke Location you like? Click the {fa-heart} in the toolbar,
+        Found a Poke Location you like? Click \"Favorite location\" in the toolbar,
         and we\'ll save it here for you.
     </string>
     <string name="no_favorite_matches">None of your favorited locations match your search criteria.</string>

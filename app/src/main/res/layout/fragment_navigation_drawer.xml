@@ -7,28 +7,13 @@
     android:background="@color/white"
     android:clickable="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/team_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/mystic"/>
-
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:textColor="@color/dark_gray"
-            android:textSize="21dp"
-            android:text="Gear61"/>
-    </LinearLayout>
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/app_name"
+        android:layout_gravity="center_horizontal"/>
 
     <View
         android:layout_width="match_parent"

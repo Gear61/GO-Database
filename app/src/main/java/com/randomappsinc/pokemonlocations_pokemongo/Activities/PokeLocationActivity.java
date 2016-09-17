@@ -57,12 +57,16 @@ public class PokeLocationActivity extends StandardActivity {
     @Bind(R.id.like_icon) TextView likeIcon;
     @Bind(R.id.score) TextView score;
     @Bind(R.id.display_name) TextView displayName;
+    @Bind(R.id.distance_container) View distanceContainer;
+    @Bind(R.id.distance) TextView distanceAway;
     @Bind(R.id.address) TextView address;
-    @Bind(R.id.distance_away) TextView distanceAway;
+    @Bind(R.id.score_report) TextView scoreReport;
+
     @Bind(R.id.likes_icon) TextView likesIcon;
     @Bind(R.id.likes_count) TextView likesCount;
     @Bind(R.id.dislikes_icon) TextView dislikesIcon;
     @Bind(R.id.dislikes_count) TextView dislikesCount;
+
     @Bind(R.id.common_pokemon) RecyclerView commonPokemon;
     @Bind(R.id.uncommon_pokemon) RecyclerView uncommonPokemon;
     @Bind(R.id.rare_pokemon) RecyclerView rarePokemon;
@@ -144,15 +148,9 @@ public class PokeLocationActivity extends StandardActivity {
         }
 
         if (currentLatLong != null) {
-            LatLong placeCoords = new LatLong(place.getLatitude(), place.getLongitude());
-            double distanceValue = LocationUtils.getDistance(placeCoords, currentLatLong);
-            if (PreferencesManager.get().getIsAmerican()) {
-                distanceAway.setText(String.format(getString(R.string.miles_away), distanceValue));
-            } else {
-                distanceAway.setText(String.format(getString(R.string.kilometers_away), distanceValue));
-            }
+            LocationUtils.loadDistanceAway(place, currentLatLong, distanceAway);
         } else {
-            distanceAway.setVisibility(View.GONE);
+            distanceContainer.setVisibility(View.GONE);
         }
 
         loadScoreModule();
@@ -212,22 +210,10 @@ public class PokeLocationActivity extends StandardActivity {
     }
 
     private void loadScoreModule() {
-        // Load score
-        int locationScore = place.getScore();
-        if (locationScore == 0) {
-            likeIcon.setText(R.string.like_icon);
-            likeIcon.setTextColor(darkGray);
-            score.setText(String.valueOf(locationScore));
-        } else if (locationScore > 0) {
-            likeIcon.setText(R.string.liked_icon);
-            likeIcon.setTextColor(green);
-            score.setText(String.format(positiveScore, locationScore));
-        } else {
-            likeIcon.setText(R.string.disliked_icon);
-            likeIcon.setTextColor(red);
-            score.setText(String.valueOf(locationScore));
-        }
+        LocationUtils.loadNetScore(likeIcon, score, place);
+        LocationUtils.loadScoreReport(place, scoreReport);
 
+        // Load voting module
         likesCount.setText(String.format(likesTemplate, place.getNumLikes()));
         dislikesCount.setText(String.format(dislikesTemplate, place.getNumDislikes()));
 

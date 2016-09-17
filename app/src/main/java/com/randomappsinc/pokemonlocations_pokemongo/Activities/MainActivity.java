@@ -2,7 +2,6 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,8 +23,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFr
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
@@ -34,15 +31,10 @@ import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.nlopez.smartlocation.OnGeocodingListener;
-import io.nlopez.smartlocation.SmartLocation;
-import io.nlopez.smartlocation.geocoding.utils.LocationAddress;
 import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
@@ -57,12 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @BindColor(R.color.transparent_red) int transparentRed;
 
     private NavigationDrawerFragment navDrawerFragment;
-    private String lastSearchedLocation;
     private Filter filter;
     private SearchFragment searchFragment;
-    private MaterialDialog processingLocation;
-    private String givenFirstLocation;
-    private MaterialDialog firstTimeLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
 
-        givenFirstLocation = "";
         filter = new Filter();
         addListing.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_ios_bookmarks).colorRes(R.color.white));
 
@@ -95,37 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         } else if (PreferencesManager.get().shouldAskToRate()) {
             showPleaseRateDialog();
         }
-
-        processingLocation = new MaterialDialog.Builder(this)
-                .content(R.string.processing_location)
-                .progress(true, 0)
-                .cancelable(false)
-                .build();
-
-        firstTimeLocation = new MaterialDialog.Builder(this)
-                .title(R.string.set_current_location)
-                .content(R.string.looking_where)
-                .cancelable(false)
-                .input(getString(R.string.location), givenFirstLocation, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull MaterialDialog dialog, @NonNull CharSequence input) {
-                        String locationInput = input.toString().trim();
-                        boolean submitEnabled = !(locationInput.isEmpty()
-                                || DatabaseManager.get().alreadyHasLocation(locationInput));
-                        dialog.getActionButton(DialogAction.POSITIVE).setEnabled(submitEnabled);
-                    }
-                })
-                .alwaysCallInputCallback()
-                .positiveText(R.string.set)
-                .negativeText(android.R.string.no)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        givenFirstLocation = dialog.getInputEditText().getText().toString();
-                        processLocation(givenFirstLocation);
-                    }
-                })
-                .build();
     }
 
     public Filter getFilter() {
@@ -146,45 +102,12 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
                     @Override
                     public void onShowcaseDismissed(MaterialShowcaseView materialShowcaseView) {
-                        setLocation();
+                        searchFragment.fullSearch();
                     }
                 })
                 .build();
         sequence.addSequenceItem(addListExplanation);
         sequence.start();
-    }
-
-    private void setLocation() {
-        firstTimeLocation.show();
-    }
-
-    public void processLocation(final String locationName) {
-        processingLocation.show();
-        SmartLocation.with(this).geocoding()
-                .direct(locationName, new OnGeocodingListener() {
-                    @Override
-                    public void onLocationResolved(String name, List<LocationAddress> results) {
-                        if (!results.isEmpty()) {
-                            Location location = results.get(0).getLocation();
-                            SavedLocationDO locationDO = new SavedLocationDO();
-                            locationDO.setDisplayName(locationName);
-                            locationDO.setLatitude(location.getLatitude());
-                            locationDO.setLongitude(location.getLongitude());
-                            DatabaseManager.get().addMyLocation(locationDO);
-                            PreferencesManager.get().setCurrentLocation(locationDO.getDisplayName());
-                            processingLocation.dismiss();
-                            searchFragment.fullSearch();
-                        } else {
-                            processingLocation.dismiss();
-                            firstTimeLocation.setContent(R.string.bad_first_location);
-                            setLocation();
-                        }
-                    }
-                });
-    }
-
-    public void setLastSearched(String address) {
-        lastSearchedLocation = address;
     }
 
     @OnClick(R.id.add_pokemon_listing)
@@ -322,7 +245,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        UIUtils.loadMenuIcon(menu, R.id.send_request, IoniconsIcons.ion_android_mail);
         UIUtils.loadMenuIcon(menu, R.id.share_app, IoniconsIcons.ion_android_share_alt);
         UIUtils.loadMenuIcon(menu, R.id.search, IoniconsIcons.ion_android_search);
         return true;
@@ -331,20 +253,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.send_request:
-                drawerLayout.closeDrawers();
-                String uriText = "mailto:" + SettingsActivity.SUPPORT_EMAIL
-                        + "?subject=" + Uri.encode(getString(R.string.pokemon_data_request))
-                        + "&body=" + Uri.encode(getString(R.string.data_request_body));
-                if (!PreferencesManager.get().getCurrentLocation().equals(getString(R.string.automatic))) {
-                    uriText += Uri.encode(PreferencesManager.get().getCurrentLocation());
-                } else if (lastSearchedLocation != null) {
-                    uriText += Uri.encode(lastSearchedLocation);
-                }
-                Uri mailUri = Uri.parse(uriText);
-                Intent sendIntent = new Intent(Intent.ACTION_SENDTO, mailUri);
-                startActivity(Intent.createChooser(sendIntent, getString(R.string.send_email)));
-                return true;
             case R.id.share_app:
                 shareApp();
                 return true;

@@ -6,7 +6,6 @@
     <string name="welcome">Welcome!</string>
 
     <!-- Action bar -->
-    <string name="send_pokemon_request">Send Pokemon request</string>
     <string name="set_range">Set range</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -45,10 +44,6 @@
     <string name="submit">Submit</string>
 
     <string name="got_it">GOT IT</string>
-    <string name="search_instructions">
-        Simply hit the search button to start searching for Pokemon hotspots nearby.
-        Click the map button in the toolbar to tell us where to search.
-    </string>
     <string name="sharing_instructions">
         This app is powered entirely by users like you!
         To start sharing your Pokemon findings with the rest of the community,
@@ -59,14 +54,6 @@
     <string name="no">No</string>
     <string name="close">Close</string>
 
-    <!-- First-time location setting -->
-    <string name="looking_where">Where are you looking for Pokemon? (Please be as specific as possible)</string>
-    <string name="bad_first_location">
-        We were unable to process the location you gave us.
-        Before trying again:\n\n1. Check your spelling\n2.
-        Be less specific. City and state/country are enough.\n3.
-        Format your input with commas.
-    </string>
     <string name="set">Set</string>
 
     <string name="share_via">Share via</string>
@@ -84,9 +71,9 @@
     <string name="building_poke_spotter">Building Poke Spotter, Together</string>
     <string name="no_results_explanation">
         So it looks like we don\'t have any data in your area, which sucks and we feel you.
-        We want to always be there for the Pokemon GO community, so we don\'t cheat.
+        We want to always be there for you guys, so we don\'t cheat.
         Poke Spotter is powered entirely by users like YOU.
-        Here are some things you can do to start getting data in your area:
+        Here are some ways to start getting data in your area:
     </string>
     <string name="none_of_the_above">None of the above</string>
     <string-array name="get_data_options">

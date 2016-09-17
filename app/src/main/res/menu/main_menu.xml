@@ -4,11 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/send_request"
-        android:title="@string/send_pokemon_request"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/share_app"
         android:title="@string/share_app_title"
         app:showAsAction="ifRoom"/>

@@ -155,9 +155,6 @@ public class SearchFragment extends Fragment implements SwipeRefreshLayout.OnRef
                     .start(new OnLocationUpdatedListener() {
                         @Override
                         public void onLocationUpdated(Location location) {
-                            MainActivity activity = (MainActivity) getActivity();
-                            activity.setLastSearched(LocationUtils.getAddressFromLocation(location));
-
                             locationChecker.removeCallbacks(locationCheckTask);
                             locationFetched = true;
                             doSearch(location.getLatitude(), location.getLongitude());

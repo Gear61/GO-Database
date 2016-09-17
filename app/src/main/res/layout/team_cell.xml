@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/team_icon"
         android:layout_width="60dp"
-        android:layout_height="60dp"/>
+        android:layout_height="60dp"
+        android:contentDescription="@string/set_team"/>
 
     <TextView
         android:id="@+id/team_name"

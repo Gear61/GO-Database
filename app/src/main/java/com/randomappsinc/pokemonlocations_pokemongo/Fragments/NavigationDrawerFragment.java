@@ -3,6 +3,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.Fragments;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,12 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.IconItemsAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
@@ -34,6 +40,7 @@ public class NavigationDrawerFragment extends Fragment {
     private View mFragmentContainerView;
 
     @Bind(R.id.nav_drawer_tabs) ListView mDrawerListView;
+    @Bind(R.id.username) TextView username;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -45,9 +52,38 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout navDrawer = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         ButterKnife.bind(this, navDrawer);
-        mDrawerListView.setAdapter(new IconItemsAdapter(getActivity(),
-                R.array.nav_drawer_tabs, R.array.nav_drawer_icons));
+        mDrawerListView.setAdapter(new IconItemsAdapter(getActivity(), R.array.nav_drawer_tabs, R.array.nav_drawer_icons));
+
+        username.setText(PreferencesManager.get().getUsername());
+
         return navDrawer;
+    }
+
+    @OnClick(R.id.username)
+    public void setUsername() {
+        String prefill = PreferencesManager.get().getUsername().equals(getString(R.string.hello_trainer))
+                ? "" : PreferencesManager.get().getUsername();
+            new MaterialDialog.Builder(getActivity())
+                    .title(R.string.set_username)
+                    .content(R.string.username_prompt)
+                    .input(getString(R.string.username), prefill, new MaterialDialog.InputCallback() {
+                        @Override
+                        public void onInput(@NonNull MaterialDialog dialog, @NonNull CharSequence input) {
+                            dialog.getActionButton(DialogAction.POSITIVE).setEnabled(!input.toString().trim().isEmpty());
+                        }
+                    })
+                    .alwaysCallInputCallback()
+                    .positiveText(R.string.set)
+                    .negativeText(android.R.string.no)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            String newUsername = dialog.getInputEditText().getText().toString();
+                            PreferencesManager.get().setUsername(newUsername);
+                            username.setText(newUsername);
+                        }
+                    })
+                    .show();
     }
 
     @OnItemClick(R.id.nav_drawer_tabs)

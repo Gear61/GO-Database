@@ -21,6 +21,7 @@ public class PreferencesManager {
     public static final String CURRENT_LOCATION_KEY = "currentLocation";
     private static final String IMAGES_ENABLED_KEY = "imagesEnabled";
     private static final String IS_AMERICAN_KEY = "isAmerican";
+    private static final String USERNAME_KEY = "username";
     private static PreferencesManager instance;
 
     private Context context;
@@ -108,5 +109,13 @@ public class PreferencesManager {
 
     public void enableImages() {
         prefs.edit().putBoolean(IMAGES_ENABLED_KEY, true).apply();
+    }
+
+    public String getUsername() {
+        return prefs.getString(USERNAME_KEY, MyApplication.getAppContext().getString(R.string.hello_trainer));
+    }
+
+    public void setUsername(String username) {
+        prefs.edit().putString(USERNAME_KEY, username).apply();
     }
 }

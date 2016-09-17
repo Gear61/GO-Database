@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello_trainer">Hello trainer!</string>
+    <string name="set_username">Set Username</string>
+    <string name="username_prompt">What is your Pokemon GO username?</string>
+    <string name="username">Username</string>
+</resources>

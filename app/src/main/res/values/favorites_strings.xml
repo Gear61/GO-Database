@@ -8,4 +8,5 @@
     <string name="favorite_location">Favorite location</string>
     <string name="unfavorite_location">Unfavorite location</string>
     <string name="location_favorited">Location favorited.</string>
+    <string name="location_unfavorited">Location unfavorited.</string>
 </resources>

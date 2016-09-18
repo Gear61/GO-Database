@@ -182,6 +182,10 @@ public class DatabaseManager {
     }
 
     public int getVote(PokeLocation place) {
+        if (place == null) {
+            return 0;
+        }
+
         VoteDO voteDO = realm.where(VoteDO.class)
                 .equalTo("placeId", place.getPlaceId())
                 .findFirst();

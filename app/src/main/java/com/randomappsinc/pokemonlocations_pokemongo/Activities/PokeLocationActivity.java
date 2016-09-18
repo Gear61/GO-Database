@@ -365,9 +365,11 @@ public class PokeLocationActivity extends StandardActivity {
             case R.id.favorite_location:
                 if (DatabaseManager.get().isLocationFavorited(place)) {
                     DatabaseManager.get().unfavoriteLocation(place);
+                    UIUtils.showSnackbar(parent, getString(R.string.location_unfavorited));
                 } else {
                     DatabaseManager.get().addOrUpdateLocation(place);
                     loadScoreModule();
+                    UIUtils.showSnackbar(parent, getString(R.string.location_favorited));
                 }
                 invalidateOptionsMenu();
                 return true;

@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     private NavigationDrawerFragment navDrawerFragment;
     private Filter filter;
     private SearchFragment searchFragment;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +74,26 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         navDrawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        searchFragment = new SearchFragment();
+        fragmentManager = getFragmentManager();
+        if (savedInstanceState != null) {
+            searchFragment = (SearchFragment) fragmentManager.getFragment(savedInstanceState, SearchFragment.SCREEN_NAME);
+        } else {
+            searchFragment = new SearchFragment();
+        }
         fragmentManager.beginTransaction().replace(R.id.container, searchFragment).commit();
 
         if (PreferencesManager.get().shouldShowShareTutorial()) {
             showTutorial();
         } else if (PreferencesManager.get().shouldAskToRate()) {
             showPleaseRateDialog();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (searchFragment != null) {
+            fragmentManager.putFragment(outState, SearchFragment.SCREEN_NAME, searchFragment);
         }
     }
 
@@ -102,7 +115,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
                     @Override
                     public void onShowcaseDismissed(MaterialShowcaseView materialShowcaseView) {
-                        searchFragment.fullSearch();
+                        if (searchFragment != null) {
+                            searchFragment.fullSearch();
+                        }
                     }
                 })
                 .build();

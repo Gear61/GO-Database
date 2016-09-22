@@ -1,10 +1,11 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
+import android.os.AsyncTask;
+
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,28 +35,43 @@ public class PokemonServer {
         nameToIdMappings = new HashMap<>();
         idToNameMappings = new HashMap<>();
         pokemonList = new ArrayList<>();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(MyApplication.getAppContext()
-                    .getAssets().open("pokemon.txt")));
-            String pokemon;
-            int currentIndex = 1;
-            while ((pokemon = reader.readLine()) != null) {
-                pokemonNamesList.add(pokemon);
-                nameToIdMappings.put(pokemon.toLowerCase(), currentIndex);
-                idToNameMappings.put(currentIndex, pokemon);
-                pokemonList.add(new Pokemon(currentIndex, pokemon));
-                currentIndex++;
+    }
+
+    public void initialize() {
+        new SetUpPokemonTask().execute();
+    }
+
+    private class SetUpPokemonTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            InputStream inputStream = null;
+            try {
+                inputStream = MyApplication.getAppContext().getAssets().open("pokemon.txt");
+                int size = inputStream.available();
+
+                // Read contents of file into a byte buffer
+                byte[] buffer = new byte[size];
+                inputStream.read(buffer);
+
+                // Convert the buffer into a string.
+                String pokemonListText = new String(buffer);
+                pokemonList.addAll(JSONUtils.extractPokemon(pokemonListText));
+                for (Pokemon pokemon : pokemonList) {
+                    pokemonNamesList.add(pokemon.getName());
+                    nameToIdMappings.put(pokemon.getName().toLowerCase(), pokemon.getId());
+                    idToNameMappings.put(pokemon.getId(), pokemon.getName());
+                }
+            } catch (IOException ignored) {
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (Exception ignored) {}
+                }
             }
-        } catch (IOException ignored) {
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (Exception ignored) {}
-            }
+            Collections.sort(pokemonNamesList);
+            return null;
         }
-        Collections.sort(pokemonNamesList);
     }
 
     public boolean isValidPokemon(String input) {

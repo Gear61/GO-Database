@@ -26,6 +26,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PokemonServer.get().initialize();
 
         // Kill activity if it's not on top of the stack due to Samsung bug
         if (!isTaskRoot() && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)

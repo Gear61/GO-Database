@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="max_cp">Max CP</string>
+    <string name="base_capture_rate">Base Capture Rate</string>
+    <string name="base_flee_rate">Base Flee Rate</string>
+    <string name="base_attack">Base Attack</string>
+    <string name="base_defense">Base Defense</string>
+    <string name="base_stamina">Base Stamina</string>
+    <string name="candy_to_evolve">Candy to Evolve</string>
+    <string name="average_cp_gain">Average CP Gain</string>
 
+    <string name="percentage">%d%%</string>
 </resources>

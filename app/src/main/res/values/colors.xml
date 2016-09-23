@@ -11,6 +11,7 @@
     <color name="lime">#CDDC39</color>
     <color name="yellow">#FFEB3B</color>
     <color name="orange">#FF9800</color>
+    <color name="black">#000000</color>
 
     <color name="gray_200">#EEEEEE</color>
     <color name="gray_400">#BDBDBD</color>

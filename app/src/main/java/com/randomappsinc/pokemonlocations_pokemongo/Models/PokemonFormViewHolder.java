@@ -41,19 +41,13 @@ public class PokemonFormViewHolder {
     private View addButton;
     private Set<String> alreadyChosen;
     private boolean prefillMode;
-    private boolean doNothing;
 
-    public PokemonFormViewHolder(Context context, View rootView, View addButton, int prefillId) {
+    public PokemonFormViewHolder(Context context, View rootView, View addButton) {
         ButterKnife.bind(this, rootView);
         this.context = context;
         this.alreadyChosen = new HashSet<>();
         this.addButton = addButton;
         addButton.setEnabled(false);
-
-        if (prefillId > 0) {
-            doNothing = true;
-            pokemonInput.setText(PokemonServer.get().getPokemonName(prefillId));
-        }
 
         pokemonInput.setAdapter(new PokemonACAdapter(context, R.layout.pokemon_ac_item, new ArrayList<String>()));
 
@@ -105,24 +99,21 @@ public class PokemonFormViewHolder {
 
     @OnTextChanged(value = R.id.pokemon_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable input) {
-        if (!doNothing) {
-            doNothing = false;
-            if (input.length() == 0) {
-                clearPokemon.setVisibility(View.GONE);
-            } else {
-                clearPokemon.setVisibility(View.VISIBLE);
-                if (PokemonServer.get().isValidPokemon(input.toString())) {
-                    // Hide keyboard
-                    InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    im.hideSoftInputFromWindow(pokemonInput.getWindowToken(), 0);
+        if (input.length() == 0) {
+            clearPokemon.setVisibility(View.GONE);
+        } else {
+            clearPokemon.setVisibility(View.VISIBLE);
+            if (PokemonServer.get().isValidPokemon(input.toString())) {
+                // Hide keyboard
+                InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                im.hideSoftInputFromWindow(pokemonInput.getWindowToken(), 0);
 
-                    if (!prefillMode) {
-                        frequencyChoice.requestFocus();
-                        frequencyChoice.performClick();
-                    } else {
-                        prefillMode = false;
-                        parent.requestFocus();
-                    }
+                if (!prefillMode) {
+                    frequencyChoice.requestFocus();
+                    frequencyChoice.performClick();
+                } else {
+                    prefillMode = false;
+                    parent.requestFocus();
                 }
             }
         }

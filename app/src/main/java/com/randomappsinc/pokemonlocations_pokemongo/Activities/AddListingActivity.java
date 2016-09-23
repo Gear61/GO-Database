@@ -21,7 +21,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.PokeLocationsEvent;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.AddPokemonAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
-import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokemonFormViewHolder;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLocationDO;
@@ -124,14 +123,8 @@ public class AddListingActivity extends StandardActivity {
                 .build();
 
         View addButton = pokeFormDialog.getActionButton(DialogAction.POSITIVE);
-        int prefillId = getIntent().getIntExtra(Pokemon.ID_KEY, 0);
-        pokemonFormHolder = new PokemonFormViewHolder(this, pokeFormDialog.getCustomView(), addButton, prefillId);
-        // Only have the dialog immediately open the keyboard if the Pokemon name isn't prefilled
-        if (prefillId == 0) {
-            pokeFormDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        } else {
-            pokeFormDialog.show();
-        }
+        pokemonFormHolder = new PokemonFormViewHolder(this, pokeFormDialog.getCustomView(), addButton);
+        pokeFormDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         addPokemonAdapter = new AddPokemonAdapter(this);
         pokemonToAdd.setAdapter(addPokemonAdapter);

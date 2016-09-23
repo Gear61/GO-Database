@@ -22,7 +22,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
-import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
@@ -41,9 +40,6 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    public static final int FILTER_KEY = 1;
-    public static final int POKEDEX_KEY = 2;
-
     @Bind(R.id.parent) View parent;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.add_pokemon_listing) FloatingActionButton addListing;
@@ -156,8 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         switch (position) {
             case 0:
                 intent = new Intent(this, PokedexActivity.class);
-                startActivityForResult(intent, POKEDEX_KEY);
-                return;
+                break;
             case 1:
                 intent = new Intent(this, FavoritesActivity.class);
                 break;
@@ -226,17 +221,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case FILTER_KEY:
-                    filter = data.getParcelableExtra(Filter.KEY);
-                    searchFragment.fullSearch();
-                    break;
-                case POKEDEX_KEY:
-                    int pokemonId = data.getIntExtra(Pokemon.ID_KEY, 0);
-                    filter.setPokemonId(pokemonId);
-                    searchFragment.fullSearch();
-                    break;
-            }
+            filter = data.getParcelableExtra(Filter.KEY);
+            searchFragment.fullSearch();
         }
     }
 
@@ -277,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 drawerLayout.closeDrawers();
                 Intent intent = new Intent(this, FilterActivity.class);
                 intent.putExtra(Filter.KEY, filter);
-                startActivityForResult(intent, FILTER_KEY);
+                startActivityForResult(intent, 1);
                 return true;
         }
         return super.onOptionsItemSelected(item);

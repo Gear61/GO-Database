@@ -7,11 +7,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokedexAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.JSONUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import butterknife.Bind;
@@ -60,29 +59,9 @@ public class PokedexActivity extends StandardActivity {
     @OnItemClick(R.id.pokemon)
     public void onPokemonClicked(int position) {
         UIUtils.hideKeyboard(this);
-
-        final Pokemon pokemon = adapter.getItem(position);
-        if (PokemonServer.get().isUnreleased(pokemon.getName())) {
-            UIUtils.showSnackbar(parent, getString(R.string.unreleased_error));
-        } else {
-            new MaterialDialog.Builder(this)
-                    .title(pokemon.getName())
-                    .items(R.array.pokedex_options)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                        @Override
-                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            switch (which) {
-                                case 0:
-                                    searchForPokemon(pokemon.getId());
-                                    break;
-                                case 1:
-                                    addPokemonListing(pokemon.getId());
-                                    break;
-                            }
-                        }
-                    })
-                    .show();
-        }
+        Intent intent = new Intent(this, PokemonActivity.class);
+        intent.putExtra(JSONUtils.POKEMON_KEY, adapter.getItem(position));
+        startActivity(intent);
     }
 
     private void searchForPokemon(int pokemonId) {

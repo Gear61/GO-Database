@@ -96,5 +96,10 @@
             android:label="@string/pokedex"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".Activities.PokemonActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

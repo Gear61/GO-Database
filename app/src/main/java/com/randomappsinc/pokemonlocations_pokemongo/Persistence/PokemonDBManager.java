@@ -32,13 +32,13 @@ public class PokemonDBManager {
 
     public boolean isValidPokemon(String pokemonName) {
         return realm.where(PokedexPokemonDO.class)
-                .contains("name", pokemonName, Case.INSENSITIVE)
+                .equalTo("name", pokemonName, Case.INSENSITIVE)
                 .findFirst() != null;
     }
 
     public int getPokemonId(String pokemonName) {
         return realm.where(PokedexPokemonDO.class)
-                .contains("name", pokemonName, Case.INSENSITIVE)
+                .equalTo("name", pokemonName, Case.INSENSITIVE)
                 .findFirst()
                 .getPokemonId();
     }

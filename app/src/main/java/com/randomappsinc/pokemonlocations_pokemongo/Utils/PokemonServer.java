@@ -1,6 +1,5 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
-import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PokemonDBManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
@@ -25,12 +24,10 @@ public class PokemonServer {
 
     private PokemonDBManager pokemonDBManager;
     private List<String> pokemonNamesList;
-    private List<Pokemon> pokemonList;
 
     private PokemonServer() {
         pokemonDBManager = DatabaseManager.get().getPokemonDBManager();
         pokemonNamesList = new ArrayList<>();
-        pokemonList = new ArrayList<>();
     }
 
     public void initialize() {
@@ -59,7 +56,6 @@ public class PokemonServer {
         }
 
         pokemonNamesList.addAll(pokemonDBManager.getPokemonNames());
-        pokemonList.addAll(pokemonDBManager.getPokemon());
     }
 
     public boolean isValidPokemon(String input) {
@@ -76,10 +72,6 @@ public class PokemonServer {
 
     public String getPokemonName(int id) {
         return pokemonDBManager.getPokemonName(id);
-    }
-
-    public List<Pokemon> getPokemonList() {
-        return pokemonList;
     }
 
     public boolean isUnreleased(String pokemonName) {

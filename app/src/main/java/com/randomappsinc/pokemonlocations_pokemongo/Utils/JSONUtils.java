@@ -39,8 +39,8 @@ public class JSONUtils {
                 Pokemon pokemon = new Pokemon();
                 pokemon.setId(i + 1);
                 pokemon.setName(pokemonJSON.getString(NAME_KEY));
-                pokemon.setType1(pokemonJSON.getString(TYPE_1_KEY));
-                pokemon.setType2(pokemonJSON.getString(TYPE_2_KEY));
+                pokemon.setType1(normalizeString(pokemonJSON.getString(TYPE_1_KEY)));
+                pokemon.setType2(normalizeString(pokemonJSON.getString(TYPE_2_KEY)));
                 pokemon.setBaseDefense(pokemonJSON.getInt(BASE_DEFENSE_KEY));
                 pokemon.setBaseStamina(pokemonJSON.getInt(BASE_STAMINA_KEY));
                 pokemon.setBaseAttack(pokemonJSON.getInt(BASE_ATTACK_KEY));
@@ -56,5 +56,19 @@ public class JSONUtils {
         catch (JSONException ignored) {}
 
         return pokemonList;
+    }
+
+    public static String normalizeString(String input) {
+        String[] pieces = input.split(" ");
+        StringBuilder finalInput = new StringBuilder();
+
+        for (String piece : pieces) {
+            if (!piece.isEmpty()) {
+                finalInput.append(piece.substring(0, 1).toUpperCase());
+                finalInput.append(piece.substring(1));
+            }
+        }
+
+        return finalInput.toString();
     }
 }

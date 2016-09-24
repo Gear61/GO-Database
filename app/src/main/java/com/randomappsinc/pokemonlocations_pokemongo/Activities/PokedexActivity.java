@@ -24,6 +24,7 @@ import butterknife.OnTextChanged;
  */
 public class PokedexActivity extends StandardActivity {
     @Bind(R.id.parent) View parent;
+    @Bind(R.id.search_container) View searchContainer;
     @Bind(R.id.search_input) EditText searchInput;
     @Bind(R.id.clear_search) View clearSearch;
     @Bind(R.id.pokemon) ListView pokemonList;
@@ -59,6 +60,7 @@ public class PokedexActivity extends StandardActivity {
     @OnItemClick(R.id.pokemon)
     public void onPokemonClicked(int position) {
         UIUtils.hideKeyboard(this);
+        searchContainer.requestFocus();
         Intent intent = new Intent(this, PokemonActivity.class);
         intent.putExtra(JSONUtils.POKEMON_KEY, adapter.getItem(position));
         startActivity(intent);

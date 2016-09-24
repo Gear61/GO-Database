@@ -1,6 +1,7 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
 import android.content.Context;
+import android.view.View;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
@@ -18,6 +19,25 @@ import java.util.List;
  * Created by alexanderchiou on 7/17/16.
  */
 public class PokemonUtils {
+    public static final String NORMAL = "Normal";
+    public static final String FIGHTING = "Fighting";
+    public static final String FLYING = "Flying";
+    public static final String POISON = "Poison";
+    public static final String GROUND = "Ground";
+    public static final String ROCK = "Rock";
+    public static final String BUG = "Bug";
+    public static final String GHOST = "Ghost";
+    public static final String STEEL = "Steel";
+    public static final String FIRE = "Fire";
+    public static final String WATER = "Water";
+    public static final String GRASS = "Grass";
+    public static final String ELECTRIC = "Electric";
+    public static final String PSYCHIC = "Psychic";
+    public static final String ICE = "Ice";
+    public static final String DRAGON = "Dragon";
+    public static final String DARK = "Dark";
+    public static final String FAIRY = "Fairy";
+
     public static File getPokemonIcon(int pokemonId) {
         Context context = MyApplication.getAppContext();
         File file = new File(context.getFilesDir() +  "/" + String.valueOf(pokemonId) + ".png");
@@ -147,5 +167,64 @@ public class PokemonUtils {
             pokemonString.append(PokemonServer.get().getPokemonName(pokemonId));
         }
         return pokemonString.toString();
+    }
+
+    public static void setTypeBackground(View typeContainer, String type) {
+        switch (type) {
+            case NORMAL:
+                typeContainer.setBackgroundResource(R.drawable.normal_background);
+                break;
+            case FIGHTING:
+                typeContainer.setBackgroundResource(R.drawable.fighting_background);
+                break;
+            case FLYING:
+                typeContainer.setBackgroundResource(R.drawable.flying_background);
+                break;
+            case POISON:
+                typeContainer.setBackgroundResource(R.drawable.poison_background);
+                break;
+            case GROUND:
+                typeContainer.setBackgroundResource(R.drawable.ground_background);
+                break;
+            case ROCK:
+                typeContainer.setBackgroundResource(R.drawable.rock_background);
+                break;
+            case BUG:
+                typeContainer.setBackgroundResource(R.drawable.bug_background);
+                break;
+            case GHOST:
+                typeContainer.setBackgroundResource(R.drawable.ghost_background);
+                break;
+            case STEEL:
+                typeContainer.setBackgroundResource(R.drawable.steel_background);
+                break;
+            case FIRE:
+                typeContainer.setBackgroundResource(R.drawable.fire_background);
+                break;
+            case WATER:
+                typeContainer.setBackgroundResource(R.drawable.water_background);
+                break;
+            case GRASS:
+                typeContainer.setBackgroundResource(R.drawable.grass_background);
+                break;
+            case ELECTRIC:
+                typeContainer.setBackgroundResource(R.drawable.electric_background);
+                break;
+            case PSYCHIC:
+                typeContainer.setBackgroundResource(R.drawable.psychic_background);
+                break;
+            case ICE:
+                typeContainer.setBackgroundResource(R.drawable.ice_background);
+                break;
+            case DRAGON:
+                typeContainer.setBackgroundResource(R.drawable.dragon_background);
+                break;
+            case DARK:
+                typeContainer.setBackgroundResource(R.drawable.dark_background);
+                break;
+            case FAIRY:
+                typeContainer.setBackgroundResource(R.drawable.fairy_background);
+                break;
+        }
     }
 }

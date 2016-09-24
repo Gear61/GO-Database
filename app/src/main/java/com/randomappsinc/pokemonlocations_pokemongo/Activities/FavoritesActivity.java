@@ -13,6 +13,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.FavoritesAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,6 +50,8 @@ public class FavoritesActivity extends StandardActivity {
 
     @OnItemClick(R.id.content)
     public void onFavoriteClick(int position) {
+        UIUtils.hideKeyboard(this);
+        searchBar.requestFocus();
         PokeLocation place = adapter.getItem(position);
         Intent intent = new Intent(this, PokeLocationActivity.class);
         intent.putExtra(PokeLocation.KEY, place);

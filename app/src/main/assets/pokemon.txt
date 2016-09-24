@@ -37,7 +37,7 @@
          "name": "Venusaur",
          "type2": "poison",
          "base_capture_rate": 4,
-         "average_cp_gain": 2580
+         "average_cp_gain": 34.8
       },
       {
          "base_defense": 108,

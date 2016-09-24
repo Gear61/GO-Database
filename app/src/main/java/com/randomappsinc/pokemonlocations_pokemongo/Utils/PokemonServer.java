@@ -1,16 +1,14 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
-import android.os.AsyncTask;
-
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PokemonDBManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by alexanderchiou on 7/15/16.
@@ -25,25 +23,18 @@ public class PokemonServer {
         return instance;
     }
 
+    private PokemonDBManager pokemonDBManager;
     private List<String> pokemonNamesList;
-    private Map<String, Integer> nameToIdMappings;
-    private Map<Integer, String> idToNameMappings;
     private List<Pokemon> pokemonList;
 
     private PokemonServer() {
+        pokemonDBManager = DatabaseManager.get().getPokemonDBManager();
         pokemonNamesList = new ArrayList<>();
-        nameToIdMappings = new HashMap<>();
-        idToNameMappings = new HashMap<>();
         pokemonList = new ArrayList<>();
     }
 
     public void initialize() {
-        new SetUpPokemonTask().execute();
-    }
-
-    private class SetUpPokemonTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
+        if (PreferencesManager.get().getPokemonDBVersion() < PokemonDBManager.CURRENT_POKEMON_DB_VERSION) {
             InputStream inputStream = null;
             try {
                 inputStream = MyApplication.getAppContext().getAssets().open("pokemon.txt");
@@ -54,13 +45,7 @@ public class PokemonServer {
                 inputStream.read(buffer);
 
                 // Convert the buffer into a string.
-                String pokemonListText = new String(buffer);
-                pokemonList.addAll(JSONUtils.extractPokemon(pokemonListText));
-                for (Pokemon pokemon : pokemonList) {
-                    pokemonNamesList.add(pokemon.getName());
-                    nameToIdMappings.put(pokemon.getName().toLowerCase(), pokemon.getId());
-                    idToNameMappings.put(pokemon.getId(), pokemon.getName());
-                }
+                JSONUtils.extractPokemon(new String(buffer));
             } catch (IOException ignored) {
             } finally {
                 if (inputStream != null) {
@@ -69,13 +54,16 @@ public class PokemonServer {
                     } catch (Exception ignored) {}
                 }
             }
-            Collections.sort(pokemonNamesList);
-            return null;
+
+            PreferencesManager.get().updatePokemonDBVersion();
         }
+
+        pokemonNamesList.addAll(pokemonDBManager.getPokemonNames());
+        pokemonList.addAll(pokemonDBManager.getPokemon());
     }
 
     public boolean isValidPokemon(String input) {
-        return nameToIdMappings.keySet().contains(input.toLowerCase());
+        return pokemonDBManager.isValidPokemon(input);
     }
 
     public List<String> getMatchingPokemon(String prefix) {
@@ -83,11 +71,11 @@ public class PokemonServer {
     }
 
     public int getPokemonId(String pokemonName) {
-        return nameToIdMappings.get(pokemonName.toLowerCase());
+        return pokemonDBManager.getPokemonId(pokemonName);
     }
 
     public String getPokemonName(int id) {
-        return idToNameMappings.get(id);
+        return pokemonDBManager.getPokemonName(id);
     }
 
     public List<Pokemon> getPokemonList() {

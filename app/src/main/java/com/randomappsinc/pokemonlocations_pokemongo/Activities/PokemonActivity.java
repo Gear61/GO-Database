@@ -50,10 +50,11 @@ public class PokemonActivity extends StandardActivity {
             Picasso.with(this)
                     .load(PokemonUtils.getPokemonIcon(pokemon.getId()))
                     .into(pokemonIcon);
-            pokemonName.setText(pokemon.getName());
         } else {
             pokemonIcon.setVisibility(View.GONE);
         }
+
+        pokemonName.setText(pokemon.getName());
 
         PokemonUtils.setTypeBackground(type1, pokemon.getType1());
         type1.setText(pokemon.getType1());

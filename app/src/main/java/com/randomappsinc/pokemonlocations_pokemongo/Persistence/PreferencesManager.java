@@ -1,6 +1,5 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -17,15 +16,15 @@ public class PreferencesManager {
     private static final String FIRST_TIME_DISTANCE = "firstTimeDistance";
     private static final String FIRST_TIME_LOCATION = "firstTimeLocation";
     private static final String SHOULD_EXPLAIN_NO_RESULTS = "shouldExplainNoResults";
-    private static final String SHOULD_SHOW_LOCATION_RATIONALE_KEY = "shouldShowLocationRationale";
     public static final String CURRENT_LOCATION_KEY = "currentLocation";
     private static final String IMAGES_ENABLED_KEY = "imagesEnabled";
     private static final String IS_AMERICAN_KEY = "isAmerican";
     private static final String USERNAME_KEY = "username";
     private static final String TEAM_KEY = "team";
+    private static final String POKEMON_DB_VERSION_KEY = "pokemonDBVersion";
+
     private static PreferencesManager instance;
 
-    private Context context;
     private SharedPreferences prefs;
 
     public static PreferencesManager get() {
@@ -36,8 +35,7 @@ public class PreferencesManager {
     }
 
     private PreferencesManager() {
-        context = MyApplication.getAppContext();
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
     }
 
     public boolean shouldAskToRate() {
@@ -56,12 +54,6 @@ public class PreferencesManager {
         boolean isFirstTime = prefs.getBoolean(FIRST_TIME_SEARCH, true);
         prefs.edit().putBoolean(FIRST_TIME_SEARCH, false).apply();
         return isFirstTime;
-    }
-
-    public boolean shouldShowLocationRationale() {
-        boolean shouldShow = prefs.getBoolean(SHOULD_SHOW_LOCATION_RATIONALE_KEY, true);
-        prefs.edit().putBoolean(SHOULD_SHOW_LOCATION_RATIONALE_KEY, false).apply();
-        return shouldShow;
     }
 
     public boolean shouldSetDistanceUnit() {
@@ -93,7 +85,7 @@ public class PreferencesManager {
     }
 
     public String getCurrentLocation() {
-        return prefs.getString(CURRENT_LOCATION_KEY, context.getString(R.string.automatic));
+        return prefs.getString(CURRENT_LOCATION_KEY, MyApplication.getAppContext().getString(R.string.automatic));
     }
 
     public void setCurrentLocation(String newLocation) {
@@ -101,7 +93,7 @@ public class PreferencesManager {
     }
 
     public void resetCurrentLocation() {
-        setCurrentLocation(context.getString(R.string.automatic));
+        setCurrentLocation(MyApplication.getAppContext().getString(R.string.automatic));
     }
 
     public boolean areImagesEnabled() {
@@ -126,5 +118,13 @@ public class PreferencesManager {
 
     public void setTeam(int team) {
         prefs.edit().putInt(TEAM_KEY, team).apply();
+    }
+
+    public int getPokemonDBVersion() {
+        return prefs.getInt(POKEMON_DB_VERSION_KEY, 0);
+    }
+
+    public void updatePokemonDBVersion() {
+        prefs.edit().putInt(POKEMON_DB_VERSION_KEY, PokemonDBManager.CURRENT_POKEMON_DB_VERSION).apply();
     }
 }

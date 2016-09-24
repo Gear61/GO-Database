@@ -3,6 +3,8 @@ package com.randomappsinc.pokemonlocations_pokemongo.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokedexPokemonDO;
+
 /**
  * Created by alexanderchiou on 7/17/16.
  */
@@ -118,6 +120,23 @@ public class Pokemon implements Parcelable {
 
     public void setAvgCpGain(double avgCpGain) {
         this.avgCpGain = avgCpGain;
+    }
+
+    public PokedexPokemonDO toPokemonDO() {
+        PokedexPokemonDO pokemonDO = new PokedexPokemonDO();
+        pokemonDO.setPokemonId(id);
+        pokemonDO.setName(name);
+        pokemonDO.setType1(type1);
+        pokemonDO.setType2(type2);
+        pokemonDO.setMaxCp(maxCp);
+        pokemonDO.setBaseAttack(baseAttack);
+        pokemonDO.setBaseDefense(baseDefense);
+        pokemonDO.setBaseStamina(baseStamina);
+        pokemonDO.setBaseCaptureRate(baseCaptureRate);
+        pokemonDO.setBaseFleeRate(baseFleeRate);
+        pokemonDO.setCandyToEvolve(candyToEvolve);
+        pokemonDO.setAvgCpGain(avgCpGain);
+        return pokemonDO;
     }
 
     protected Pokemon(Parcel in) {

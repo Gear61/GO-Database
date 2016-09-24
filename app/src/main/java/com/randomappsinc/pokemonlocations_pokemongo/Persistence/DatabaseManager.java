@@ -10,7 +10,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.SavedLoca
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.VoteDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +27,7 @@ import io.realm.Sort;
  * Created by alexanderchiou on 7/17/16.
  */
 public class DatabaseManager {
-    private static final int CURRENT_REALM_VERSION = 3;
+    private static final int CURRENT_REALM_VERSION = 4;
     private static DatabaseManager instance;
 
     public static DatabaseManager get() {
@@ -46,44 +45,68 @@ public class DatabaseManager {
     }
 
     private Realm realm;
+    private PokemonDBManager pokemonDBManager;
 
     private DatabaseManager() {
+        RealmMigration migration = new RealmMigration() {
+            @Override
+            public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
+                RealmSchema schema = realm.getSchema();
+
+                // Add saved locations
+                if (oldVersion == 0) {
+                    schema.create("SavedLocationDO")
+                            .addField("displayName", String.class)
+                            .addField("latitude", double.class)
+                            .addField("longitude", double.class);
+                    oldVersion++;
+                }
+
+                if (oldVersion == 1) {
+                    schema.get("PokeLocationDO")
+                            .removeField("score")
+                            .addField("numLikes", int.class)
+                            .addField("numDislikes", int.class);
+                    oldVersion++;
+                }
+
+                if (oldVersion == 2) {
+                    schema.get("PokeFindingDO")
+                            .addField("reportTime", long.class);
+                    oldVersion++;
+                }
+
+                if (oldVersion == 3) {
+                    schema.create("PokedexPokemonDO")
+                            .addField("pokemonId", int.class)
+                            .addPrimaryKey("pokemonId")
+                            .addField("name", String.class)
+                            .addField("type1", String.class)
+                            .addField("type2", String.class)
+                            .addField("maxCp", int.class)
+                            .addField("baseAttack", int.class)
+                            .addField("baseDefense", int.class)
+                            .addField("baseStamina", int.class)
+                            .addField("baseCaptureRate", int.class)
+                            .addField("baseFleeRate", int.class)
+                            .addField("candyToEvolve", int.class)
+                            .addField("avgCpGain", double.class);
+                }
+            }
+        };
+
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(MyApplication.getAppContext())
                 .schemaVersion(CURRENT_REALM_VERSION)
                 .migration(migration)
                 .build();
         Realm.setDefaultConfiguration(realmConfig);
         realm = Realm.getDefaultInstance();
+        pokemonDBManager = new PokemonDBManager(realm);
     }
 
-    RealmMigration migration = new RealmMigration() {
-        @Override
-        public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
-            RealmSchema schema = realm.getSchema();
-
-            // Add saved locations
-            if (oldVersion == 0) {
-                schema.create("SavedLocationDO")
-                        .addField("displayName", String.class)
-                        .addField("latitude", double.class)
-                        .addField("longitude", double.class);
-                oldVersion++;
-            }
-
-            if (oldVersion == 1) {
-                schema.get("PokeLocationDO")
-                        .removeField("score")
-                        .addField("numLikes", int.class)
-                        .addField("numDislikes", int.class);
-                oldVersion++;
-            }
-
-            if (oldVersion == 2) {
-                schema.get("PokeFindingDO")
-                        .addField("reportTime", long.class);
-            }
-        }
-    };
+    public PokemonDBManager getPokemonDBManager() {
+        return pokemonDBManager;
+    }
 
     // Upvote/downvote
     public void processLike(PokeLocation place) {
@@ -201,7 +224,7 @@ public class DatabaseManager {
         List<PokeLocation> favorites = new ArrayList<>();
         List<PokeLocationDO> pokeLocationDOs = realm.where(PokeLocationDO.class).findAll();
         for (PokeLocationDO pokeLocationDO : pokeLocationDOs) {
-            favorites.add(PokemonUtils.getLocationFromDO(pokeLocationDO));
+            favorites.add(DBConverters.getLocationFromDO(pokeLocationDO));
         }
         return favorites;
     }
@@ -251,7 +274,7 @@ public class DatabaseManager {
         PokeLocationDO pokeLocationDO = realm.where(PokeLocationDO.class)
                 .equalTo("placeId", placeId)
                 .findFirst();
-        return pokeLocationDO == null ? null : PokemonUtils.getLocationFromDO(pokeLocationDO);
+        return pokeLocationDO == null ? null : DBConverters.getLocationFromDO(pokeLocationDO);
     }
 
     // Pokemon Findings

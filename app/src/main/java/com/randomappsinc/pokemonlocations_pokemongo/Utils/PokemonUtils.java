@@ -3,16 +3,12 @@ package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 import android.content.Context;
 import android.view.View;
 
-import com.randomappsinc.pokemonlocations_pokemongo.Models.PokeLocation;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeLocationDO;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokemonDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,38 +115,6 @@ public class PokemonUtils {
         } else {
             return 3F;
         }
-    }
-
-    public static PokeLocation getLocationFromDO(PokeLocationDO locationDO) {
-        PokeLocation location = new PokeLocation();
-
-        location.setPlaceId(locationDO.getPlaceId());
-        location.setDisplayName(locationDO.getDisplayName());
-        location.setAddress(locationDO.getAddress());
-        location.setLatitude(locationDO.getLatitude());
-        location.setLongitude(locationDO.getLongitude());
-        location.setNumLikes(locationDO.getNumLikes());
-        location.setNumDislikes(locationDO.getNumDislikes());
-
-        List<Integer> commonPokemon = new ArrayList<>();
-        for (PokemonDO pokemonDO : locationDO.getCommonPokemon()) {
-            commonPokemon.add(pokemonDO.getPokemonId());
-        }
-        location.setCommonPokemon(commonPokemon);
-
-        List<Integer> uncommonPokemon = new ArrayList<>();
-        for (PokemonDO pokemonDO : locationDO.getUncommonPokemon()) {
-            uncommonPokemon.add(pokemonDO.getPokemonId());
-        }
-        location.setUncommonPokemon(uncommonPokemon);
-
-        List<Integer> rarePokemon = new ArrayList<>();
-        for (PokemonDO pokemonDO : locationDO.getRarePokemon()) {
-            rarePokemon.add(pokemonDO.getPokemonId());
-        }
-        location.setRarePokemon(rarePokemon);
-
-        return location;
     }
 
     public static String getFindingInfo(PokeFindingDO pokeFindingDO) {

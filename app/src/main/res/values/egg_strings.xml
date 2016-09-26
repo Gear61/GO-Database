@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="twoKm">2km</string>
+    <string name="fiveKm">5km</string>
+    <string name="tenKm">10km</string>
+    <string-array name="egg_types">
+        <item>@string/twoKm</item>
+        <item>@string/fiveKm</item>
+        <item>@string/tenKm</item>
+    </string-array>
+</resources>

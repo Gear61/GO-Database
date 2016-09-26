@@ -30,7 +30,7 @@
                     android:hint="@string/location"
                     android:textCursorDrawable="@null"
                     android:paddingRight="40dp"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:imeOptions="actionDone"/>
 
                 <com.joanzapata.iconify.widget.IconTextView

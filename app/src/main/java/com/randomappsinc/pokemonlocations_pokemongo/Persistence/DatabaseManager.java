@@ -27,7 +27,7 @@ import io.realm.Sort;
  * Created by alexanderchiou on 7/17/16.
  */
 public class DatabaseManager {
-    private static final int CURRENT_REALM_VERSION = 4;
+    private static final int CURRENT_REALM_VERSION = 5;
     private static DatabaseManager instance;
 
     public static DatabaseManager get() {
@@ -46,55 +46,9 @@ public class DatabaseManager {
 
     private Realm realm;
     private PokemonDBManager pokemonDBManager;
+    private EggsDBManager eggsDBManager;
 
     private DatabaseManager() {
-        RealmMigration migration = new RealmMigration() {
-            @Override
-            public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
-                RealmSchema schema = realm.getSchema();
-
-                // Add saved locations
-                if (oldVersion == 0) {
-                    schema.create("SavedLocationDO")
-                            .addField("displayName", String.class)
-                            .addField("latitude", double.class)
-                            .addField("longitude", double.class);
-                    oldVersion++;
-                }
-
-                if (oldVersion == 1) {
-                    schema.get("PokeLocationDO")
-                            .removeField("score")
-                            .addField("numLikes", int.class)
-                            .addField("numDislikes", int.class);
-                    oldVersion++;
-                }
-
-                if (oldVersion == 2) {
-                    schema.get("PokeFindingDO")
-                            .addField("reportTime", long.class);
-                    oldVersion++;
-                }
-
-                if (oldVersion == 3) {
-                    schema.create("PokedexPokemonDO")
-                            .addField("pokemonId", int.class)
-                            .addPrimaryKey("pokemonId")
-                            .addField("name", String.class)
-                            .addField("type1", String.class)
-                            .addField("type2", String.class)
-                            .addField("maxCp", int.class)
-                            .addField("baseAttack", int.class)
-                            .addField("baseDefense", int.class)
-                            .addField("baseStamina", int.class)
-                            .addField("baseCaptureRate", int.class)
-                            .addField("baseFleeRate", int.class)
-                            .addField("candyToEvolve", int.class)
-                            .addField("avgCpGain", double.class);
-                }
-            }
-        };
-
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(MyApplication.getAppContext())
                 .schemaVersion(CURRENT_REALM_VERSION)
                 .migration(migration)
@@ -102,10 +56,71 @@ public class DatabaseManager {
         Realm.setDefaultConfiguration(realmConfig);
         realm = Realm.getDefaultInstance();
         pokemonDBManager = new PokemonDBManager(realm);
+        eggsDBManager = new EggsDBManager(realm);
     }
+
+    private RealmMigration migration = new RealmMigration() {
+        @Override
+        public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
+            RealmSchema schema = realm.getSchema();
+
+            // Add saved locations
+            if (oldVersion == 0) {
+                schema.create("SavedLocationDO")
+                        .addField("displayName", String.class)
+                        .addField("latitude", double.class)
+                        .addField("longitude", double.class);
+                oldVersion++;
+            }
+
+            if (oldVersion == 1) {
+                schema.get("PokeLocationDO")
+                        .removeField("score")
+                        .addField("numLikes", int.class)
+                        .addField("numDislikes", int.class);
+                oldVersion++;
+            }
+
+            if (oldVersion == 2) {
+                schema.get("PokeFindingDO")
+                        .addField("reportTime", long.class);
+                oldVersion++;
+            }
+
+            if (oldVersion == 3) {
+                schema.create("PokedexPokemonDO")
+                        .addField("pokemonId", int.class)
+                        .addPrimaryKey("pokemonId")
+                        .addField("name", String.class)
+                        .addField("type1", String.class)
+                        .addField("type2", String.class)
+                        .addField("maxCp", int.class)
+                        .addField("baseAttack", int.class)
+                        .addField("baseDefense", int.class)
+                        .addField("baseStamina", int.class)
+                        .addField("baseCaptureRate", int.class)
+                        .addField("baseFleeRate", int.class)
+                        .addField("candyToEvolve", int.class)
+                        .addField("avgCpGain", double.class);
+                oldVersion++;
+            }
+
+            if (oldVersion == 4) {
+                schema.create("EggDO")
+                        .addField("pokemonId", int.class)
+                        .addPrimaryKey("pokemonId")
+                        .addField("distance", int.class)
+                        .addField("chance", double.class);
+            }
+        }
+    };
 
     public PokemonDBManager getPokemonDBManager() {
         return pokemonDBManager;
+    }
+
+    public EggsDBManager getEggsDBManager() {
+        return eggsDBManager;
     }
 
     // Upvote/downvote

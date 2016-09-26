@@ -1,17 +1,23 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.EggsDBManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokedexPokemonDO;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by alexanderchiou on 9/21/16.
  */
 
 public class JSONUtils {
+    // Pokemon
     public static final String POKEMON_KEY = "pokemon";
     public static final String NAME_KEY = "name";
     public static final String TYPE_1_KEY = "type1";
@@ -24,6 +30,13 @@ public class JSONUtils {
     public static final String BASE_FLEE_RATE_KEY = "base_flee_rate";
     public static final String CANDY_TO_EVOLVE_KEY = "candy_to_evolve";
     public static final String AVERAGE_CP_GAIN_KEY = "average_cp_gain";
+
+    // Eggs
+    public static final String POKEMON_ID_KEY = "pokemon_id";
+    public static final String CHANCE_KEY = "chance";
+    public static final String TWO_KEY = "two";
+    public static final String FIVE_KEY = "five";
+    public static final String TEN_KEY = "ten";
 
     public static void extractPokemon(String jsonText) {
         try {
@@ -48,8 +61,55 @@ public class JSONUtils {
 
                 DatabaseManager.get().getPokemonDBManager().addOrUpdatePokemon(pokemonDO);
             }
+        } catch (JSONException ignored) {}
+    }
+
+    public static void updateEggsDB() {
+        if (PreferencesManager.get().getEggsDBVersion() < EggsDBManager.CURRENT_EGGS_DB_VERSION) {
+            InputStream inputStream = null;
+            try {
+                inputStream = MyApplication.getAppContext().getAssets().open("eggs.txt");
+                int size = inputStream.available();
+                byte[] buffer = new byte[size];
+                inputStream.read(buffer);
+                JSONUtils.extractEggData(new String(buffer));
+            } catch (IOException ignored) {
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (Exception ignored) {}
+                }
+            }
+
+            PreferencesManager.get().updateEggsDBVersion();
         }
-        catch (JSONException ignored) {}
+    }
+
+    public static void extractEggData(String jsonText) {
+        try {
+            JSONObject eggListJson = new JSONObject(jsonText);
+            JSONArray twoKmList = eggListJson.getJSONArray(TWO_KEY);
+            for (int i = 0; i < twoKmList.length(); i++) {
+                JSONObject eggJson = twoKmList.getJSONObject(i);
+                DatabaseManager.get().getEggsDBManager()
+                        .addOrUpdateEgg(eggJson.getInt(POKEMON_ID_KEY), 2, eggJson.getDouble(CHANCE_KEY));
+            }
+
+            JSONArray fiveKmList = eggListJson.getJSONArray(FIVE_KEY);
+            for (int i = 0; i < fiveKmList.length(); i++) {
+                JSONObject eggJson = fiveKmList.getJSONObject(i);
+                DatabaseManager.get().getEggsDBManager()
+                        .addOrUpdateEgg(eggJson.getInt(POKEMON_ID_KEY), 5, eggJson.getDouble(CHANCE_KEY));
+            }
+
+            JSONArray tenKmList = eggListJson.getJSONArray(TEN_KEY);
+            for (int i = 0; i < tenKmList.length(); i++) {
+                JSONObject eggJson = tenKmList.getJSONObject(i);
+                DatabaseManager.get().getEggsDBManager()
+                        .addOrUpdateEgg(eggJson.getInt(POKEMON_ID_KEY), 10, eggJson.getDouble(CHANCE_KEY));
+            }
+        } catch (JSONException ignored) {}
     }
 
     public static String normalizeString(String input) {

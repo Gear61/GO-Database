@@ -36,12 +36,9 @@ public class PokemonServer {
             try {
                 inputStream = MyApplication.getAppContext().getAssets().open("pokemon.txt");
                 int size = inputStream.available();
-
-                // Read contents of file into a byte buffer
                 byte[] buffer = new byte[size];
                 inputStream.read(buffer);
 
-                // Convert the buffer into a string.
                 JSONUtils.extractPokemon(new String(buffer));
             } catch (IOException ignored) {
             } finally {

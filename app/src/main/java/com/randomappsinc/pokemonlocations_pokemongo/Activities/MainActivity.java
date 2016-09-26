@@ -24,6 +24,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.JSONUtils;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.MyApplication;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PokemonServer.get().initialize();
+        JSONUtils.updateEggsDB();
 
         // Kill activity if it's not on top of the stack due to Samsung bug
         if (!isTaskRoot() && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)

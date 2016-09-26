@@ -1,6 +1,6 @@
 <resources>
     <string name="pokemon">Pokemon</string>
-    <string name="app_name">Poke Spotter</string>
+    <string name="app_name">Poke Buddy</string>
     <string name="choose">Choose</string>
     <string name="add">Add</string>
     <string name="welcome">Welcome!</string>
@@ -11,25 +11,38 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="pokedex">Pokedex</string>
+    <string name="me">Me</string>
     <string name="favorites">Favorites</string>
     <string name="journal">Journal</string>
+    <string name="tools">Tools</string>
+    <string name="pokedex">Pokedex</string>
+    <string name="egg_hatches">Egg Hatches</string>
     <string name="settings">Settings</string>
-    <string-array name="nav_drawer_tabs">
-        <item>@string/pokedex</item>
+
+    <string-array name="nav_drawer_options">
+        <item>@string/me</item>
         <item>@string/favorites</item>
         <item>@string/journal</item>
+        <item></item>
+        <item>@string/tools</item>
+        <item>@string/pokedex</item>
+        <item>@string/egg_hatches</item>
         <item>@string/settings</item>
     </string-array>
 
-    <string name="pokedex_icon">{ion-calculator}</string>
     <string name="heart_icon">{fa-heart}</string>
     <string name="journal_icon">{ion-ios-bookmarks}</string>
+    <string name="pokedex_icon">{ion-calculator}</string>
+    <string name="egg_icon">{ion-egg}</string>
     <string name="settings_icon">{ion-android-settings}</string>
     <string-array name="nav_drawer_icons">
-        <item>@string/pokedex_icon</item>
+        <item></item>
         <item>@string/heart_icon</item>
         <item>@string/journal_icon</item>
+        <item></item>
+        <item></item>
+        <item>@string/pokedex_icon</item>
+        <item>@string/egg_icon</item>
         <item>@string/settings_icon</item>
     </string-array>
 
@@ -59,7 +72,7 @@
     <string name="share_via">Share via</string>
     <string name="share_app_title">Share Poke Spotter</string>
     <string name="share_app_message">
-        I recently found an app named Poke Spotter, which maps out Pokemon hotspots and nests all over the world.
+        I recently found an app named Poke Buddy, which maps out Pokemon hotspots and nests all over the world.
         It\'s updated very regularly, and the developers behind it are super friendly, responsive, and care deeply
         for the Pokemon GO community.\n\nIf you want to join me, you can download it at:
         https://play.google.com/store/apps/details?id=com.randomappsinc.pokelocator

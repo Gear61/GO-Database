@@ -101,5 +101,11 @@
             android:name=".Activities.PokemonActivity"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".Activities.EggHatchesActivity"
+            android:label="@string/egg_hatches"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

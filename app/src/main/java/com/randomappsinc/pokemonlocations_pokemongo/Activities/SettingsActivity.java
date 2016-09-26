@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.randomappsinc.pokemonlocations_pokemongo.Adapters.IconItemsAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.SettingsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
@@ -36,7 +36,7 @@ public class SettingsActivity extends StandardActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        settingsOptions.setAdapter(new IconItemsAdapter(this, R.array.settings_options, R.array.settings_icons));
+        settingsOptions.setAdapter(new SettingsAdapter(this));
     }
 
     private void showDistanceUnitDialog() {

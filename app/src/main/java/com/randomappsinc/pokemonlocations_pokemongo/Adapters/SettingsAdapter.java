@@ -15,15 +15,15 @@ import butterknife.ButterKnife;
 /**
  * Created by alexanderchiou on 7/15/16.
  */
-public class IconItemsAdapter extends BaseAdapter {
+public class SettingsAdapter extends BaseAdapter {
     private Context context;
     private String[] itemNames;
     private String[] itemIcons;
 
-    public IconItemsAdapter(Context context, int optionIds, int iconIds) {
+    public SettingsAdapter(Context context) {
         this.context = context;
-        this.itemNames = context.getResources().getStringArray(optionIds);
-        this.itemIcons = context.getResources().getStringArray(iconIds);
+        this.itemNames = context.getResources().getStringArray(R.array.settings_options);
+        this.itemIcons = context.getResources().getStringArray(R.array.settings_icons);
     }
 
     @Override
@@ -41,24 +41,24 @@ public class IconItemsAdapter extends BaseAdapter {
         return position;
     }
 
-    public class IconItemViewHolder {
-        @Bind(R.id.item_icon) TextView itemIcon;
-        @Bind(R.id.item_name) TextView itemName;
+    public class SettingsViewHolder {
+        @Bind(R.id.settings_icon) TextView itemIcon;
+        @Bind(R.id.settings_option) TextView itemName;
 
-        public IconItemViewHolder(View view) {
+        SettingsViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
 
     public View getView(int position, View view, ViewGroup parent) {
-        IconItemViewHolder holder;
+        SettingsViewHolder holder;
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.icon_item_cell, parent, false);
-            holder = new IconItemViewHolder(view);
+            view = vi.inflate(R.layout.settings_cell, parent, false);
+            holder = new SettingsViewHolder(view);
             view.setTag(holder);
         } else {
-            holder = (IconItemViewHolder) view.getTag();
+            holder = (SettingsViewHolder) view.getTag();
         }
 
         holder.itemName.setText(itemNames[position]);

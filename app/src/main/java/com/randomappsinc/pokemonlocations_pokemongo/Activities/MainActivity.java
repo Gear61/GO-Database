@@ -19,7 +19,7 @@ import com.joanzapata.iconify.fonts.IoniconsIcons;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Callbacks.StatusCallback;
 import com.randomappsinc.pokemonlocations_pokemongo.API.Models.Requests.StatusRequest;
 import com.randomappsinc.pokemonlocations_pokemongo.API.RestClient;
-import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavigationDrawerFragment;
+import com.randomappsinc.pokemonlocations_pokemongo.Fragments.NavDrawerFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Fragments.SearchFragment;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Filter;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
@@ -39,13 +39,13 @@ import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
-public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends AppCompatActivity implements NavDrawerFragment.NavigationDrawerCallbacks {
     @Bind(R.id.parent) View parent;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.add_pokemon_listing) FloatingActionButton addListing;
     @BindColor(R.color.transparent_red) int transparentRed;
 
-    private NavigationDrawerFragment navDrawerFragment;
+    private NavDrawerFragment navDrawerFragment;
     private Filter filter;
     private SearchFragment searchFragment;
     private FragmentManager fragmentManager;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         filter = new Filter();
         addListing.setImageDrawable(new IconDrawable(this, IoniconsIcons.ion_ios_bookmarks).colorRes(R.color.white));
 
-        navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        navDrawerFragment = (NavDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         navDrawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
 
         fragmentManager = getFragmentManager();
@@ -150,16 +150,19 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public void onNavigationDrawerItemSelected(int position) {
         Intent intent = null;
         switch (position) {
-            case 0:
-                intent = new Intent(this, PokedexActivity.class);
-                break;
             case 1:
                 intent = new Intent(this, FavoritesActivity.class);
                 break;
             case 2:
                 intent = new Intent(this, JournalActivity.class);
                 break;
-            case 3:
+            case 5:
+                intent = new Intent(this, PokedexActivity.class);
+                break;
+            case 6:
+                intent = new Intent(this, EggHatchesActivity.class);
+                break;
+            case 7:
                 intent = new Intent(this, SettingsActivity.class);
                 break;
         }

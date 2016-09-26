@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.randomappsinc.pokemonlocations_pokemongo.Adapters.IconItemsAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Adapters.NavDrawerAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.TeamsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
@@ -34,7 +34,7 @@ import butterknife.OnItemClick;
 /**
  * Created by alexanderchiou on 7/14/16.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavDrawerFragment extends Fragment {
     @Bind(R.id.nav_drawer_tabs) ListView mDrawerListView;
     @Bind(R.id.no_team) View noTeam;
     @Bind(R.id.team_icon) ImageView teamIcon;
@@ -54,9 +54,9 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LinearLayout navDrawer = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        LinearLayout navDrawer = (LinearLayout) inflater.inflate(R.layout.nav_drawer_fragment, container, false);
         ButterKnife.bind(this, navDrawer);
-        mDrawerListView.setAdapter(new IconItemsAdapter(getActivity(), R.array.nav_drawer_tabs, R.array.nav_drawer_icons));
+        mDrawerListView.setAdapter(new NavDrawerAdapter(getActivity()));
 
         int team = PreferencesManager.get().getTeam();
         if (team == -1) {
@@ -141,6 +141,9 @@ public class NavigationDrawerFragment extends Fragment {
 
     @OnItemClick(R.id.nav_drawer_tabs)
     public void onItemClick(int position) {
+        if (position != NavDrawerAdapter.ME_INDEX &&
+            position != NavDrawerAdapter.DIVIDER_INDEX &&
+            position != NavDrawerAdapter.TOOLS_INDEX)
         selectItem(position);
     }
 

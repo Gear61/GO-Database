@@ -10,7 +10,7 @@
     <string name="no_results">
         Sorry, we don\'t have any Pokemon data matching your search criteria. {ion-sad-outline}
         Here\'s what you can do to change that:\n\n1. Click the {ion-ios-bookmarks} button to add Pokemon data
-        to your area!\n2. Click the {ion-android-share-alt} to share Poke Spotter with your friends!\n3. Click the
+        to your area!\n2. Click the {ion-android-share-alt} to share Poke Buddy with your friends!\n3. Click the
         {ion-android-search} to expand your search.
     </string>
 </resources>

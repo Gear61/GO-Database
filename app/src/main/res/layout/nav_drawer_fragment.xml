@@ -49,7 +49,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/app_red"/>
+        android:layout_marginBottom="4dp"
+        android:background="@color/gray_200"/>
 
     <ListView
         android:id="@+id/nav_drawer_tabs"

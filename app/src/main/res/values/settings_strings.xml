@@ -2,7 +2,7 @@
 <resources>
     <string name="my_locations">My Locations</string>
     <string name="set_distance_unit">Set distance unit</string>
-    <string name="share_pokespotter">Share Poke Spotter</string>
+    <string name="share_pokespotter">Share Poke Buddy</string>
     <string name="send_feedback">Send feedback</string>
     <string name="our_other_apps">Our other apps</string>
     <string name="rate_this_app">Rate this app</string>

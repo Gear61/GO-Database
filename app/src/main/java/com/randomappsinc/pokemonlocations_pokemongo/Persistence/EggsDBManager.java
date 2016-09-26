@@ -2,7 +2,10 @@ package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.EggDO;
 
+import java.util.List;
+
 import io.realm.Realm;
+import io.realm.Sort;
 
 /**
  * Created by alexanderchiou on 9/25/16.
@@ -27,5 +30,11 @@ public class EggsDBManager {
                 realm.copyToRealmOrUpdate(eggDO);
             }
         });
+    }
+
+    public List<EggDO> getEggs(int distance) {
+        return realm.where(EggDO.class)
+                .equalTo("distance", distance)
+                .findAllSorted("chance", Sort.DESCENDING);
     }
 }

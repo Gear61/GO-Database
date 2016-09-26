@@ -50,6 +50,13 @@ public class PokemonDBManager {
                 .getName();
     }
 
+    public Pokemon getPokemon(int pokemonId) {
+        PokedexPokemonDO pokemonDO = realm.where(PokedexPokemonDO.class)
+                .equalTo("pokemonId", pokemonId)
+                .findFirst();
+        return DBConverters.getPokemonFromDO(pokemonDO);
+    }
+
     public List<String> getPokemonNames() {
         List<String> pokemonNames = new ArrayList<>();
 

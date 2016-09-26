@@ -1,0 +1,300 @@
+{
+   "two": [
+      {
+         "pokemon_id": 13,
+         "chance": 12.3
+      },
+      {
+         "pokemon_id": 16,
+         "chance": 11.4
+      },
+      {
+         "pokemon_id": 19,
+         "chance": 10.4
+      },
+      {
+         "pokemon_id": 10,
+         "chance": 10.3
+      },
+      {
+         "pokemon_id": 1,
+         "chance": 9.8
+      },
+      {
+         "pokemon_id": 129,
+         "chance": 8.6
+      },
+      {
+         "pokemon_id": 41,
+         "chance": 8.3
+      },
+      {
+         "pokemon_id": 4,
+         "chance": 5.4
+      },
+      {
+         "pokemon_id": 7,
+         "chance": 4.8
+      },
+      {
+         "pokemon_id": 25,
+         "chance": 4.7
+      },
+      {
+         "pokemon_id": 74,
+         "chance": 3.9
+      },
+      {
+         "pokemon_id": 21,
+         "chance": 3.3
+      },
+      {
+         "pokemon_id": 39,
+         "chance": 1.7
+      },
+      {
+         "pokemon_id": 35,
+         "chance": 1.4
+      }
+   ],
+   "five": [
+      {
+         "pokemon_id": 77,
+         "chance": 4.6
+      },
+      {
+         "pokemon_id": 32,
+         "chance": 4.2
+      },
+      {
+         "pokemon_id": 27,
+         "chance": 4.1
+      },
+      {
+         "pokemon_id": 46,
+         "chance": 4.1
+      },
+      {
+         "pokemon_id": 43,
+         "chance": 4.0
+      },
+      {
+         "pokemon_id": 23,
+         "chance": 3.8
+      },
+      {
+         "pokemon_id": 29,
+         "chance": 3.8
+      },
+      {
+         "pokemon_id": 72,
+         "chance": 3.8
+      },
+      {
+         "pokemon_id": 52,
+         "chance": 3.6
+      },
+      {
+         "pokemon_id": 58,
+         "chance": 3.5
+      },
+      {
+         "pokemon_id": 69,
+         "chance": 3.3
+      },
+      {
+         "pokemon_id": 60,
+         "chance": 3.0
+      },
+      {
+         "pokemon_id": 98,
+         "chance": 3.0
+      },
+      {
+         "pokemon_id": 120,
+         "chance": 3.0
+      },
+      {
+         "pokemon_id": 37,
+         "chance": 2.8
+      },
+      {
+         "pokemon_id": 118,
+         "chance": 2.6
+      },
+      {
+         "pokemon_id": 54,
+         "chance": 2.4
+      },
+      {
+         "pokemon_id": 63,
+         "chance": 2.3
+      },
+      {
+         "pokemon_id": 111,
+         "chance": 2.3
+      },
+      {
+         "pokemon_id": 81,
+         "chance": 2.2
+      },
+      {
+         "pokemon_id": 104,
+         "chance": 2.1
+      },
+      {
+         "pokemon_id": 100,
+         "chance": 2.0
+      },
+      {
+         "pokemon_id": 48,
+         "chance": 2.0
+      },
+      {
+         "pokemon_id": 96,
+         "chance": 1.9
+      },
+      {
+         "pokemon_id": 66,
+         "chance": 1.8
+      },
+      {
+         "pokemon_id": 92,
+         "chance": 1.8
+      },
+      {
+         "pokemon_id": 79,
+         "chance": 1.8
+      },
+      {
+         "pokemon_id": 102,
+         "chance": 1.7
+      },
+      {
+         "pokemon_id": 116,
+         "chance": 1.6
+      },
+      {
+         "pokemon_id": 90,
+         "chance": 1.6
+      },
+      {
+         "pokemon_id": 84,
+         "chance": 1.4
+      },
+      {
+         "pokemon_id": 56,
+         "chance": 1.4
+      },
+      {
+         "pokemon_id": 86,
+         "chance": 1.3
+      },
+      {
+         "pokemon_id": 50,
+         "chance": 1.1
+      },
+      {
+         "pokemon_id": 137,
+         "chance": 1.0
+      },
+      {
+         "pokemon_id": 114,
+         "chance": 1.0
+      },
+      {
+         "pokemon_id": 128,
+         "chance": 0.9
+      },
+      {
+         "pokemon_id": 115,
+         "chance": 0.9
+      },
+      {
+         "pokemon_id": 83,
+         "chance": 0.9
+      },
+      {
+         "pokemon_id": 108,
+         "chance": 0.7
+      },
+      {
+         "pokemon_id": 88,
+         "chance": 0.5
+      },
+      {
+         "pokemon_id": 109,
+         "chance": 0.3
+      }
+   ],
+   "ten": [
+      {
+         "pokemon_id": 133,
+         "chance": 17.7
+      },
+      {
+         "pokemon_id": 126,
+         "chance": 8.8
+      },
+      {
+         "pokemon_id": 127,
+         "chance": 7.6
+      },
+      {
+         "pokemon_id": 125,
+         "chance": 7.4
+      },
+      {
+         "pokemon_id": 124,
+         "chance": 7.2
+      },
+      {
+         "pokemon_id": 95,
+         "chance": 7.0
+      },
+      {
+         "pokemon_id": 123,
+         "chance": 6.4
+      },
+      {
+         "pokemon_id": 143,
+         "chance": 5.1
+      },
+      {
+         "pokemon_id": 131,
+         "chance": 4.3
+      },
+      {
+         "pokemon_id": 142,
+         "chance": 4.2
+      },
+      {
+         "pokemon_id": 113,
+         "chance": 3.7
+      },
+      {
+         "pokemon_id": 147,
+         "chance": 3.5
+      },
+      {
+         "pokemon_id": 106,
+         "chance": 3.3
+      },
+      {
+         "pokemon_id": 140,
+         "chance": 3.3
+      },
+      {
+         "pokemon_id": 138,
+         "chance": 3.2
+      },
+      {
+         "pokemon_id": 107,
+         "chance": 2.8
+      },
+      {
+         "pokemon_id": 122,
+         "chance": 1.9
+      }
+   ]
+}

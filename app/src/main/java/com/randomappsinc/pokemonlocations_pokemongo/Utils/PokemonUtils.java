@@ -44,7 +44,7 @@ public class PokemonUtils {
             byte[] data = new byte[2048];
             int nbread;
             fos = new FileOutputStream(file);
-            while((nbread = fileStream.read(data)) > -1) {
+            while ((nbread = fileStream.read(data)) > -1) {
                 fos.write(data, 0, nbread);
             }
         }

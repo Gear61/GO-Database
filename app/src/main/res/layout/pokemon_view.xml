@@ -20,9 +20,18 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
 
+                <TextView
+                    android:id="@+id/pokemon_note"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="12dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center_horizontal"
+                    style="@style/stat_header"/>
+
                 <ImageView
                     android:id="@+id/pokemon_icon"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:contentDescription="@string/pokemon"/>

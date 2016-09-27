@@ -1,8 +1,12 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
+import android.content.Context;
+
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PokemonDBManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
+import com.randomappsinc.pokemonlocations_pokemongo.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,6 +79,24 @@ public class PokemonServer {
         int pokemonId = getPokemonId(pokemonName);
         return pokemonId == 132 || pokemonId == 144 || pokemonId == 145 ||
                 pokemonId == 146 || pokemonId == 150 || pokemonId == 151;
+    }
+
+    public String isRegionExclusive(Pokemon pokemon) {
+        Context context = MyApplication.getAppContext();
+
+        int pokemonId = pokemon.getId();
+        switch (pokemonId) {
+            case 128:
+                return context.getString(R.string.north_america);
+            case 115:
+                return context.getString(R.string.australasia);
+            case 83:
+                return context.getString(R.string.asia);
+            case 122:
+                return context.getString(R.string.europe);
+            default:
+                return "";
+        }
     }
 
     public boolean cantBeCommon(String pokemonName) {

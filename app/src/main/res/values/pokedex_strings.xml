@@ -11,4 +11,12 @@
 
     <string name="percentage">%d%%</string>
     <string name="not_applicable">N/A</string>
+
+    <string name="region_exclusive">
+        This Pokemon is a region exclusive and only available in %1$s, eggs included.
+    </string>
+    <string name="north_america">North America</string>
+    <string name="australasia">Australasia</string>
+    <string name="europe">Europe</string>
+    <string name="asia">Asia</string>
 </resources>

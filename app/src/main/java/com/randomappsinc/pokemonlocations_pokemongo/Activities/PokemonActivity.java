@@ -9,6 +9,7 @@ import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.JSONUtils;
+import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonServer;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.PokemonUtils;
 import com.squareup.picasso.Picasso;
 
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
  */
 
 public class PokemonActivity extends StandardActivity {
+    @Bind(R.id.pokemon_note) TextView pokemonNote;
     @Bind(R.id.pokemon_icon) ImageView pokemonIcon;
     @Bind(R.id.pokemon_name) TextView pokemonName;
     @Bind(R.id.type1) TextView type1;
@@ -35,6 +37,7 @@ public class PokemonActivity extends StandardActivity {
     @Bind(R.id.average_cp_gain) TextView cpGain;
 
     @BindString(R.string.percentage) String percentage;
+    @BindString(R.string.region_exclusive) String regionTemplate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,15 @@ public class PokemonActivity extends StandardActivity {
 
         Pokemon pokemon = getIntent().getParcelableExtra(JSONUtils.POKEMON_KEY);
         setTitle(pokemon.getName());
+
+        String pokemonRegion = PokemonServer.get().isRegionExclusive(pokemon);
+        if (PokemonServer.get().isUnreleased(pokemon.getName())) {
+            pokemonNote.setText(R.string.unreleased_error);
+        } else if (!pokemonRegion.isEmpty()){
+            pokemonNote.setText(String.format(regionTemplate, pokemonRegion));
+        } else  {
+            pokemonNote.setVisibility(View.GONE);
+        }
 
         if (PreferencesManager.get().areImagesEnabled()) {
             Picasso.with(this)

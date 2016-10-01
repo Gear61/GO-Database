@@ -1,8 +1,8 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.EggsDBManager;
-import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokedexPokemonDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.PreferencesManager;
 
 import org.json.JSONArray;
@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexanderchiou on 9/21/16.
@@ -42,25 +44,29 @@ public class JSONUtils {
         try {
             JSONObject pokemonListJson = new JSONObject(jsonText);
             JSONArray pokemonArray = pokemonListJson.getJSONArray(POKEMON_KEY);
+
+            List<Pokemon> pokemonList = new ArrayList<>();
             for (int i = 0; i < pokemonArray.length(); i++) {
                 JSONObject pokemonJSON = pokemonArray.getJSONObject(i);
 
-                PokedexPokemonDO pokemonDO = new PokedexPokemonDO();
-                pokemonDO.setPokemonId(i + 1);
-                pokemonDO.setName(pokemonJSON.getString(NAME_KEY));
-                pokemonDO.setType1(normalizeString(pokemonJSON.getString(TYPE_1_KEY)));
-                pokemonDO.setType2(normalizeString(pokemonJSON.getString(TYPE_2_KEY)));
-                pokemonDO.setBaseDefense(pokemonJSON.getInt(BASE_DEFENSE_KEY));
-                pokemonDO.setBaseStamina(pokemonJSON.getInt(BASE_STAMINA_KEY));
-                pokemonDO.setBaseAttack(pokemonJSON.getInt(BASE_ATTACK_KEY));
-                pokemonDO.setMaxCp(pokemonJSON.getInt(MAX_CP_KEY));
-                pokemonDO.setBaseCaptureRate(pokemonJSON.getInt(BASE_CAPTURE_RATE_KEY));
-                pokemonDO.setBaseFleeRate(pokemonJSON.getInt(BASE_FLEE_RATE_KEY));
-                pokemonDO.setCandyToEvolve(pokemonJSON.getInt(CANDY_TO_EVOLVE_KEY));
-                pokemonDO.setAvgCpGain(pokemonJSON.getDouble(AVERAGE_CP_GAIN_KEY));
+                Pokemon pokemon = new Pokemon();
+                pokemon.setId(i + 1);
+                pokemon.setName(pokemonJSON.getString(NAME_KEY));
+                pokemon.setType1(normalizeString(pokemonJSON.getString(TYPE_1_KEY)));
+                pokemon.setType2(normalizeString(pokemonJSON.getString(TYPE_2_KEY)));
+                pokemon.setBaseDefense(pokemonJSON.getInt(BASE_DEFENSE_KEY));
+                pokemon.setBaseStamina(pokemonJSON.getInt(BASE_STAMINA_KEY));
+                pokemon.setBaseAttack(pokemonJSON.getInt(BASE_ATTACK_KEY));
+                pokemon.setMaxCp(pokemonJSON.getInt(MAX_CP_KEY));
+                pokemon.setBaseCaptureRate(pokemonJSON.getInt(BASE_CAPTURE_RATE_KEY));
+                pokemon.setBaseFleeRate(pokemonJSON.getInt(BASE_FLEE_RATE_KEY));
+                pokemon.setCandyToEvolve(pokemonJSON.getInt(CANDY_TO_EVOLVE_KEY));
+                pokemon.setAvgCpGain(pokemonJSON.getDouble(AVERAGE_CP_GAIN_KEY));
 
-                DatabaseManager.get().getPokemonDBManager().addOrUpdatePokemon(pokemonDO);
+                pokemonList.add(pokemon);
             }
+
+            DatabaseManager.get().getPokemonDBManager().updatePokemonList(pokemonList);
         } catch (JSONException ignored) {}
     }
 

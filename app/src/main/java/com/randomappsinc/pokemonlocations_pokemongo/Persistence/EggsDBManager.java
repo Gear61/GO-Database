@@ -13,14 +13,13 @@ import io.realm.Sort;
 
 public class EggsDBManager {
     public static final int CURRENT_EGGS_DB_VERSION = 1;
-    private Realm realm;
 
-    public EggsDBManager(Realm realm) {
-        this.realm = realm;
+    private Realm getRealm() {
+        return Realm.getDefaultInstance();
     }
 
     public void addOrUpdateEgg(final int pokemonId, final int distance, final double chance) {
-        realm.executeTransaction(new Realm.Transaction() {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 EggDO eggDO = new EggDO();
@@ -33,7 +32,7 @@ public class EggsDBManager {
     }
 
     public List<EggDO> getEggs(int distance) {
-        return realm.where(EggDO.class)
+        return getRealm().where(EggDO.class)
                 .equalTo("distance", distance)
                 .findAllSorted("chance", Sort.DESCENDING);
     }

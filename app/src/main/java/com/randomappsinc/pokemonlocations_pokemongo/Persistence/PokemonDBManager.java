@@ -18,17 +18,16 @@ import io.realm.Sort;
 public class PokemonDBManager {
     public static final int CURRENT_POKEMON_DB_VERSION = 1;
     public static final int CURRENT_RANKINGS_DB_VERSION = 1;
-    private Realm realm;
 
-    public PokemonDBManager(Realm realm) {
-        this.realm = realm;
+    private Realm getRealm() {
+        return Realm.getDefaultInstance();
     }
 
     public void setupRankings() {
         if (PreferencesManager.get().getRankingsDBVersion() < CURRENT_RANKINGS_DB_VERSION) {
             List<Pokemon> pokemonList = getPokemon();
 
-            RealmResults<PokedexPokemonDO> pokemonDOs = realm.where(PokedexPokemonDO.class).findAll();
+            RealmResults<PokedexPokemonDO> pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAll();
 
             pokemonDOs = pokemonDOs.sort("maxCp", Sort.DESCENDING);
             pokemonList.get(pokemonDOs.get(0).getPokemonId() - 1).setMaxCpRanking(1);
@@ -108,45 +107,45 @@ public class PokemonDBManager {
                 }
             }
 
-            for (Pokemon pokemon : pokemonList) {
-                addOrUpdatePokemon(pokemon.toPokemonDO());
-            }
+            updatePokemonList(pokemonList);
 
             PreferencesManager.get().updateRankingsDBVersion();
         }
     }
 
-    public void addOrUpdatePokemon(final PokedexPokemonDO pokemonDO) {
-        realm.executeTransaction(new Realm.Transaction() {
+    public void updatePokemonList(final List<Pokemon> pokemonList) {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(pokemonDO);
+                for (Pokemon pokemon : pokemonList) {
+                    realm.copyToRealmOrUpdate(pokemon.toPokemonDO());
+                }
             }
         });
     }
 
     public boolean isValidPokemon(String pokemonName) {
-        return realm.where(PokedexPokemonDO.class)
+        return getRealm().where(PokedexPokemonDO.class)
                 .equalTo("name", pokemonName, Case.INSENSITIVE)
                 .findFirst() != null;
     }
 
     public int getPokemonId(String pokemonName) {
-        return realm.where(PokedexPokemonDO.class)
+        return getRealm().where(PokedexPokemonDO.class)
                 .equalTo("name", pokemonName, Case.INSENSITIVE)
                 .findFirst()
                 .getPokemonId();
     }
 
     public String getPokemonName(int pokemonId) {
-        return realm.where(PokedexPokemonDO.class)
+        return getRealm().where(PokedexPokemonDO.class)
                 .equalTo("pokemonId", pokemonId)
                 .findFirst()
                 .getName();
     }
 
     public Pokemon getPokemon(int pokemonId) {
-        PokedexPokemonDO pokemonDO = realm.where(PokedexPokemonDO.class)
+        PokedexPokemonDO pokemonDO = getRealm().where(PokedexPokemonDO.class)
                 .equalTo("pokemonId", pokemonId)
                 .findFirst();
         return DBConverters.getPokemonFromDO(pokemonDO);
@@ -155,7 +154,7 @@ public class PokemonDBManager {
     public List<String> getPokemonNames() {
         List<String> pokemonNames = new ArrayList<>();
 
-        List<PokedexPokemonDO> pokemonDOs = realm.where(PokedexPokemonDO.class).findAllSorted("name");
+        List<PokedexPokemonDO> pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAllSorted("name");
         for (PokedexPokemonDO pokemonDO : pokemonDOs) {
             pokemonNames.add(pokemonDO.getName());
         }
@@ -166,7 +165,7 @@ public class PokemonDBManager {
     public List<Pokemon> getPokemon() {
         List<Pokemon> pokemon = new ArrayList<>();
 
-        List<PokedexPokemonDO> pokemonDOs = realm.where(PokedexPokemonDO.class).findAllSorted("pokemonId");
+        List<PokedexPokemonDO> pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAllSorted("pokemonId");
         for (PokedexPokemonDO pokemonDO : pokemonDOs) {
             pokemon.add(DBConverters.getPokemonFromDO(pokemonDO));
         }

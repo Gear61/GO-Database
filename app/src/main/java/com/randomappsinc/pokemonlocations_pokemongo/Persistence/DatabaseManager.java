@@ -44,9 +44,12 @@ public class DatabaseManager {
         return instance;
     }
 
-    private Realm realm;
     private PokemonDBManager pokemonDBManager;
     private EggsDBManager eggsDBManager;
+
+    private Realm getRealm() {
+        return Realm.getDefaultInstance();
+    }
 
     private DatabaseManager() {
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(MyApplication.getAppContext())
@@ -54,9 +57,8 @@ public class DatabaseManager {
                 .migration(migration)
                 .build();
         Realm.setDefaultConfiguration(realmConfig);
-        realm = Realm.getDefaultInstance();
-        pokemonDBManager = new PokemonDBManager(realm);
-        eggsDBManager = new EggsDBManager(realm);
+        pokemonDBManager = new PokemonDBManager();
+        eggsDBManager = new EggsDBManager();
     }
 
     private RealmMigration migration = new RealmMigration() {
@@ -222,7 +224,7 @@ public class DatabaseManager {
     }
 
     public void updateVote(final VoteDO vote) {
-        realm.executeTransaction(new Realm.Transaction() {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(vote);
@@ -235,7 +237,7 @@ public class DatabaseManager {
             return 0;
         }
 
-        VoteDO voteDO = realm.where(VoteDO.class)
+        VoteDO voteDO = getRealm().where(VoteDO.class)
                 .equalTo("placeId", place.getPlaceId())
                 .findFirst();
         if (voteDO == null) {
@@ -248,7 +250,7 @@ public class DatabaseManager {
     // Favorites
     public List<PokeLocation> getFavorites() {
         List<PokeLocation> favorites = new ArrayList<>();
-        List<PokeLocationDO> pokeLocationDOs = realm.where(PokeLocationDO.class).findAll();
+        List<PokeLocationDO> pokeLocationDOs = getRealm().where(PokeLocationDO.class).findAll();
         for (PokeLocationDO pokeLocationDO : pokeLocationDOs) {
             favorites.add(DBConverters.getLocationFromDO(pokeLocationDO));
         }
@@ -256,13 +258,13 @@ public class DatabaseManager {
     }
 
     public boolean isLocationFavorited(PokeLocation pokeLocation) {
-        return pokeLocation != null && realm.where(PokeLocationDO.class)
+        return pokeLocation != null && getRealm().where(PokeLocationDO.class)
                 .equalTo("placeId", pokeLocation.getPlaceId())
                 .findFirst() != null;
     }
 
     public void unfavoriteLocation(final PokeLocation pokeLocation) {
-        realm.executeTransaction(new Realm.Transaction() {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(PokeLocationDO.class)
@@ -279,7 +281,7 @@ public class DatabaseManager {
             processLike(pokeLocation);
         }
 
-        realm.executeTransaction(new Realm.Transaction() {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(pokeLocation.toPokeLocationDO());
@@ -289,7 +291,7 @@ public class DatabaseManager {
 
     public List<String> getFavoriteIds() {
         List<String> placeIds = new ArrayList<>();
-        List<PokeLocationDO> favorites = realm.where(PokeLocationDO.class).findAll();
+        List<PokeLocationDO> favorites = getRealm().where(PokeLocationDO.class).findAll();
         for (PokeLocationDO locationDO : favorites) {
             placeIds.add(locationDO.getPlaceId());
         }
@@ -297,7 +299,7 @@ public class DatabaseManager {
     }
 
     public PokeLocation getFavorite(String placeId) {
-        PokeLocationDO pokeLocationDO = realm.where(PokeLocationDO.class)
+        PokeLocationDO pokeLocationDO = getRealm().where(PokeLocationDO.class)
                 .equalTo("placeId", placeId)
                 .findFirst();
         return pokeLocationDO == null ? null : DBConverters.getLocationFromDO(pokeLocationDO);
@@ -305,12 +307,12 @@ public class DatabaseManager {
 
     // Pokemon Findings
     public List<PokeFindingDO> getFindings () {
-        return realm.where(PokeFindingDO.class).findAll()
+        return getRealm().where(PokeFindingDO.class).findAll()
                 .sort("reportTime", Sort.DESCENDING);
     }
 
     public void addPokeFinding(final PokeFindingDO pokeFindingDO) {
-        realm.executeTransaction(new Realm.Transaction() {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealm(pokeFindingDO);
@@ -319,7 +321,7 @@ public class DatabaseManager {
     }
 
     public void updatePokeFinding(final PokeFindingDO pokeFindingDO, final String newFrequency) {
-        realm.executeTransaction(new Realm.Transaction() {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 PokeFindingDO finding = getFinding(pokeFindingDO.getPokemonId(), pokeFindingDO.getPlaceId());
@@ -332,7 +334,7 @@ public class DatabaseManager {
     }
 
     public PokeFindingDO getFinding(int pokemonId, String placeId) {
-        return realm.where(PokeFindingDO.class)
+        return getRealm().where(PokeFindingDO.class)
                 .equalTo("pokemonId", pokemonId)
                 .equalTo("placeId", placeId)
                 .findFirst();
@@ -342,7 +344,7 @@ public class DatabaseManager {
     public List<String> getMyLocations() {
         List<String> locationNames = new ArrayList<>();
 
-        RealmResults<SavedLocationDO> locationDOs = realm.where(SavedLocationDO.class).findAll();
+        RealmResults<SavedLocationDO> locationDOs = getRealm().where(SavedLocationDO.class).findAll();
         for (SavedLocationDO locationDO : locationDOs) {
             locationNames.add(locationDO.getDisplayName());
         }
@@ -354,7 +356,7 @@ public class DatabaseManager {
 
     public void addMyLocation(final SavedLocationDO locationDO) {
         if (!alreadyHasLocation(locationDO.getDisplayName())) {
-            realm.executeTransaction(new Realm.Transaction() {
+            getRealm().executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     realm.copyToRealm(locationDO);
@@ -368,7 +370,7 @@ public class DatabaseManager {
             PreferencesManager.get().resetCurrentLocation();
         }
 
-        realm.executeTransaction(new Realm.Transaction() {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(SavedLocationDO.class)
@@ -384,7 +386,7 @@ public class DatabaseManager {
             PreferencesManager.get().setCurrentLocation(locationDO.getDisplayName());
         }
 
-        realm.executeTransaction(new Realm.Transaction() {
+        getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 SavedLocationDO savedLocationDO = realm.where(SavedLocationDO.class)
@@ -418,13 +420,13 @@ public class DatabaseManager {
     }
 
     public boolean alreadyHasLocation(String displayName) {
-        return realm.where(SavedLocationDO.class)
+        return getRealm().where(SavedLocationDO.class)
                 .equalTo("displayName", displayName)
                 .findFirst() != null;
     }
 
     public SavedLocationDO getLocation(String displayName) {
-        return realm.where(SavedLocationDO.class)
+        return getRealm().where(SavedLocationDO.class)
                 .equalTo("displayName", displayName)
                 .findFirst();
     }

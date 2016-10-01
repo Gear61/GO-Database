@@ -3,6 +3,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.Activities;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -55,9 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PokemonServer.get().initialize();
-        JSONUtils.updateEggsDB();
-        DatabaseManager.get().getPokemonDBManager().setupRankings();
+        new SetUpDBTask().execute();
 
         // Kill activity if it's not on top of the stack due to Samsung bug
         if (!isTaskRoot() && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
@@ -88,6 +87,16 @@ public class MainActivity extends AppCompatActivity implements NavDrawerFragment
             showTutorial();
         } else if (PreferencesManager.get().shouldAskToRate()) {
             showPleaseRateDialog();
+        }
+    }
+
+    private class SetUpDBTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            PokemonServer.get().initialize();
+            JSONUtils.updateEggsDB();
+            DatabaseManager.get().getPokemonDBManager().setupRankings();
+            return null;
         }
     }
 

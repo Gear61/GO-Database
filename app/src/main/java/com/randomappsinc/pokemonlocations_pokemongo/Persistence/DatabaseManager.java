@@ -111,6 +111,18 @@ public class DatabaseManager {
                         .addPrimaryKey("pokemonId")
                         .addField("distance", int.class)
                         .addField("chance", double.class);
+                oldVersion++;
+            }
+
+            if (oldVersion == 5) {
+                schema.get("PokedexPokemonDO")
+                        .addField("maxCpRanking", int.class)
+                        .addField("attackRanking", int.class)
+                        .addField("defenseRanking", int.class)
+                        .addField("staminaRanking", int.class)
+                        .addField("captureRateRanking", int.class)
+                        .addField("fleeRateRanking", int.class)
+                        .addField("cpGainRanking", int.class);
             }
         }
     };

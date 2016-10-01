@@ -23,6 +23,13 @@ public class Pokemon implements Parcelable {
     private int baseFleeRate;
     private int candyToEvolve;
     private double avgCpGain;
+    private int maxCpRanking;
+    private int attackRanking;
+    private int defenseRanking;
+    private int staminaRanking;
+    private int captureRateRanking;
+    private int fleeRateRanking;
+    private int cpGainRanking;
 
     public Pokemon() {}
 
@@ -122,8 +129,65 @@ public class Pokemon implements Parcelable {
         this.avgCpGain = avgCpGain;
     }
 
+    public int getMaxCpRanking() {
+        return maxCpRanking;
+    }
+
+    public void setMaxCpRanking(int maxCpRanking) {
+        this.maxCpRanking = maxCpRanking;
+    }
+
+    public int getAttackRanking() {
+        return attackRanking;
+    }
+
+    public void setAttackRanking(int attackRanking) {
+        this.attackRanking = attackRanking;
+    }
+
+    public int getDefenseRanking() {
+        return defenseRanking;
+    }
+
+    public void setDefenseRanking(int defenseRanking) {
+        this.defenseRanking = defenseRanking;
+    }
+
+    public int getStaminaRanking() {
+        return staminaRanking;
+    }
+
+    public void setStaminaRanking(int staminaRanking) {
+        this.staminaRanking = staminaRanking;
+    }
+
+    public int getCaptureRateRanking() {
+        return captureRateRanking;
+    }
+
+    public void setCaptureRateRanking(int captureRateRanking) {
+        this.captureRateRanking = captureRateRanking;
+    }
+
+    public int getFleeRateRanking() {
+        return fleeRateRanking;
+    }
+
+    public void setFleeRateRanking(int fleeRateRanking) {
+        this.fleeRateRanking = fleeRateRanking;
+    }
+
+    public int getCpGainRanking() {
+        return cpGainRanking;
+    }
+
+    public void setCpGainRanking(int cpGainRanking) {
+        this.cpGainRanking = cpGainRanking;
+    }
+
     public PokedexPokemonDO toPokemonDO() {
         PokedexPokemonDO pokemonDO = new PokedexPokemonDO();
+
         pokemonDO.setPokemonId(id);
         pokemonDO.setName(name);
         pokemonDO.setType1(type1);
@@ -136,6 +200,14 @@ public class Pokemon implements Parcelable {
         pokemonDO.setBaseFleeRate(baseFleeRate);
         pokemonDO.setCandyToEvolve(candyToEvolve);
         pokemonDO.setAvgCpGain(avgCpGain);
+        pokemonDO.setMaxCpRanking(maxCpRanking);
+        pokemonDO.setAttackRanking(attackRanking);
+        pokemonDO.setDefenseRanking(defenseRanking);
+        pokemonDO.setStaminaRanking(staminaRanking);
+        pokemonDO.setCaptureRateRanking(captureRateRanking);
+        pokemonDO.setFleeRateRanking(fleeRateRanking);
+        pokemonDO.setCpGainRanking(cpGainRanking);
+
         return pokemonDO;
     }
 
@@ -152,6 +224,13 @@ public class Pokemon implements Parcelable {
         baseFleeRate = in.readInt();
         candyToEvolve = in.readInt();
         avgCpGain = in.readDouble();
+        maxCpRanking = in.readInt();
+        attackRanking = in.readInt();
+        defenseRanking = in.readInt();
+        staminaRanking = in.readInt();
+        captureRateRanking = in.readInt();
+        fleeRateRanking = in.readInt();
+        cpGainRanking = in.readInt();
     }
 
     @Override
@@ -173,6 +252,13 @@ public class Pokemon implements Parcelable {
         dest.writeInt(baseFleeRate);
         dest.writeInt(candyToEvolve);
         dest.writeDouble(avgCpGain);
+        dest.writeInt(maxCpRanking);
+        dest.writeInt(attackRanking);
+        dest.writeInt(defenseRanking);
+        dest.writeInt(staminaRanking);
+        dest.writeInt(captureRateRanking);
+        dest.writeInt(fleeRateRanking);
+        dest.writeInt(cpGainRanking);
     }
 
     @SuppressWarnings("unused")

@@ -60,6 +60,13 @@ public class DBConverters {
         pokemon.setBaseFleeRate(pokemonDO.getBaseFleeRate());
         pokemon.setCandyToEvolve(pokemonDO.getCandyToEvolve());
         pokemon.setAvgCpGain(pokemonDO.getAvgCpGain());
+        pokemon.setMaxCpRanking(pokemonDO.getMaxCpRanking());
+        pokemon.setAttackRanking(pokemonDO.getAttackRanking());
+        pokemon.setDefenseRanking(pokemonDO.getDefenseRanking());
+        pokemon.setStaminaRanking(pokemonDO.getStaminaRanking());
+        pokemon.setCaptureRateRanking(pokemonDO.getCaptureRateRanking());
+        pokemon.setFleeRateRanking(pokemonDO.getFleeRateRanking());
+        pokemon.setCpGainRanking(pokemonDO.getCpGainRanking());
         return pokemon;
     }
 }

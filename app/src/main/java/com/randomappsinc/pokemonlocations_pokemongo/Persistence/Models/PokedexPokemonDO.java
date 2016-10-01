@@ -22,6 +22,13 @@ public class PokedexPokemonDO extends RealmObject {
     private int baseFleeRate;
     private int candyToEvolve;
     private double avgCpGain;
+    private int maxCpRanking;
+    private int attackRanking;
+    private int defenseRanking;
+    private int staminaRanking;
+    private int captureRateRanking;
+    private int fleeRateRanking;
+    private int cpGainRanking;
 
     public int getPokemonId() {
         return pokemonId;
@@ -117,5 +124,61 @@ public class PokedexPokemonDO extends RealmObject {
 
     public void setAvgCpGain(double avgCpGain) {
         this.avgCpGain = avgCpGain;
+    }
+
+    public int getMaxCpRanking() {
+        return maxCpRanking;
+    }
+
+    public void setMaxCpRanking(int maxCpRanking) {
+        this.maxCpRanking = maxCpRanking;
+    }
+
+    public int getAttackRanking() {
+        return attackRanking;
+    }
+
+    public void setAttackRanking(int attackRanking) {
+        this.attackRanking = attackRanking;
+    }
+
+    public int getDefenseRanking() {
+        return defenseRanking;
+    }
+
+    public void setDefenseRanking(int defenseRanking) {
+        this.defenseRanking = defenseRanking;
+    }
+
+    public int getStaminaRanking() {
+        return staminaRanking;
+    }
+
+    public void setStaminaRanking(int staminaRanking) {
+        this.staminaRanking = staminaRanking;
+    }
+
+    public int getCaptureRateRanking() {
+        return captureRateRanking;
+    }
+
+    public void setCaptureRateRanking(int captureRateRanking) {
+        this.captureRateRanking = captureRateRanking;
+    }
+
+    public int getFleeRateRanking() {
+        return fleeRateRanking;
+    }
+
+    public void setFleeRateRanking(int fleeRateRanking) {
+        this.fleeRateRanking = fleeRateRanking;
+    }
+
+    public int getCpGainRanking() {
+        return cpGainRanking;
+    }
+
+    public void setCpGainRanking(int cpGainRanking) {
+        this.cpGainRanking = cpGainRanking;
     }
 }

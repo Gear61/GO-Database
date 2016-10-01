@@ -66,7 +66,6 @@ public class DBConverters {
         pokemon.setStaminaRanking(pokemonDO.getStaminaRanking());
         pokemon.setCaptureRateRanking(pokemonDO.getCaptureRateRanking());
         pokemon.setFleeRateRanking(pokemonDO.getFleeRateRanking());
-        pokemon.setCpGainRanking(pokemonDO.getCpGainRanking());
         return pokemon;
     }
 }

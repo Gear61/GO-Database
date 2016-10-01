@@ -29,7 +29,6 @@ public class Pokemon implements Parcelable {
     private int staminaRanking;
     private int captureRateRanking;
     private int fleeRateRanking;
-    private int cpGainRanking;
 
     public Pokemon() {}
 
@@ -177,14 +176,6 @@ public class Pokemon implements Parcelable {
         this.fleeRateRanking = fleeRateRanking;
     }
 
-    public int getCpGainRanking() {
-        return cpGainRanking;
-    }
-
-    public void setCpGainRanking(int cpGainRanking) {
-        this.cpGainRanking = cpGainRanking;
-    }
-
     public PokedexPokemonDO toPokemonDO() {
         PokedexPokemonDO pokemonDO = new PokedexPokemonDO();
 
@@ -206,7 +197,6 @@ public class Pokemon implements Parcelable {
         pokemonDO.setStaminaRanking(staminaRanking);
         pokemonDO.setCaptureRateRanking(captureRateRanking);
         pokemonDO.setFleeRateRanking(fleeRateRanking);
-        pokemonDO.setCpGainRanking(cpGainRanking);
 
         return pokemonDO;
     }
@@ -230,7 +220,6 @@ public class Pokemon implements Parcelable {
         staminaRanking = in.readInt();
         captureRateRanking = in.readInt();
         fleeRateRanking = in.readInt();
-        cpGainRanking = in.readInt();
     }
 
     @Override
@@ -258,7 +247,6 @@ public class Pokemon implements Parcelable {
         dest.writeInt(staminaRanking);
         dest.writeInt(captureRateRanking);
         dest.writeInt(fleeRateRanking);
-        dest.writeInt(cpGainRanking);
     }
 
     @SuppressWarnings("unused")

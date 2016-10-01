@@ -28,7 +28,6 @@ public class PokedexPokemonDO extends RealmObject {
     private int staminaRanking;
     private int captureRateRanking;
     private int fleeRateRanking;
-    private int cpGainRanking;
 
     public int getPokemonId() {
         return pokemonId;
@@ -172,13 +171,5 @@ public class PokedexPokemonDO extends RealmObject {
 
     public void setFleeRateRanking(int fleeRateRanking) {
         this.fleeRateRanking = fleeRateRanking;
-    }
-
-    public int getCpGainRanking() {
-        return cpGainRanking;
-    }
-
-    public void setCpGainRanking(int cpGainRanking) {
-        this.cpGainRanking = cpGainRanking;
     }
 }

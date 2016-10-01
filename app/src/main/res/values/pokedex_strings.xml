@@ -19,4 +19,6 @@
     <string name="australasia">Australasia</string>
     <string name="europe">Europe</string>
     <string name="asia">Asia</string>
+
+    <string name="rankings">Rankings</string>
 </resources>

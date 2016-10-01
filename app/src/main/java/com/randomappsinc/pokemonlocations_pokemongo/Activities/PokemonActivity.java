@@ -36,6 +36,13 @@ public class PokemonActivity extends StandardActivity {
     @Bind(R.id.candy_to_evolve) TextView candyToEvolve;
     @Bind(R.id.average_cp_gain) TextView cpGain;
 
+    @Bind(R.id.max_cp_ranking) TextView maxCpRanking;
+    @Bind(R.id.base_attack_ranking) TextView attackRanking;
+    @Bind(R.id.base_defense_ranking) TextView defenseRanking;
+    @Bind(R.id.base_stamina_ranking) TextView staminaRanking;
+    @Bind(R.id.base_capture_rate_ranking) TextView captureRateRanking;
+    @Bind(R.id.base_flee_rate_ranking) TextView fleeRateRanking;
+
     @BindString(R.string.percentage) String percentage;
     @BindString(R.string.region_exclusive) String regionTemplate;
 
@@ -93,5 +100,16 @@ public class PokemonActivity extends StandardActivity {
         }
 
         cpGain.setText(String.valueOf(pokemon.getAvgCpGain()));
+
+        maxCpRanking.setText(getRankText(pokemon.getMaxCpRanking()));
+        attackRanking.setText(getRankText(pokemon.getAttackRanking()));
+        defenseRanking.setText(getRankText(pokemon.getDefenseRanking()));
+        staminaRanking.setText(getRankText(pokemon.getStaminaRanking()));
+        captureRateRanking.setText(getRankText(pokemon.getCaptureRateRanking()));
+        fleeRateRanking.setText(getRankText(pokemon.getFleeRateRanking()));
+    }
+
+    private String getRankText(int ranking) {
+        return "#" + String.valueOf(ranking);
     }
 }

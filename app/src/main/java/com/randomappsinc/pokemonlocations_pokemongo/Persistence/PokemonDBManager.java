@@ -30,7 +30,7 @@ public class PokemonDBManager {
 
             RealmResults<PokedexPokemonDO> pokemonDOs = realm.where(PokedexPokemonDO.class).findAll();
 
-            pokemonDOs.sort("maxCp", Sort.DESCENDING);
+            pokemonDOs = pokemonDOs.sort("maxCp", Sort.DESCENDING);
             pokemonList.get(pokemonDOs.get(0).getPokemonId() - 1).setMaxCpRanking(1);
             for (int i = 1; i < pokemonDOs.size(); i++) {
                 int previousStat = pokemonDOs.get(i - 1).getMaxCp();
@@ -43,7 +43,7 @@ public class PokemonDBManager {
                 }
             }
 
-            pokemonDOs.sort("baseAttack", Sort.DESCENDING);
+            pokemonDOs = pokemonDOs.sort("baseAttack", Sort.DESCENDING);
             pokemonList.get(pokemonDOs.get(0).getPokemonId() - 1).setAttackRanking(1);
             for (int i = 1; i < pokemonDOs.size(); i++) {
                 int previousStat = pokemonDOs.get(i - 1).getBaseAttack();
@@ -56,7 +56,7 @@ public class PokemonDBManager {
                 }
             }
 
-            pokemonDOs.sort("baseDefense", Sort.DESCENDING);
+            pokemonDOs = pokemonDOs.sort("baseDefense", Sort.DESCENDING);
             pokemonList.get(pokemonDOs.get(0).getPokemonId() - 1).setDefenseRanking(1);
             for (int i = 1; i < pokemonDOs.size(); i++) {
                 int previousStat = pokemonDOs.get(i - 1).getBaseDefense();
@@ -69,7 +69,7 @@ public class PokemonDBManager {
                 }
             }
 
-            pokemonDOs.sort("baseStamina", Sort.DESCENDING);
+            pokemonDOs = pokemonDOs.sort("baseStamina", Sort.DESCENDING);
             pokemonList.get(pokemonDOs.get(0).getPokemonId() - 1).setStaminaRanking(1);
             for (int i = 1; i < pokemonDOs.size(); i++) {
                 int previousStat = pokemonDOs.get(i - 1).getBaseStamina();
@@ -82,7 +82,7 @@ public class PokemonDBManager {
                 }
             }
 
-            pokemonDOs.sort("baseCaptureRate", Sort.DESCENDING);
+            pokemonDOs = pokemonDOs.sort("baseCaptureRate", Sort.DESCENDING);
             pokemonList.get(pokemonDOs.get(0).getPokemonId() - 1).setCaptureRateRanking(1);
             for (int i = 1; i < pokemonDOs.size(); i++) {
                 int previousStat = pokemonDOs.get(i - 1).getBaseCaptureRate();
@@ -95,7 +95,7 @@ public class PokemonDBManager {
                 }
             }
 
-            pokemonDOs.sort("baseFleeRate", Sort.DESCENDING);
+            pokemonDOs = pokemonDOs.sort("baseFleeRate", Sort.DESCENDING);
             pokemonList.get(pokemonDOs.get(0).getPokemonId() - 1).setFleeRateRanking(1);
             for (int i = 1; i < pokemonDOs.size(); i++) {
                 int previousStat = pokemonDOs.get(i - 1).getBaseFleeRate();
@@ -105,19 +105,6 @@ public class PokemonDBManager {
                     pokemonList.get(pokemonDOs.get(i).getPokemonId() - 1).setFleeRateRanking(previousRanking);
                 } else {
                     pokemonList.get(pokemonDOs.get(i).getPokemonId() - 1).setFleeRateRanking(i + 1);
-                }
-            }
-
-            pokemonDOs.sort("avgCpGain", Sort.DESCENDING);
-            pokemonList.get(pokemonDOs.get(0).getPokemonId() - 1).setCpGainRanking(1);
-            for (int i = 1; i < pokemonDOs.size(); i++) {
-                double previousStat = pokemonDOs.get(i - 1).getAvgCpGain();
-                double currentStat = pokemonDOs.get(i).getAvgCpGain();
-                if (previousStat == currentStat) {
-                    int previousRanking = pokemonList.get(pokemonDOs.get(i - 1).getPokemonId() - 1).getCpGainRanking();
-                    pokemonList.get(pokemonDOs.get(i).getPokemonId() - 1).setCpGainRanking(previousRanking);
-                } else {
-                    pokemonList.get(pokemonDOs.get(i).getPokemonId() - 1).setCpGainRanking(i + 1);
                 }
             }
 

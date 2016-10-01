@@ -162,5 +162,96 @@
                 </FrameLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="8dp"
+            style="@style/stat_card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="@string/rankings"
+                    android:padding="12dp"
+                    style="@style/stat_title"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_200"/>
+
+                <FrameLayout style="@style/stat_container">
+                    <TextView
+                        android:text="@string/max_cp"
+                        style="@style/stat_header"/>
+
+                    <TextView
+                        android:id="@+id/max_cp_ranking"
+                        style="@style/pokemon_stat"/>
+                </FrameLayout>
+
+                <View style="@style/stat_divider"/>
+
+                <FrameLayout style="@style/stat_container">
+                    <TextView
+                        android:text="@string/base_attack"
+                        style="@style/stat_header"/>
+
+                    <TextView
+                        android:id="@+id/base_attack_ranking"
+                        style="@style/pokemon_stat"/>
+                </FrameLayout>
+
+                <View style="@style/stat_divider"/>
+
+                <FrameLayout style="@style/stat_container">
+                    <TextView
+                        android:text="@string/base_defense"
+                        style="@style/stat_header"/>
+
+                    <TextView
+                        android:id="@+id/base_defense_ranking"
+                        style="@style/pokemon_stat"/>
+                </FrameLayout>
+
+                <View style="@style/stat_divider"/>
+
+                <FrameLayout style="@style/stat_container">
+                    <TextView
+                        android:text="@string/base_stamina"
+                        style="@style/stat_header"/>
+
+                    <TextView
+                        android:id="@+id/base_stamina_ranking"
+                        style="@style/pokemon_stat"/>
+                </FrameLayout>
+
+                <View style="@style/stat_divider"/>
+
+                <FrameLayout style="@style/stat_container">
+                    <TextView
+                        android:text="@string/base_capture_rate"
+                        style="@style/stat_header"/>
+
+                    <TextView
+                        android:id="@+id/base_capture_rate_ranking"
+                        style="@style/pokemon_stat"/>
+                </FrameLayout>
+
+                <View style="@style/stat_divider"/>
+
+                <FrameLayout style="@style/stat_container">
+                    <TextView
+                        android:text="@string/base_flee_rate"
+                        style="@style/stat_header"/>
+
+                    <TextView
+                        android:id="@+id/base_flee_rate_ranking"
+                        style="@style/pokemon_stat"/>
+                </FrameLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 </ScrollView>

@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -66,9 +68,129 @@ public class JSONUtils {
                 pokemonList.add(pokemon);
             }
 
+            Collections.sort(pokemonList, CP_SORTER);
+            pokemonList.get(0).setMaxCpRanking(1);
+            for (int i = 1; i < pokemonList.size(); i++) {
+                int previousStat = pokemonList.get(i - 1).getMaxCp();
+                int currentStat = pokemonList.get(i).getMaxCp();
+                if (previousStat == currentStat) {
+                    int previousRanking = pokemonList.get(i - 1).getMaxCpRanking();
+                    pokemonList.get(i).setMaxCpRanking(previousRanking);
+                } else {
+                    pokemonList.get(i).setMaxCpRanking(i + 1);
+                }
+            }
+
+            Collections.sort(pokemonList, ATTACK_SORTER);
+            pokemonList.get(0).setAttackRanking(1);
+            for (int i = 1; i < pokemonList.size(); i++) {
+                int previousStat = pokemonList.get(i - 1).getBaseAttack();
+                int currentStat = pokemonList.get(i).getBaseAttack();
+                if (previousStat == currentStat) {
+                    int previousRanking = pokemonList.get(i - 1).getAttackRanking();
+                    pokemonList.get(i).setAttackRanking(previousRanking);
+                } else {
+                    pokemonList.get(i).setAttackRanking(i + 1);
+                }
+            }
+
+            Collections.sort(pokemonList, DEFENSE_SORTER);
+            pokemonList.get(0).setDefenseRanking(1);
+            for (int i = 1; i < pokemonList.size(); i++) {
+                int previousStat = pokemonList.get(i - 1).getBaseDefense();
+                int currentStat = pokemonList.get(i).getBaseDefense();
+                if (previousStat == currentStat) {
+                    int previousRanking = pokemonList.get(i - 1).getDefenseRanking();
+                    pokemonList.get(i).setDefenseRanking(previousRanking);
+                } else {
+                    pokemonList.get(i).setDefenseRanking(i + 1);
+                }
+            }
+
+            Collections.sort(pokemonList, STAMINA_SORTER);
+            pokemonList.get(0).setStaminaRanking(1);
+            for (int i = 1; i < pokemonList.size(); i++) {
+                int previousStat = pokemonList.get(i - 1).getBaseStamina();
+                int currentStat = pokemonList.get(i).getBaseStamina();
+                if (previousStat == currentStat) {
+                    int previousRanking = pokemonList.get(i - 1).getStaminaRanking();
+                    pokemonList.get(i).setStaminaRanking(previousRanking);
+                } else {
+                    pokemonList.get(i).setStaminaRanking(i + 1);
+                }
+            }
+
+            Collections.sort(pokemonList, CATCH_RATE_SORTER);
+            pokemonList.get(0).setCaptureRateRanking(1);
+            for (int i = 1; i < pokemonList.size(); i++) {
+                int previousStat = pokemonList.get(i - 1).getBaseCaptureRate();
+                int currentStat = pokemonList.get(i).getBaseCaptureRate();
+                if (previousStat == currentStat) {
+                    int previousRanking = pokemonList.get(i - 1).getCaptureRateRanking();
+                    pokemonList.get(i).setCaptureRateRanking(previousRanking);
+                } else {
+                    pokemonList.get(i).setCaptureRateRanking(i + 1);
+                }
+            }
+
+            Collections.sort(pokemonList, FLEE_RATE_SORTER);
+            pokemonList.get(0).setFleeRateRanking(1);
+            for (int i = 1; i < pokemonList.size(); i++) {
+                int previousStat = pokemonList.get(i - 1).getBaseFleeRate();
+                int currentStat = pokemonList.get(i).getBaseFleeRate();
+                if (previousStat == currentStat) {
+                    int previousRanking = pokemonList.get(i - 1).getFleeRateRanking();
+                    pokemonList.get(i).setFleeRateRanking(previousRanking);
+                } else {
+                    pokemonList.get(i).setFleeRateRanking(i + 1);
+                }
+            }
+
             DatabaseManager.get().getPokemonDBManager().updatePokemonList(pokemonList);
         } catch (JSONException ignored) {}
     }
+
+    private static Comparator<Pokemon> CP_SORTER = new Comparator<Pokemon>() {
+        @Override
+        public int compare(Pokemon first, Pokemon second) {
+            return second.getMaxCp() - first.getMaxCp();
+        }
+    };
+
+    private static Comparator<Pokemon> ATTACK_SORTER = new Comparator<Pokemon>() {
+        @Override
+        public int compare(Pokemon first, Pokemon second) {
+            return second.getBaseAttack() - first.getBaseAttack();
+        }
+    };
+
+    private static Comparator<Pokemon> DEFENSE_SORTER = new Comparator<Pokemon>() {
+        @Override
+        public int compare(Pokemon first, Pokemon second) {
+            return second.getBaseDefense() - first.getBaseDefense();
+        }
+    };
+
+    private static Comparator<Pokemon> STAMINA_SORTER = new Comparator<Pokemon>() {
+        @Override
+        public int compare(Pokemon first, Pokemon second) {
+            return second.getBaseStamina() - first.getBaseStamina();
+        }
+    };
+
+    private static Comparator<Pokemon> CATCH_RATE_SORTER = new Comparator<Pokemon>() {
+        @Override
+        public int compare(Pokemon first, Pokemon second) {
+            return second.getBaseCaptureRate() - first.getBaseCaptureRate();
+        }
+    };
+
+    private static Comparator<Pokemon> FLEE_RATE_SORTER = new Comparator<Pokemon>() {
+        @Override
+        public int compare(Pokemon first, Pokemon second) {
+            return second.getBaseFleeRate() - first.getBaseFleeRate();
+        }
+    };
 
     public static void updateEggsDB() {
         if (PreferencesManager.get().getEggsDBVersion() < EggsDBManager.CURRENT_EGGS_DB_VERSION) {

@@ -23,7 +23,6 @@ public class PreferencesManager {
     private static final String TEAM_KEY = "team";
     private static final String POKEMON_DB_VERSION_KEY = "pokemonDBVersion";
     private static final String EGGS_DB_VERSION_KEY = "eggsDBVersion";
-    private static final String RANKINGS_DB_VERSION_KEY = "rankingsDBVersion";
 
     private static PreferencesManager instance;
 
@@ -136,13 +135,5 @@ public class PreferencesManager {
 
     public void updateEggsDBVersion() {
         prefs.edit().putInt(EGGS_DB_VERSION_KEY, EggsDBManager.CURRENT_EGGS_DB_VERSION).apply();
-    }
-
-    public int getRankingsDBVersion() {
-        return prefs.getInt(RANKINGS_DB_VERSION_KEY, 0);
-    }
-
-    public void updateRankingsDBVersion() {
-        prefs.edit().putInt(RANKINGS_DB_VERSION_KEY, PokemonDBManager.CURRENT_RANKINGS_DB_VERSION).apply();
     }
 }

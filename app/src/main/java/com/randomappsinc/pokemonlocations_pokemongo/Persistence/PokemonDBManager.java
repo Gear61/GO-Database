@@ -79,4 +79,37 @@ public class PokemonDBManager {
 
         return pokemon;
     }
+
+    public List<Pokemon> getPokemonRanked(int sortOption) {
+        List<Pokemon> pokemon = new ArrayList<>();
+
+        List<PokedexPokemonDO> pokemonDOs = new ArrayList<>();
+
+        switch (sortOption) {
+            case 0:
+                pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAllSorted("maxCpRanking");
+                break;
+            case 1:
+                pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAllSorted("attackRanking");
+                break;
+            case 2:
+                pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAllSorted("defenseRanking");
+                break;
+            case 3:
+                pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAllSorted("staminaRanking");
+                break;
+            case 4:
+                pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAllSorted("captureRateRanking");
+                break;
+            case 5:
+                pokemonDOs = getRealm().where(PokedexPokemonDO.class).findAllSorted("fleeRateRanking");
+                break;
+        }
+
+        for (PokedexPokemonDO pokemonDO : pokemonDOs) {
+            pokemon.add(DBConverters.getPokemonFromDO(pokemonDO));
+        }
+
+        return pokemon;
+    }
 }

@@ -27,6 +27,7 @@
         <item>@string/tools</item>
         <item>@string/pokedex</item>
         <item>@string/egg_hatches</item>
+        <item>@string/rankings</item>
         <item>@string/settings</item>
     </string-array>
 
@@ -34,6 +35,7 @@
     <string name="journal_icon">{ion-ios-bookmarks}</string>
     <string name="pokedex_icon">{ion-calculator}</string>
     <string name="egg_icon">{ion-egg}</string>
+    <string name="rankings_icon">{fa-list-ol}</string>
     <string name="settings_icon">{ion-android-settings}</string>
     <string-array name="nav_drawer_icons">
         <item></item>
@@ -43,6 +45,7 @@
         <item></item>
         <item>@string/pokedex_icon</item>
         <item>@string/egg_icon</item>
+        <item>@string/rankings_icon</item>
         <item>@string/settings_icon</item>
     </string-array>
 

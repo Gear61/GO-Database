@@ -9,6 +9,15 @@
     <string name="candy_to_evolve">Candy to Evolve</string>
     <string name="average_cp_gain">Average CP Gain</string>
 
+    <string-array name="rankings_options">
+        <item>@string/max_cp</item>
+        <item>@string/base_attack</item>
+        <item>@string/base_defense</item>
+        <item>@string/base_stamina</item>
+        <item>@string/base_capture_rate</item>
+        <item>@string/base_flee_rate</item>
+    </string-array>
+
     <string name="percentage">%d%%</string>
     <string name="not_applicable">N/A</string>
 

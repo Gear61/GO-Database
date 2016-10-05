@@ -4,19 +4,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="10dp">
+    android:paddingTop="8dp"
+    android:background="@color/white">
 
-    <TextView
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/sort_options"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/credits_intro"
-        android:textColor="@color/dark_gray"
-        android:textSize="18sp"/>
+        android:layout_gravity="center_horizontal"
+        android:entries="@array/rankings_options"
+        style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
     <ListView
-        android:id="@+id/artists"
-        android:layout_marginTop="5dp"
+        android:id="@+id/pokemon_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

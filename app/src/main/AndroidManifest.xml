@@ -108,5 +108,11 @@
             android:label="@string/egg_hatches"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".Activities.RankingsActivity"
+            android:label="@string/rankings"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

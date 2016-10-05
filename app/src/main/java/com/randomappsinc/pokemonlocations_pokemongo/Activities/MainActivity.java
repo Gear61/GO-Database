@@ -174,6 +174,9 @@ public class MainActivity extends AppCompatActivity implements NavDrawerFragment
                 intent = new Intent(this, EggHatchesActivity.class);
                 break;
             case 7:
+                intent = new Intent(this, RankingsActivity.class);
+                break;
+            case 8:
                 intent = new Intent(this, SettingsActivity.class);
                 break;
         }

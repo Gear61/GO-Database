@@ -42,7 +42,7 @@ public class PreferencesManager {
     public boolean shouldAskToRate() {
         int numAppOpens = prefs.getInt(NUM_APP_OPENS_KEY, 0) + 1;
         prefs.edit().putInt(NUM_APP_OPENS_KEY, numAppOpens).apply();
-        return numAppOpens == 5;
+        return numAppOpens == 3;
     }
 
     public boolean shouldShowShareTutorial() {

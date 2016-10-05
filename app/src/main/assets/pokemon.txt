@@ -1787,7 +1787,7 @@
          "base_flee_rate": 9,
          "max_cp": 1119,
          "candy_to_evolve": 50,
-         "base_attack": 0,
+         "base_attack": 132,
          "type1": "water",
          "name": "Omanyte",
          "type2": "rock",

@@ -37,6 +37,7 @@ public class RankingsActivity extends StandardActivity {
     @OnItemSelected(R.id.sort_options)
     public void onRankOptionChosen(int position) {
         adapter.setSortOption(position);
+        pokemonList.setSelection(0);
     }
 
     @OnItemClick(R.id.pokemon_list)

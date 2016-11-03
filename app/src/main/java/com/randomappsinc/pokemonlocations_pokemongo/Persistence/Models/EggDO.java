@@ -9,10 +9,10 @@ import io.realm.annotations.PrimaryKey;
 
 public class EggDO extends RealmObject{
     @PrimaryKey
-    int pokemonId;
+    private int pokemonId;
 
-    int distance;
-    double chance;
+    private int distance;
+    private double chance;
 
     public int getPokemonId() {
         return pokemonId;

@@ -32,6 +32,10 @@ public class PokemonActivity extends StandardActivity {
         adapter = new PokemonCardsAdapter(getFragmentManager());
         pokemonPager.setAdapter(adapter);
         pokemonPager.setCurrentItem(currentPosition);
+
+        if (currentPosition == 0) {
+            setTitle(adapter.getPokemon(0).getName());
+        }
     }
 
     @OnPageChange(value = R.id.pokemon_pager, callback = OnPageChange.Callback.PAGE_SELECTED)

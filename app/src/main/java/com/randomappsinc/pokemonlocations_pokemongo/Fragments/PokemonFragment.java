@@ -2,6 +2,7 @@ package com.randomappsinc.pokemonlocations_pokemongo.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,8 @@ public class PokemonFragment extends Fragment {
     @Bind(R.id.base_stamina_ranking) TextView staminaRanking;
     @Bind(R.id.base_capture_rate_ranking) TextView captureRateRanking;
     @Bind(R.id.base_flee_rate_ranking) TextView fleeRateRanking;
+
+    @Bind(R.id.egg_info) TextView eggInfo;
 
     @BindString(R.string.percentage) String percentage;
     @BindString(R.string.region_exclusive) String regionTemplate;
@@ -119,6 +122,8 @@ public class PokemonFragment extends Fragment {
         staminaRanking.setText(getRankText(pokemon.getStaminaRanking()));
         captureRateRanking.setText(getRankText(pokemon.getCaptureRateRanking()));
         fleeRateRanking.setText(getRankText(pokemon.getFleeRateRanking()));
+
+        eggInfo.setText(Html.fromHtml(PokemonUtils.getEggInfo(pokemon)));
 
         return rootView;
     }

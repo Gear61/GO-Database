@@ -3,6 +3,9 @@ package com.randomappsinc.pokemonlocations_pokemongo.Utils;
 import android.content.Context;
 import android.view.View;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.DatabaseManager;
+import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.EggDO;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokeFindingDO;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 
@@ -10,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by alexanderchiou on 7/17/16.
@@ -189,6 +193,26 @@ public class PokemonUtils {
             case FAIRY:
                 typeContainer.setBackgroundResource(R.drawable.fairy_background);
                 break;
+        }
+    }
+
+    public static String getEggInfo(Pokemon pokemon) {
+        EggDO eggDO = DatabaseManager.get().getEggsDBManager().getEgg(pokemon);
+        if (eggDO != null) {
+            String eggDistance = String.valueOf(eggDO.getDistance());
+            double numEggs = 100/(eggDO.getChance());
+            double distance = eggDO.getDistance() * numEggs;
+
+            String numEggsText = String.format(Locale.US, "%.1f", numEggs);
+            String distanceText = String.format(Locale.US, "%.1f", distance);
+
+            return pokemon.getName() + " has a <b>" + eggDO.getChance() + "%</b> chance of hatching from a <b>" +
+                    eggDO.getDistance() + "km</b> egg. This means that you need to walk an average of <b>" +
+                    distanceText + "km</b> to hatch <b>" + numEggsText + "</b> " + eggDistance +
+                    "km eggs in order to get one.";
+
+        } else {
+            return MyApplication.getAppContext().getString(R.string.does_not_hatch);
         }
     }
 }

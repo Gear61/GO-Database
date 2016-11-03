@@ -8,4 +8,7 @@
         <item>@string/fiveKm</item>
         <item>@string/tenKm</item>
     </string-array>
+
+    <string name="egg_info">Egg Info</string>
+    <string name="does_not_hatch">This Pokemon does not hatch from an egg.</string>
 </resources>

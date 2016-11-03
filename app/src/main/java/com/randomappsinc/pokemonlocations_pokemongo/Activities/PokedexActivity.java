@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.PokedexAdapter;
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
 import com.randomappsinc.pokemonlocations_pokemongo.Utils.UIUtils;
 
@@ -60,7 +61,8 @@ public class PokedexActivity extends StandardActivity {
         UIUtils.hideKeyboard(this);
         searchContainer.requestFocus();
         Intent intent = new Intent(this, PokemonActivity.class);
-        intent.putExtra(PokemonActivity.CURRENT_POSITION_KEY, position);
+        Pokemon pokemon = adapter.getItem(position);
+        intent.putExtra(PokemonActivity.CURRENT_POSITION_KEY, pokemon.getId() - 1);
         startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package com.randomappsinc.pokemonlocations_pokemongo.Persistence;
 
+import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.EggDO;
 
 import java.util.List;
@@ -35,5 +36,11 @@ public class EggsDBManager {
         return getRealm().where(EggDO.class)
                 .equalTo("distance", distance)
                 .findAllSorted("chance", Sort.DESCENDING);
+    }
+
+    public EggDO getEgg(Pokemon pokemon) {
+        return getRealm().where(EggDO.class)
+                .equalTo("pokemonId", pokemon.getId())
+                .findFirst();
     }
 }

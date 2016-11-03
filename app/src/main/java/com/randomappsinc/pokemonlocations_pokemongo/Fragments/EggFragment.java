@@ -53,7 +53,7 @@ public class EggFragment extends Fragment {
         EggDO eggDO = eggsAdapter.getItem(position);
         Pokemon pokemon = DatabaseManager.get().getPokemonDBManager().getPokemon(eggDO.getPokemonId());
         Intent intent = new Intent(getActivity(), PokemonActivity.class);
-        intent.putExtra(JSONUtils.POKEMON_KEY, pokemon);
+        intent.putExtra(PokemonActivity.CURRENT_POSITION_KEY, pokemon.getId() - 1);
         getActivity().startActivity(intent);
     }
 }

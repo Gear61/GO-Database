@@ -7,7 +7,6 @@ import android.widget.ListView;
 import com.randomappsinc.pokemonlocations_pokemongo.Adapters.RankingsAdapter;
 import com.randomappsinc.pokemonlocations_pokemongo.Models.Pokemon;
 import com.randomappsinc.pokemonlocations_pokemongo.R;
-import com.randomappsinc.pokemonlocations_pokemongo.Utils.JSONUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,7 +43,7 @@ public class RankingsActivity extends StandardActivity {
     public void onPokemonClicked(int position) {
         Pokemon pokemon = adapter.getItem(position);
         Intent intent = new Intent(this, PokemonActivity.class);
-        intent.putExtra(JSONUtils.POKEMON_KEY, pokemon);
+        intent.putExtra(PokemonActivity.CURRENT_POSITION_KEY, pokemon.getId() - 1);
         startActivity(intent);
     }
 }

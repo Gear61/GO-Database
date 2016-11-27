@@ -14,7 +14,7 @@ import io.realm.Realm;
  */
 
 public class PokemonDBManager {
-    public static final int CURRENT_POKEMON_DB_VERSION = 3;
+    public static final int CURRENT_POKEMON_DB_VERSION = 4;
 
     private Realm getRealm() {
         return Realm.getDefaultInstance();

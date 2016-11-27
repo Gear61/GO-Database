@@ -33,7 +33,6 @@ public class JSONUtils {
     public static final String BASE_CAPTURE_RATE_KEY = "base_capture_rate";
     public static final String BASE_FLEE_RATE_KEY = "base_flee_rate";
     public static final String CANDY_TO_EVOLVE_KEY = "candy_to_evolve";
-    public static final String AVERAGE_CP_GAIN_KEY = "average_cp_gain";
 
     // Eggs
     public static final String POKEMON_ID_KEY = "pokemon_id";
@@ -63,7 +62,6 @@ public class JSONUtils {
                 pokemon.setBaseCaptureRate(pokemonJSON.getInt(BASE_CAPTURE_RATE_KEY));
                 pokemon.setBaseFleeRate(pokemonJSON.getInt(BASE_FLEE_RATE_KEY));
                 pokemon.setCandyToEvolve(pokemonJSON.getInt(CANDY_TO_EVOLVE_KEY));
-                pokemon.setAvgCpGain(pokemonJSON.getDouble(AVERAGE_CP_GAIN_KEY));
 
                 pokemonList.add(pokemon);
             }
@@ -194,6 +192,8 @@ public class JSONUtils {
 
     public static void updateEggsDB() {
         if (PreferencesManager.get().getEggsDBVersion() < EggsDBManager.CURRENT_EGGS_DB_VERSION) {
+            DatabaseManager.get().getEggsDBManager().clearEggs();
+
             InputStream inputStream = null;
             try {
                 inputStream = MyApplication.getAppContext().getAssets().open("eggs.txt");

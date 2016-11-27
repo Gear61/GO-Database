@@ -9,8 +9,6 @@ import com.randomappsinc.pokemonlocations_pokemongo.Persistence.Models.PokedexPo
  * Created by alexanderchiou on 7/17/16.
  */
 public class Pokemon implements Parcelable {
-    public static final String ID_KEY = "ID_KEY";
-
     private int id;
     private String name;
     private String type1;
@@ -22,7 +20,6 @@ public class Pokemon implements Parcelable {
     private int baseCaptureRate;
     private int baseFleeRate;
     private int candyToEvolve;
-    private double avgCpGain;
     private int maxCpRanking;
     private int attackRanking;
     private int defenseRanking;
@@ -120,14 +117,6 @@ public class Pokemon implements Parcelable {
         this.candyToEvolve = candyToEvolve;
     }
 
-    public double getAvgCpGain() {
-        return avgCpGain;
-    }
-
-    public void setAvgCpGain(double avgCpGain) {
-        this.avgCpGain = avgCpGain;
-    }
-
     public int getMaxCpRanking() {
         return maxCpRanking;
     }
@@ -190,7 +179,6 @@ public class Pokemon implements Parcelable {
         pokemonDO.setBaseCaptureRate(baseCaptureRate);
         pokemonDO.setBaseFleeRate(baseFleeRate);
         pokemonDO.setCandyToEvolve(candyToEvolve);
-        pokemonDO.setAvgCpGain(avgCpGain);
         pokemonDO.setMaxCpRanking(maxCpRanking);
         pokemonDO.setAttackRanking(attackRanking);
         pokemonDO.setDefenseRanking(defenseRanking);
@@ -213,7 +201,6 @@ public class Pokemon implements Parcelable {
         baseCaptureRate = in.readInt();
         baseFleeRate = in.readInt();
         candyToEvolve = in.readInt();
-        avgCpGain = in.readDouble();
         maxCpRanking = in.readInt();
         attackRanking = in.readInt();
         defenseRanking = in.readInt();
@@ -240,7 +227,6 @@ public class Pokemon implements Parcelable {
         dest.writeInt(baseCaptureRate);
         dest.writeInt(baseFleeRate);
         dest.writeInt(candyToEvolve);
-        dest.writeDouble(avgCpGain);
         dest.writeInt(maxCpRanking);
         dest.writeInt(attackRanking);
         dest.writeInt(defenseRanking);

@@ -21,7 +21,6 @@ public class PokedexPokemonDO extends RealmObject {
     private int baseCaptureRate;
     private int baseFleeRate;
     private int candyToEvolve;
-    private double avgCpGain;
     private int maxCpRanking;
     private int attackRanking;
     private int defenseRanking;
@@ -115,14 +114,6 @@ public class PokedexPokemonDO extends RealmObject {
 
     public void setCandyToEvolve(int candyToEvolve) {
         this.candyToEvolve = candyToEvolve;
-    }
-
-    public double getAvgCpGain() {
-        return avgCpGain;
-    }
-
-    public void setAvgCpGain(double avgCpGain) {
-        this.avgCpGain = avgCpGain;
     }
 
     public int getMaxCpRanking() {

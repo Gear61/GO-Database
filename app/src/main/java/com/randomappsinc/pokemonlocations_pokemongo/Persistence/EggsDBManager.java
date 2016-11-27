@@ -13,10 +13,19 @@ import io.realm.Sort;
  */
 
 public class EggsDBManager {
-    public static final int CURRENT_EGGS_DB_VERSION = 1;
+    public static final int CURRENT_EGGS_DB_VERSION = 2;
 
     private Realm getRealm() {
         return Realm.getDefaultInstance();
+    }
+
+    public void clearEggs() {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(EggDO.class).findAll().deleteAllFromRealm();
+            }
+        });
     }
 
     public void addOrUpdateEgg(final int pokemonId, final int distance, final double chance) {

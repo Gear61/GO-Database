@@ -77,8 +77,7 @@ public class PokemonServer {
 
     public boolean isUnreleased(String pokemonName) {
         int pokemonId = getPokemonId(pokemonName);
-        return pokemonId == 132 || pokemonId == 144 || pokemonId == 145 ||
-                pokemonId == 146 || pokemonId == 150 || pokemonId == 151;
+        return pokemonId == 144 || pokemonId == 145 || pokemonId == 146 || pokemonId == 150 || pokemonId == 151;
     }
 
     public String isRegionExclusive(Pokemon pokemon) {

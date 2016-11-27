@@ -114,8 +114,6 @@ public class PokemonFragment extends Fragment {
             candyToEvolve.setText(R.string.not_applicable);
         }
 
-        cpGain.setText(String.valueOf(pokemon.getAvgCpGain()));
-
         maxCpRanking.setText(getRankText(pokemon.getMaxCpRanking()));
         attackRanking.setText(getRankText(pokemon.getAttackRanking()));
         defenseRanking.setText(getRankText(pokemon.getDefenseRanking()));

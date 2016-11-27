@@ -59,7 +59,6 @@ public class DBConverters {
         pokemon.setBaseCaptureRate(pokemonDO.getBaseCaptureRate());
         pokemon.setBaseFleeRate(pokemonDO.getBaseFleeRate());
         pokemon.setCandyToEvolve(pokemonDO.getCandyToEvolve());
-        pokemon.setAvgCpGain(pokemonDO.getAvgCpGain());
         pokemon.setMaxCpRanking(pokemonDO.getMaxCpRanking());
         pokemon.setAttackRanking(pokemonDO.getAttackRanking());
         pokemon.setDefenseRanking(pokemonDO.getDefenseRanking());

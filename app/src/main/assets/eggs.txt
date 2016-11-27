@@ -5,14 +5,6 @@
          "chance": 12.3
       },
       {
-         "pokemon_id": 16,
-         "chance": 11.4
-      },
-      {
-         "pokemon_id": 19,
-         "chance": 10.4
-      },
-      {
          "pokemon_id": 10,
          "chance": 10.3
       },
@@ -100,6 +92,10 @@
       },
       {
          "pokemon_id": 69,
+         "chance": 3.3
+      },
+      {
+         "pokemon_id": 133,
          "chance": 3.3
       },
       {
@@ -228,10 +224,6 @@
       }
    ],
    "ten": [
-      {
-         "pokemon_id": 133,
-         "chance": 17.7
-      },
       {
          "pokemon_id": 126,
          "chance": 8.8

@@ -27,7 +27,7 @@ import io.realm.Sort;
  * Created by alexanderchiou on 7/17/16.
  */
 public class DatabaseManager {
-    private static final int CURRENT_REALM_VERSION = 6;
+    private static final int CURRENT_REALM_VERSION = 7;
     private static DatabaseManager instance;
 
     public static DatabaseManager get() {
@@ -124,6 +124,12 @@ public class DatabaseManager {
                         .addField("staminaRanking", int.class)
                         .addField("captureRateRanking", int.class)
                         .addField("fleeRateRanking", int.class);
+                oldVersion++;
+            }
+
+            if (oldVersion == 6) {
+                schema.get("PokedexPokemonDO")
+                        .removeField("avgCpGain");
             }
         }
     };

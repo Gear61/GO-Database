@@ -7,7 +7,6 @@
     <string name="base_defense">Base Defense</string>
     <string name="base_stamina">Base Stamina</string>
     <string name="candy_to_evolve">Candy to Evolve</string>
-    <string name="average_cp_gain">Average CP Gain</string>
 
     <string-array name="rankings_options">
         <item>@string/max_cp</item>

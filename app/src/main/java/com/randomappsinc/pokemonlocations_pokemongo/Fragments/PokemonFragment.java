@@ -50,7 +50,6 @@ public class PokemonFragment extends Fragment {
     @Bind(R.id.base_defense) TextView defense;
     @Bind(R.id.base_stamina) TextView stamina;
     @Bind(R.id.candy_to_evolve) TextView candyToEvolve;
-    @Bind(R.id.average_cp_gain) TextView cpGain;
 
     @Bind(R.id.max_cp_ranking) TextView maxCpRanking;
     @Bind(R.id.base_attack_ranking) TextView attackRanking;

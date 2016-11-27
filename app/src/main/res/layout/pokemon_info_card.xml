@@ -148,18 +148,6 @@
                         android:id="@+id/candy_to_evolve"
                         style="@style/pokemon_stat"/>
                 </FrameLayout>
-
-                <View style="@style/stat_divider"/>
-
-                <FrameLayout style="@style/stat_container">
-                    <TextView
-                        android:text="@string/average_cp_gain"
-                        style="@style/stat_header"/>
-
-                    <TextView
-                        android:id="@+id/average_cp_gain"
-                        style="@style/pokemon_stat"/>
-                </FrameLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
